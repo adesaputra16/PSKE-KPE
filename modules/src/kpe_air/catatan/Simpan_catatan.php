@@ -1,0 +1,284 @@
+<?php
+
+if (empty($params['case']))
+	{
+	$result['respon']['pesan'] == "gagal";
+	$result['respon']['pesan'] == "Module tidak dapat di muat";
+	echo json_encode($result);
+	exit();
+	}
+
+
+		$input = $params['input_option'];
+		$bulan = Date("m");
+		$tahun = Date("Y");
+		$sql_fd = "SELECT KPE_AIR_FLOWMETER_DEPARTEMEN_FLOW_NAMA,KPE_AIR_FLOWMETER_DEPARTEMEN_PERIODE,KPE_AIR_FLOWMETER_DEPARTEMEN_PERSONIL,KPE_AIR_FLOWMETER_DEPARTEMEN_TOTAL_PERSONIL,KPE_AIR_FLOWMETER_DEPARTEMEN_TOTAL_PERSEN,KPE_AIR_FLOWMETER_DEPARTEMEN_PERSONIL_HASIL FROM KPE_AIR_FLOWMETER_DEPARTEMEN_FLOW WHERE KPE_AIR_FLOWMETER_ID='".$input['KPE_AIR_FLOWMETER_ID']."' AND KPE_AIR_FLOWMETER_DEPARTEMEN_PERIODE='".$input['KPE_AIR_FLOWMETER_DEPARTEMEN_PERIODE']."' AND RECORD_STATUS='A'";
+
+		$this->MYSQL = new MYSQL();
+		$this->MYSQL->database = $this->CONFIG->mysql_koneksi()->db_nama;
+		$this->MYSQL->queri = $sql_fd;
+		$result_fd = $this->MYSQL->data();
+
+		$sql_c = "SELECT KPE_AIR_FLOWMETER_CATATAN_ANGKA,KPE_AIR_FLOWMETER_CATATAN_KALIBRASI,
+							KPE_AIR_FLOWMETER_CATATAN_PERSONIL_HASIL,KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_PERSEN
+							FROM KPE_AIR_FLOWMETER_CATATAN WHERE KPE_AIR_FLOWMETER_ID='".$input['KPE_AIR_FLOWMETER_ID']."' AND KPE_AIR_FLOWMETER_CATATAN_TANGGAL='".$input['KPE_AIR_FLOWMETER_CATATAN_TANGGAL_SEBELUMNYA']."' AND RECORD_STATUS='A' GROUP BY KPE_AIR_FLOWMETER_ID";
+		$this->MYSQL = new MYSQL();
+		$this->MYSQL->database = $this->CONFIG->mysql_koneksi()->db_nama;
+		$this->MYSQL->queri = $sql_c;
+		$result_c = $this->MYSQL->data();
+
+		if ($input['KPE_AIR_FLOWMETER_KALIBRASI_PERSEN'] == "") {
+			$KPE_AIR_FLOWMETER_CATATAN_KALIBRASI = 'off';
+			$KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_PERSEN = '';
+		} else {
+			$KPE_AIR_FLOWMETER_CATATAN_KALIBRASI = 'on';
+			$KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_PERSEN = $input['KPE_AIR_FLOWMETER_KALIBRASI_PERSEN'];
+		}
+
+		if (base64_decode($input['KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA']) == "") {
+				// $KPE_AIR_FLOWMETER_CATATAN_PAKAI = round($input['KPE_AIR_FLOWMETER_CATATAN_ANGKA'] - $result_c[0]['KPE_AIR_FLOWMETER_CATATAN_ANGKA'],3);
+			
+			$KPE_AIR_FLOWMETER_CATATAN_PAKAI = round($input['KPE_AIR_FLOWMETER_CATATAN_ANGKA'] - $result_c[0]['KPE_AIR_FLOWMETER_CATATAN_ANGKA'],2);
+		}else {
+			$KPE_AIR_FLOWMETER_CATATAN_PAKAI = round($input['KPE_AIR_FLOWMETER_CATATAN_ANGKA'] - $result_c[0]['KPE_AIR_FLOWMETER_CATATAN_ANGKA'],3);
+			$KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA = "";
+		}
+
+		if ($input['KPE_AIR_FLOWMETER_DEPARTEMEN_ID'] == "") {
+			$KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA = "";
+		}else {
+			$KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA = base64_decode($input['KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA']);
+		}
+
+		if ($input['KPE_AIR_FLOWMETER_KALIBRASI_PERSEN'] != "") {
+			if ($input['TOTAL_PERSONIL'] != "") {
+				$KPE_AIR_FLOWMETER_CATATAN_BEBAN = round($KPE_AIR_FLOWMETER_CATATAN_PAKAI-($KPE_AIR_FLOWMETER_CATATAN_PAKAI*$KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_PERSEN/100),3);		
+			}
+			$KPE_AIR_FLOWMETER_CATATAN_BEBAN = round($KPE_AIR_FLOWMETER_CATATAN_PAKAI-($KPE_AIR_FLOWMETER_CATATAN_PAKAI*$KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_PERSEN/100),2);
+		} else {
+			$KPE_AIR_FLOWMETER_CATATAN_BEBAN = $KPE_AIR_FLOWMETER_CATATAN_PAKAI;
+		}
+
+		if ($input['TOTAL_PERSONIL'] == "") {
+			$KPE_AIR_FLOWMETER_CATATAN_BEBAN_DEPARTEMEN = "";
+		} else {
+			$KPE_AIR_FLOWMETER_CATATAN_BEBAN_DEPARTEMEN = round($KPE_AIR_FLOWMETER_CATATAN_BEBAN*$input['KPE_AIR_FLOWMETER_DEPARTEMEN_PERSONIL_HASIL'],3);
+		}
+
+		if ($result_fd > 0) {
+
+			foreach ($result_fd as $key => $value) {
+				$KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN_BEBAN_DEPARTEMEN = round($KPE_AIR_FLOWMETER_CATATAN_BEBAN*$result_fd[$key]['KPE_AIR_FLOWMETER_DEPARTEMEN_PERSONIL_HASIL'],3);
+				$data_master_catatan_dept = array(
+					'KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN_INDEX' => waktu_decimal(Date("Y-m-d H:i:s")),
+					'KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN_ID' => waktu_decimal(Date("Y-m-d H:i:s")),
+					'KPE_AIR_FLOWMETER_ID' => $input['KPE_AIR_FLOWMETER_ID'],
+					'KPE_AIR_FLOWMETER_NAMA' => base64_decode($input['KPE_AIR_FLOWMETER_NAMA']),
+					'KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN_NAMA' => $result_fd[$key]['KPE_AIR_FLOWMETER_DEPARTEMEN_FLOW_NAMA'],
+					'KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN_TANGGAL' => $input['KPE_AIR_FLOWMETER_CATATAN_TANGGAL'],
+					'KPE_AIR_FLOWMETER_CATATAN_ANGKA' => $input['KPE_AIR_FLOWMETER_CATATAN_ANGKA'],
+					'KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN_PERSONIL_DEPARTEMEN' => $result_fd[$key]['KPE_AIR_FLOWMETER_DEPARTEMEN_PERSONIL'],
+					'KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN_TOTAL_PERSONIL' => $result_fd[$key]['KPE_AIR_FLOWMETER_DEPARTEMEN_TOTAL_PERSONIL'],
+					'KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN_TOTAL_PERSEN' => $result_fd[$key]['KPE_AIR_FLOWMETER_DEPARTEMEN_TOTAL_PERSEN'],
+					'KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN_PERSONIL_HASIL' => $result_fd[$key]['KPE_AIR_FLOWMETER_DEPARTEMEN_PERSONIL_HASIL'],
+					'KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN_KALIBRASI_REAL' => $input['KPE_AIR_FLOWMETER_KALIBRASI_REAL'],
+					'KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN_KALIBRASI_SELISIH' => $input['KPE_AIR_FLOWMETER_KALIBRASI_SELISIH'],
+					'KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN_KALIBRASI_PERSEN' => $input['KPE_AIR_FLOWMETER_KALIBRASI_PERSEN'],
+					'KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN_PAKAI' => $KPE_AIR_FLOWMETER_CATATAN_PAKAI,
+					'KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN_BEBAN' => $KPE_AIR_FLOWMETER_CATATAN_BEBAN,
+					'KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN_BEBAN_DEPARTEMEN' => $KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN_BEBAN_DEPARTEMEN,
+					'KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN_KALIBRASI' => $KPE_AIR_FLOWMETER_CATATAN_KALIBRASI,
+					'ENTRI_WAKTU' => date("Y-m-d H:i:s"),
+					'ENTRI_OPERATOR' => $user_login['PERSONAL_NIK'],
+					'RECORD_STATUS' => "A"
+				);
+	
+				$this->MYSQL =new MYSQL;
+				$this->MYSQL->database = $this->CONFIG->mysql_koneksi()->db_nama;
+				$this->MYSQL->tabel ="KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN";
+				$this->MYSQL->record = $data_master_catatan_dept;	
+				$this->MYSQL->simpan();
+			}
+		}
+	
+		if($input['KPE_AIR_FLOWMETER_CATATAN_ID']=="")
+		{
+			if ($input['KPE_AIR_FLOWMETER_DEPARTEMEN_ID'] != "" && $input['KPE_AIR_FLOWMETER_CATATAN_TANGGAL'] == $tahun."/".$bulan."/01") {
+		
+						$data_master_dept_flow = array(
+							'KPE_AIR_FLOWMETER_DEPARTEMEN_FLOW_INDEX' => waktu_decimal(Date("Y-m-d H:i:s")),
+							'KPE_AIR_FLOWMETER_DEPARTEMEN_FLOW_ID' => waktu_decimal(Date("Y-m-d H:i:s")),
+							'KPE_AIR_FLOWMETER_ID' => $input['KPE_AIR_FLOWMETER_ID'],
+							'KPE_AIR_FLOWMETER_NAMA' => base64_decode($input['KPE_AIR_FLOWMETER_NAMA']),
+							'KPE_AIR_FLOWMETER_DEPARTEMEN_FLOW_NAMA' => base64_decode($input['KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA']),
+							'KPE_AIR_FLOWMETER_DEPARTEMEN_PERSONIL' => $input['PERSONIL_DEPARTEMEN'],
+							'KPE_AIR_FLOWMETER_DEPARTEMEN_TOTAL_PERSONIL' => $input['TOTAL_PERSONIL'],
+							'KPE_AIR_FLOWMETER_DEPARTEMEN_TOTAL_PERSEN' => $input['PERSEN'],
+							'KPE_AIR_FLOWMETER_DEPARTEMEN_PERSONIL_HASIL' => $input['KPE_AIR_FLOWMETER_DEPARTEMEN_PERSONIL_HASIL'],
+							'KPE_AIR_FLOWMETER_DEPARTEMEN_PERIODE' => $input['KPE_AIR_FLOWMETER_DEPARTEMEN_PERIODE'],
+							'ENTRI_WAKTU' => date("Y-m-d H:i:s"),
+							'ENTRI_OPERATOR' => $user_login['PERSONAL_NIK'],
+							'RECORD_STATUS' => "A"
+						);
+			
+						$this->MYSQL =new MYSQL;
+						$this->MYSQL->database = $this->CONFIG->mysql_koneksi()->db_nama;
+						$this->MYSQL->tabel ="KPE_AIR_FLOWMETER_DEPARTEMEN_FLOW";
+						$this->MYSQL->record = $data_master_dept_flow;	
+						$this->MYSQL->simpan();
+				}	
+				
+				$data_master = array(
+					'KPE_AIR_FLOWMETER_CATATAN_INDEX' => waktu_decimal(Date("Y-m-d H:i:s")),
+					'KPE_AIR_FLOWMETER_CATATAN_ID' => waktu_decimal(Date("Y-m-d H:i:s")),
+					'KPE_AIR_FLOWMETER_ID' => $input['KPE_AIR_FLOWMETER_ID'],
+					'KPE_AIR_FLOWMETER_NAMA' => base64_decode($input['KPE_AIR_FLOWMETER_NAMA']),
+					'KPE_AIR_FLOWMETER_CATATAN_TANGGAL' => $input['KPE_AIR_FLOWMETER_CATATAN_TANGGAL'],
+					'KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN_NAMA' => $KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA,
+					'KPE_AIR_FLOWMETER_CATATAN_PERSONIL_DEPARTEMEN' => $input['PERSONIL_DEPARTEMEN'],
+					'KPE_AIR_FLOWMETER_CATATAN_TOTAL_PERSONIL' => $input['TOTAL_PERSONIL'],
+					'KPE_AIR_FLOWMETER_CATATAN_TOTAL_PERSEN' => $input['PERSEN'],
+					'KPE_AIR_FLOWMETER_CATATAN_PERSONIL_HASIL' => $input['KPE_AIR_FLOWMETER_DEPARTEMEN_PERSONIL_HASIL'],
+					'KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_REAL' => $input['KPE_AIR_FLOWMETER_KALIBRASI_REAL'],
+					'KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_SELISIH' => $input['KPE_AIR_FLOWMETER_KALIBRASI_SELISIH'],
+					'KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_PERSEN' => $input['KPE_AIR_FLOWMETER_KALIBRASI_PERSEN'],
+					'KPE_AIR_FLOWMETER_CATATAN_ANGKA' => $input['KPE_AIR_FLOWMETER_CATATAN_ANGKA'],
+					'KPE_AIR_FLOWMETER_CATATAN_PAKAI' => $KPE_AIR_FLOWMETER_CATATAN_PAKAI,
+					'KPE_AIR_FLOWMETER_CATATAN_BEBAN' => $KPE_AIR_FLOWMETER_CATATAN_BEBAN,
+					'KPE_AIR_FLOWMETER_CATATAN_BEBAN_DEPARTEMEN' => $KPE_AIR_FLOWMETER_CATATAN_BEBAN_DEPARTEMEN,
+					'KPE_AIR_FLOWMETER_CATATAN_KALIBRASI' => $KPE_AIR_FLOWMETER_CATATAN_KALIBRASI,
+					'ENTRI_WAKTU' => date("Y-m-d H:i:s"),
+					'ENTRI_OPERATOR' => $user_login['PERSONAL_NIK'],
+					'RECORD_STATUS' => "A"
+				);
+	
+				$this->MYSQL =new MYSQL;
+				$this->MYSQL->database = $this->CONFIG->mysql_koneksi()->db_nama;
+				$this->MYSQL->tabel ="KPE_AIR_FLOWMETER_CATATAN";
+				$this->MYSQL->record = $data_master;				
+	
+				if ($this->MYSQL->simpan() == true)
+					{
+						$this->callback['respon']['pesan']="sukses";
+						$this->callback['respon']['text_msg']="Berhasil Simpan";
+						$this->callback['result']=$result;
+					}
+					else
+					{
+					$this->callback['respon']['pesan'] = "gagal";
+					$this->callback['respon']['text_msg'] = "Gagal Simpan";
+					}
+			}else 
+			{
+				$data_master_flow_edit = array(
+					'EDIT_WAKTU' => date("Y-m-d H:i:s"),
+					'EDIT_OPERATOR' => $user_login['PERSONAL_NIK'],
+					'RECORD_STATUS' => "E"
+				);
+				$this->MYSQL =new MYSQL;
+				$this->MYSQL->database = $this->CONFIG->mysql_koneksi()->db_nama;
+				$this->MYSQL->tabel ="KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN";
+				$this->MYSQL->record = $data_master_flow_edit;
+				$this->MYSQL->dimana = "WHERE KPE_AIR_FLOWMETER_ID='".$input['KPE_AIR_FLOWMETER_ID']."' AND KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN_TANGGAL='".$input['KPE_AIR_FLOWMETER_CATATAN_TANGGAL']."' AND RECORD_STATUS='A'";
+				if($this->MYSQL->ubah() == true){
+					foreach ($result_fd as $key => $value) {
+						$KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN_BEBAN_DEPARTEMEN = round($KPE_AIR_FLOWMETER_CATATAN_BEBAN*$result_fd[$key]['KPE_AIR_FLOWMETER_DEPARTEMEN_PERSONIL_HASIL'],3);
+						$data_master_edit_catatan_dept = array(
+							'KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN_INDEX' => waktu_decimal(Date("Y-m-d H:i:s")),
+							'KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN_ID' => waktu_decimal(Date("Y-m-d H:i:s")),
+							'KPE_AIR_FLOWMETER_ID' => $input['KPE_AIR_FLOWMETER_ID'],
+							'KPE_AIR_FLOWMETER_NAMA' => base64_decode($input['KPE_AIR_FLOWMETER_NAMA']),
+							'KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN_NAMA' => $result_fd[$key]['KPE_AIR_FLOWMETER_DEPARTEMEN_FLOW_NAMA'],
+							'KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN_TANGGAL' => $input['KPE_AIR_FLOWMETER_CATATAN_TANGGAL'],
+							'KPE_AIR_FLOWMETER_CATATAN_ANGKA' => $input['KPE_AIR_FLOWMETER_CATATAN_ANGKA'],
+							'KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN_PERSONIL_DEPARTEMEN' => $result_fd[$key]['KPE_AIR_FLOWMETER_DEPARTEMEN_PERSONIL'],
+							'KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN_TOTAL_PERSONIL' => $result_fd[$key]['KPE_AIR_FLOWMETER_DEPARTEMEN_TOTAL_PERSONIL'],
+							'KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN_TOTAL_PERSEN' => $result_fd[$key]['KPE_AIR_FLOWMETER_DEPARTEMEN_TOTAL_PERSEN'],
+							'KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN_PERSONIL_HASIL' => $result_fd[$key]['KPE_AIR_FLOWMETER_DEPARTEMEN_PERSONIL_HASIL'],
+							'KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN_KALIBRASI_REAL' => $input['KPE_AIR_FLOWMETER_KALIBRASI_REAL'],
+							'KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN_KALIBRASI_SELISIH' => $input['KPE_AIR_FLOWMETER_KALIBRASI_SELISIH'],
+							'KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN_KALIBRASI_PERSEN' => $input['KPE_AIR_FLOWMETER_KALIBRASI_PERSEN'],
+							'KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN_PAKAI' => $KPE_AIR_FLOWMETER_CATATAN_PAKAI,
+							'KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN_BEBAN' => $KPE_AIR_FLOWMETER_CATATAN_BEBAN,
+							'KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN_BEBAN_DEPARTEMEN' => $KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN_BEBAN_DEPARTEMEN,
+							'KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN_KALIBRASI' => $KPE_AIR_FLOWMETER_CATATAN_KALIBRASI,
+							'ENTRI_WAKTU' => date("Y-m-d H:i:s"),
+							'ENTRI_OPERATOR' => $user_login['PERSONAL_NIK'],
+							'RECORD_STATUS' => "A"
+						);
+			
+						$this->MYSQL =new MYSQL;
+						$this->MYSQL->database = $this->CONFIG->mysql_koneksi()->db_nama;
+						$this->MYSQL->tabel ="KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN";
+						$this->MYSQL->record = $data_master_edit_catatan_dept;	
+						$this->MYSQL->simpan();
+					}
+				}
+
+
+				$data_master_edit = array(
+					
+					'EDIT_WAKTU' => date("Y-m-d H:i:s"),
+					'EDIT_OPERATOR' => $user_login['PERSONAL_NIK'],
+					'RECORD_STATUS' => "E"
+				);
+	
+				$this->MYSQL =new MYSQL;
+				$this->MYSQL->database = $this->CONFIG->mysql_koneksi()->db_nama;
+				$this->MYSQL->tabel ="KPE_AIR_FLOWMETER_CATATAN";
+				$this->MYSQL->record = $data_master_edit;
+				$this->MYSQL->dimana = "WHERE KPE_AIR_FLOWMETER_CATATAN_ID='".$input['KPE_AIR_FLOWMETER_CATATAN_ID']."' AND RECORD_STATUS='A'";
+	
+				if ($this->MYSQL->ubah() == true)
+				{
+					$data_master_ubah = array(
+						'KPE_AIR_FLOWMETER_CATATAN_INDEX' => waktu_decimal(Date("Y-m-d H:i:s")),
+						'KPE_AIR_FLOWMETER_CATATAN_ID' => waktu_decimal(Date("Y-m-d H:i:s")),
+						'KPE_AIR_FLOWMETER_ID' => $input['KPE_AIR_FLOWMETER_ID'],
+						'KPE_AIR_FLOWMETER_NAMA' => base64_decode($input['KPE_AIR_FLOWMETER_NAMA']),
+						'KPE_AIR_FLOWMETER_CATATAN_TANGGAL' => $input['KPE_AIR_FLOWMETER_CATATAN_TANGGAL'],
+						'KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN_NAMA' => $KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA,
+						'KPE_AIR_FLOWMETER_CATATAN_PERSONIL_DEPARTEMEN' => $input['PERSONIL_DEPARTEMEN'],
+						'KPE_AIR_FLOWMETER_CATATAN_TOTAL_PERSONIL' => $input['TOTAL_PERSONIL'],
+						'KPE_AIR_FLOWMETER_CATATAN_TOTAL_PERSEN' => $input['PERSEN'],
+						'KPE_AIR_FLOWMETER_CATATAN_PERSONIL_HASIL' => $input['KPE_AIR_FLOWMETER_DEPARTEMEN_PERSONIL_HASIL'],
+						'KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_REAL' => $input['KPE_AIR_FLOWMETER_KALIBRASI_REAL'],
+						'KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_SELISIH' => $input['KPE_AIR_FLOWMETER_KALIBRASI_SELISIH'],
+						'KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_PERSEN' => $input['KPE_AIR_FLOWMETER_KALIBRASI_PERSEN'],
+						'KPE_AIR_FLOWMETER_CATATAN_ANGKA' => $input['KPE_AIR_FLOWMETER_CATATAN_ANGKA'],
+						'KPE_AIR_FLOWMETER_CATATAN_PAKAI' => $KPE_AIR_FLOWMETER_CATATAN_PAKAI,
+						'KPE_AIR_FLOWMETER_CATATAN_BEBAN' => $KPE_AIR_FLOWMETER_CATATAN_BEBAN,
+						'KPE_AIR_FLOWMETER_CATATAN_BEBAN_DEPARTEMEN' => $KPE_AIR_FLOWMETER_CATATAN_BEBAN_DEPARTEMEN,
+						'KPE_AIR_FLOWMETER_CATATAN_KALIBRASI' => $KPE_AIR_FLOWMETER_CATATAN_KALIBRASI,
+						'ENTRI_WAKTU' => date("Y-m-d H:i:s"),
+						'ENTRI_OPERATOR' => $user_login['PERSONAL_NIK'],
+						'RECORD_STATUS' => "A"
+					);
+		
+					$this->MYSQL =new MYSQL;
+					$this->MYSQL->database = $this->CONFIG->mysql_koneksi()->db_nama;
+					$this->MYSQL->tabel ="KPE_AIR_FLOWMETER_CATATAN";
+					$this->MYSQL->record = $data_master_ubah;
+		
+					if ($this->MYSQL->simpan() == true)
+						{
+							
+								$this->callback['respon']['pesan']="sukses";
+								$this->callback['respon']['text_msg']="Berhasil Mengubah";
+								$this->callback['result']=$result;
+						}
+						else
+						{
+						$this->callback['respon']['pesan'] = "gagal";
+						$this->callback['respon']['text_msg'] = "Gagal Mengubah";
+						}
+				}else {
+					$this->callback['respon']['pesan'] = "gagal";
+					$this->callback['respon']['text_msg'] = "Gagal Mengubah";
+				}
+			}
+		
+		
+
+
+?>
