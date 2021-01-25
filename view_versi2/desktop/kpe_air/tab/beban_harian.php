@@ -114,7 +114,7 @@
         </span>
       </div>
     </div>
-    <!-- End -->
+    <!-- End akumulasi-->
 
     </div>
   </div>
