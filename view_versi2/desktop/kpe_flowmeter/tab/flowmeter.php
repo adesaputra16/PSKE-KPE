@@ -288,6 +288,15 @@ tr.trData:hover{
               <label for="KPE_AIR_FLOWMETER_DISTRIBUSI">Distribusi</label>
               <input type="text" class="form-control" id="KPE_AIR_FLOWMETER_DISTRIBUSI" name="KPE_AIR_FLOWMETER_DISTRIBUSI" placeholder="KPE_AIR_FLOWMETER_DISTRIBUSI">
             </div>
+            <div class="form-group">
+              <label for="KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE">Type Distribusi</label>
+              <select class="form-control" id="KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE" name="KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE" required>
+                <option value="">--Pilih--</option>
+                <option value="PRE">PRE</option>
+                <option value="RO">RO</option>
+                <option value="REJECT">REJECT</option>
+              </select>
+            </div>
             <div class="form-group KPE_AIR_FLOWMETER_PERIODE" style="display:none;">
               <label for="KPE_AIR_FLOWMETER_PERIODE">Periode</label>
               <input type="text" class="form-control" id="KPE_AIR_FLOWMETER_PERIODE" name="KPE_AIR_FLOWMETER_PERIODE" value="<?= Date("Y-m"); ?>">
@@ -326,6 +335,7 @@ $('.btnFlowmeter').on('click', function(){
   $('#KPE_AIR_FLOWMETER_LOKASI').val('');
   $('#KPE_AIR_FLOWMETER_ID').val('');
   $('#KPE_AIR_FLOWMETER_DISTRIBUSI').val('');
+  $('#KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE').val('');
 })
 
 function simpan()
@@ -369,6 +379,7 @@ $('tbody').on('click', 'a.edit', function(){
   var KPE_AIR_FLOWMETER_NAMA = $(this).attr('KPE_AIR_FLOWMETER_NAMA');
   var KPE_AIR_FLOWMETER_LOKASI = $(this).attr('KPE_AIR_FLOWMETER_LOKASI');
   var KPE_AIR_FLOWMETER_DISTRIBUSI = $(this).attr('KPE_AIR_FLOWMETER_DISTRIBUSI');
+  var KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE = $(this).attr('KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE');
   var KPE_AIR_FLOWMETER_SUB_ID = $(this).attr('KPE_AIR_FLOWMETER_SUB_ID');
   var KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA = $(this).attr('KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA');
   // console.log(KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA);
@@ -395,6 +406,7 @@ $('tbody').on('click', 'a.edit', function(){
   $('input#KPE_AIR_FLOWMETER_ID').val(KPE_AIR_FLOWMETER_ID);
   $('select#KPE_AIR_FLOWMETER_SUB_ID').selectpicker("val",KPE_AIR_FLOWMETER_SUB_ID);
   $('input#KPE_AIR_FLOWMETER_DISTRIBUSI').val(KPE_AIR_FLOWMETER_DISTRIBUSI);
+  $('input#KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE').val(KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE);
 });
 
 $(window).on('hashchange', function(e) {
@@ -455,7 +467,7 @@ function tampil(curPage)
                   "<i class='caret'></i>"+
                 "</button>"+
                 "<ul class='dropdown-menu'>"+
-                  "<li><a class='edit' KPE_AIR_FLOWMETER_ID='" + data.result[i].KPE_AIR_FLOWMETER_ID + "' KPE_AIR_FLOWMETER_NAMA='" + data.result[i].KPE_AIR_FLOWMETER_NAMA + "' KPE_AIR_FLOWMETER_DISTRIBUSI='" + data.result[i].KPE_AIR_FLOWMETER_DISTRIBUSI + "' KPE_AIR_FLOWMETER_SUB_ID='" + data.result[i].KPE_AIR_FLOWMETER_SUB_ID + "' KPE_AIR_FLOWMETER_LOKASI='" + data.result[i].KPE_AIR_FLOWMETER_LOKASI + "' KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA='" + KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA +"'><i class='fa fa-edit'></i>Edit</a></li>"+
+                  "<li><a class='edit' KPE_AIR_FLOWMETER_ID='" + data.result[i].KPE_AIR_FLOWMETER_ID + "' KPE_AIR_FLOWMETER_NAMA='" + data.result[i].KPE_AIR_FLOWMETER_NAMA + "' KPE_AIR_FLOWMETER_DISTRIBUSI='" + data.result[i].KPE_AIR_FLOWMETER_DISTRIBUSI + "' KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE='" + data.result[i].KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE + "' KPE_AIR_FLOWMETER_SUB_ID='" + data.result[i].KPE_AIR_FLOWMETER_SUB_ID + "' KPE_AIR_FLOWMETER_LOKASI='" + data.result[i].KPE_AIR_FLOWMETER_LOKASI + "' KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA='" + KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA +"'><i class='fa fa-edit'></i>Edit</a></li>"+
                   "<li><a class='hapus' KPE_AIR_FLOWMETER_ID='" + data.result[i].KPE_AIR_FLOWMETER_ID + "'><i class='fa fa-trash'></i>Hapus</a></li>"+
                 "</ul>"+
               "</div>"+

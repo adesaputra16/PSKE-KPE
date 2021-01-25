@@ -1,25 +1,25 @@
 <style> 
 
-.loader {
-  border: 7px solid #f3f3f3;
-  border-radius: 50%;
-  border-top: 7px solid #3498db;
-  border-bottom: 7px solid #3498db;
-  width: 60px;
-  height: 60px;
-  -webkit-animation: spin 2s linear infinite;
-  animation: spin 2s linear infinite;
-}
+  .loader {
+    border: 7px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 7px solid #3498db;
+    border-bottom: 7px solid #3498db;
+    width: 60px;
+    height: 60px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+  }
 
-@-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
-}
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
 
   table, th, td{
     border:1px solid #ccc !important;
@@ -27,6 +27,24 @@
 
   tr.trData:hover{
     background:rgba(250, 240, 202,0.5) !important;
+  }
+
+  .Content {
+    height:600px;
+    overflow:auto;
+    background:#fff;
+  }
+
+  .table-sticky>thead>tr>th {
+    background: #fff;
+    /* color: #000; */
+    top: -3px;
+    position: sticky;
+    z-index: 10;
+  }
+
+  table, .table-bodered{
+    border-collapse: separate;
   }
 
 </style>
@@ -103,70 +121,34 @@
   <!-- /.End Pencarian -->
 
   <!-- Tabel -->
-  <div class="row">
-    <div class="col-md-12">
-      <div class="table-responsive">
-        <table class="table table-hover table-bordered" id="sum_table">
-          <thead>
-              <tr id="nFlowmeter">
-                <script>
-
-                    var date = new Date();
-                    var bulan = $('select#BULAN_FILTER').val();
-                    var tahun = $('select#TAHUN_FILTER').val();
-
-                    if (bulan == '') {
-                      var bulans = date.getMonth()+1;
-                    } else {
-                      bulans = new Date($('#BULAN_FILTER').val());
-                    }
-
-                    if (tahun == '') {
-                      var tahuns = date.getFullYear();
-                    } else {
-                      tahuns = new Date($('#TAHUN_FILTER').val());
-                    }
-
-                    var lastDay = new Date(tahuns, bulans + 1, 0);
-                    var tanggal = lastDay.getDate();
-                    var tglBeban = '';
-                    for (var t = 1; t <= tanggal; t++) {
-                      tglBeban += /*html*/`<th>${t}</th>`;
-                    }
-                    
-                    var th = /*html*/`<th width="10" class="text-center">No</th>
-                                      <th width="" class="text-center">DEPT.</th>
-                                      <th colspan="2" width="" class="text-center">Domestik (M&sup2;/Day)</th>
-                                      <th colspan="2" width="" class="text-center">Produk/Evap/Steam (M&sup3;/Day)</th>
-                                      <th colspan="2" width="" class="text-center">Proses (M&sup3;/Day)</th>
-                                      <th colspan="2" width="" class="text-center" style="width:130px">AVG Bulan Lalu(M&sup3;/Day) </th>
-                                      <th width="" class="text-center">AVG (M&sup3;/Day) </th>`;
-                    $('tr#nFlowmeter').append(th+tglBeban);
-
-                    $('#btn-reload').click(function(){
-                      $('tr#nFlowmeter').empty();
+  <div class="box">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="table-responsive Content">
+          <table class="table table-hover table-bordered table-sticky" id="sum_table">
+            <thead>
+                <tr id="nFlowmeter">
+                  <script>
 
                       var date = new Date();
-                      var bulan = new Date($('select#BULAN_FILTER').val());
-                      var tahun = new Date($('select#TAHUN_FILTER').val());
-                      var bulanss = $('select#BULAN_FILTER').val();
-                      var tahunss = $('select#TAHUN_FILTER').val();
+                      var bulan = $('select#BULAN_FILTER').val();
+                      var tahun = $('select#TAHUN_FILTER').val();
 
-                      if (bulanss == '') {
+                      if (bulan == '') {
                         var bulans = date.getMonth();
                       } else {
-                        bulans = bulan.getMonth();
+                        bulans = new Date($('#BULAN_FILTER').val());
                       }
 
-                      if (tahunss == '') {
+                      if (tahun == '') {
                         var tahuns = date.getFullYear();
                       } else {
-                        tahuns = tahun.getFullYear();
+                        tahuns = new Date($('#TAHUN_FILTER').val());
                       }
+
                       var lastDay = new Date(tahuns, bulans + 1, 0);
                       var tanggal = lastDay.getDate();
                       var tglBeban = '';
-
                       for (var t = 1; t <= tanggal; t++) {
                         tglBeban += /*html*/`<th>${t}</th>`;
                       }
@@ -180,22 +162,60 @@
                                         <th width="" class="text-center">AVG (M&sup3;/Day) </th>`;
                       $('tr#nFlowmeter').append(th+tglBeban);
 
-                    })
-                </script>
+                      $('#btn-reload').click(function(){
+                        $('tr#nFlowmeter').empty();
+
+                        var date = new Date();
+                        var bulan = new Date($('select#BULAN_FILTER').val());
+                        var tahun = new Date($('select#TAHUN_FILTER').val());
+                        var bulanss = $('select#BULAN_FILTER').val();
+                        var tahunss = $('select#TAHUN_FILTER').val();
+
+                        if (bulanss == '') {
+                          var bulans = date.getMonth();
+                        } else {
+                          bulans = bulan.getMonth();
+                        }
+
+                        if (tahunss == '') {
+                          var tahuns = date.getFullYear();
+                        } else {
+                          tahuns = tahun.getFullYear();
+                        }
+                        var lastDay = new Date(tahuns, bulans + 1, 0);
+                        var tanggal = lastDay.getDate();
+                        var tglBeban = '';
+
+                        for (var t = 1; t <= tanggal; t++) {
+                          tglBeban += /*html*/`<th>${t}</th>`;
+                        }
+                        
+                        var th = /*html*/`<th width="10" class="text-center">No</th>
+                                          <th width="" class="text-center">DEPT.</th>
+                                          <th colspan="2" width="" class="text-center">Domestik (M&sup2;/Day)</th>
+                                          <th colspan="2" width="" class="text-center">Produk/Evap/Steam (M&sup3;/Day)</th>
+                                          <th colspan="2" width="" class="text-center">Proses (M&sup3;/Day)</th>
+                                          <th colspan="2" width="" class="text-center" style="width:130px">AVG Bulan Lalu(M&sup3;/Day) </th>
+                                          <th width="" class="text-center">AVG (M&sup3;/Day) </th>`;
+                        $('tr#nFlowmeter').append(th+tglBeban);
+
+                      })
+                  </script>
+                </tr>
+            </thead>
+            <tbody id="zone_data">
+              <tr> 
+                <td class="backloader" colspan="33">
+                  <center>
+                    <div class="loader"></div>
+                  </center>
+                </td>
               </tr>
-          </thead>
-          <tbody id="zone_data">
-            <tr> 
-              <td class="backloader" colspan="33">
-                <center>
-                  <div class="loader"></div>
-                </center>
-              </td>
-            </tr>
-          </tbody>
-          <tfoot id="zone_total">
-          </tfoot>
-        </table>
+            </tbody>
+            <tfoot id="zone_total">
+            </tfoot>
+          </table>
+        </div>
       </div>
     </div>
   </div>
