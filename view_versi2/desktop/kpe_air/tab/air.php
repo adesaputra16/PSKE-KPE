@@ -53,6 +53,24 @@
   background:rgba(250, 240, 202,0.4) !important;
 } */
 
+.Content {
+    height:600px;
+    overflow:auto;
+    background:#fff;
+  }
+
+  .table-sticky>thead>tr>th {
+    background: #fff;
+    /* color: #000; */
+    top: -3px;
+    position: sticky;
+    z-index: 10;
+  }
+
+  table, .table-bodered{
+    border-collapse: separate;
+  }
+
 .dropleft {
   position: relative;
 }
@@ -204,8 +222,8 @@ tr.trData:hover{
   <div class="box">
     <div class="row">
       <div class="col-md-12">
-        <div class="table-responsive">
-          <table class="table table-hover table-bordered">
+        <div class="table-responsive Content">
+          <table class="table table-hover table-bordered table-sticky">
             <thead>
                 <tr>
                   <th class="bordered" rowspan="2" width="40">NO.</th>
@@ -306,7 +324,7 @@ tr.trData:hover{
             </div>
             <div class="form-group KPE_AIR_FLOWMETER_CATATAN_ANGKA">
               <label for="KPE_AIR_FLOWMETER_CATATAN_ANGKA">Catatan Angka</label>
-              <input type="number" class="form-control" id="KPE_AIR_FLOWMETER_CATATAN_ANGKA" name="KPE_AIR_FLOWMETER_CATATAN_ANGKA" autocomplete="off" placeholder="123.456" step="any" required>
+              <input type="number" class="form-control" id="KPE_AIR_FLOWMETER_CATATAN_ANGKA" name="KPE_AIR_FLOWMETER_CATATAN_ANGKA" autocomplete="off" placeholder="123.456" step="any">
               <input type="hidden" class="form-control" id="KPE_AIR_FLOWMETER_CATATAN_ANGKA_HIDDEN" name="KPE_AIR_FLOWMETER_CATATAN_ANGKA_HIDDEN">
               
               <input type="hidden" class="form-control" id="KPE_AIR_FLOWMETER_CATATAN_ID" name="KPE_AIR_FLOWMETER_CATATAN_ID" value="">
@@ -315,7 +333,7 @@ tr.trData:hover{
               <label for="KPE_AIR_FLOWMETER_CATATAN_TANGGAL">Tanggal</label>
               <input type="text" class="form-control datepicker" id="KPE_AIR_FLOWMETER_CATATAN_TANGGAL" name="KPE_AIR_FLOWMETER_CATATAN_TANGGAL" placeholder="<?= Date("Y/m/d"); ?>" autocomplete="off" required>
             </div>
-            <div class="row rumusCatatan"> 
+            <div class="row rumusCatatan" style="display:none;"> 
               <div class="col-sm-4">
                 <div class="form-group">
                   <label for="KPE_AIR_FLOWMETER_KALIBRASI_REAL">Real</label>
@@ -340,20 +358,23 @@ tr.trData:hover{
 
               <input class="form-control" value="off" type="hidden" id="KPE_AIR_FLOWMETER_CATATAN_KALIBRASI" name="KPE_AIR_FLOWMETER_CATATAN_KALIBRASI">
             </div>
-            <div class="form-check KPE_AIR_FLOWMETER_KALIBRASI">
+            <div class="form-check KPE_AIR_FLOWMETER_KALIBRASI" style="display:none;">
               <input type="checkbox" class="form-check-input" id="KPE_AIR_FLOWMETER_KALIBRASI" name="KPE_AIR_FLOWMETER_KALIBRASI">
               <label class="form-check-label"for="KPE_AIR_FLOWMETER_KALIBRASI">Kalibrasi</label>
             </div>
-            <div class="form-check form-check-inline GUNAKAN_PERSONIL_SEBELUMNYA">
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="flowmeterBaru" name="flowmeterBaru">
+              <label class="form-check-label"for="flowmeterBaru">Flowmeter Baru</label>
+            </div>
+            <div class="form-check form-check-inline GUNAKAN_PERSONIL_SEBELUMNYA" style="display:none;">
               <input class="form-check-input" type="checkbox" id="GUNAKAN_PERSONIL_SEBELUMNYA" name="GUNAKAN_PERSONIL_SEBELUMNYA">
               <label class="form-check-label" for="GUNAKAN_PERSONIL_SEBELUMNYA">Gunakan personil(%) sebelumnya</label>
             </div>
-            <div class="form-check form-check-inline GUNAKAN_KALIBRASI_SEBELUMNYA">
+            <!-- <div class="form-check form-check-inline GUNAKAN_KALIBRASI_SEBELUMNYA" style="display:none;">
               <input class="form-check-input" type="checkbox" id="GUNAKAN_KALIBRASI_SEBELUMNYA" name="GUNAKAN_KALIBRASI_SEBELUMNYA">
               <label class="form-check-label" for="GUNAKAN_KALIBRASI_SEBELUMNYA">Gunakan angka kalibrasi sebelumnya</label>
-            </div>
+            </div> -->
             <div class="modal-footer">
-              <!-- <button type="button" class="btn btn-danger" id="btnKalibrasi">Kalibrasi</button> -->
               <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
               <button type="submit" class="btn btn-success" id="btnSimpanCatatan">Simpan</button>
             </div>
@@ -373,8 +394,11 @@ tr.trData:hover{
     {  
       $('.datepicker').datepicker('hide');
     });
+    tampil('1');
+    $('tr#colTgl').append(/*html*/`<th class="bordered" style="top:35px;">${format_tanggal($('input#DATA_sDATE').val())}</th>`)
   });	
 
+  /*===== Filter perminggu (Tanggal akhir akan dijumlahkan selama 1 minggu kedepan) =====*/
   $(function(){
     $('input#DATA_eDATE').attr("readonly","readonly");
     $("input#DATA_sDATE").datepicker().on('changeDate', function(ev)
@@ -403,7 +427,9 @@ tr.trData:hover{
       $('.datepicker').datepicker('hide');
       });
   });	
+  /*===== End filter perminggu =====*/
 
+  /*===== Filter Harian,Mingguan,Bulanan dan Tahunan  =====*/
   function jenisAkumulasi(){
     var JENIS_LAPORAN=$('select#JENIS_LAPORAN').val(); 
     if (JENIS_LAPORAN == "Harian") 
@@ -516,9 +542,12 @@ tr.trData:hover{
       $('input#DATA_eDATE').attr("readonly","readonly");}
     //search();
   }
+  /*===== End filter =====*/
 
+  /*===== Modal tambah catatan =====*/
   $('.modalCatatan').on('click', function(){
     $(".selectpicker").selectpicker("val","");
+    $("#flowmeterBaru").prop("checked", false);
     $("small.angkaSebelumnya").remove();
     $("#fData").attr("action","javascript:simpan()")
     $("#modalCatatan").modal('show');
@@ -549,11 +578,15 @@ tr.trData:hover{
     $('.GUNAKAN_PERSONIL_SEBELUMNYA').attr("style","display:none;");
     $('#KPE_AIR_FLOWMETER_CATATAN_TANGGAL').val("<?= Date('Y/m/d');?>");
   })
+  /*===== End modal =====*/
 
-  $("#btnKalibrasi").click(function(){
-    $("#KPE_AIR_FLOWMETER_CATATAN_KALIBRASI").val("on")
+  /*===== Jika checked maka menggunakan flowmeter baru =====*/
+  $("#flowmeterBaru").click(function(){
+    $("#KPE_AIR_FLOWMETER_CATATAN_ANGKA_HIDDEN").val(0)
   });
+  /*===== End checked =====*/
 
+  /*===== Function untuk menyimpan Catatan Keliling =====*/
   function simpan()
   {
   $("#btnSimpanCatatan").attr("disabled","disabled");
@@ -599,12 +632,23 @@ tr.trData:hover{
     }//end error
   });
   }
+  /*===== End function simpan Catatan =====*/
 
   function tambahNol(x){
     y=(x>9)?'0.'+x:'0.0'+x;
     return y;
   }
 
+  function tambahKosong(x){
+    y=(x>9)?x:'0'+x;
+    return y;
+  }
+
+  function formatNumber(num) {
+    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+  }
+
+  /*===== Function list data personil departemen yg menggunakan 1 flowmeter bersamaan =====*/
   function listCatatanFlowDept()
   {
   var KPE_AIR_FLOWMETER_ID = $("#KPE_AIR_FLOWMETER_ID").val();
@@ -647,12 +691,9 @@ tr.trData:hover{
     }//end error
   });
   }
+  /*===== End function list data personil =====*/
 
-  function tambahKosong(x){
-    y=(x>9)?x:'0'+x;
-    return y;
-  }
-
+  /*===== Edit catatan keliling =====*/
   $('tbody').on('click', 'a.edit', function(){
     $("#btnSimpanCatatan").removeAttr("disabled");
     var KPE_AIR_FLOWMETER_CATATAN_ANGKA = $(this).attr('KPE_AIR_FLOWMETER_CATATAN_ANGKA');
@@ -664,36 +705,37 @@ tr.trData:hover{
     var KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_REAL = $(this).attr('KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_REAL');
     var KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_SELISIH = $(this).attr('KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_SELISIH');
     var KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_PERSEN = $(this).attr('KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_PERSEN');
+    // console.log(KPE_AIR_FLOWMETER_CATATAN_KALIBRASI+'='+KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_REAL+'='+KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_SELISIH+'='+KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_PERSEN);
     var d = new Date(KPE_AIR_FLOWMETER_CATATAN_TANGGAL);
     var t = d.getFullYear();
     var b = tambahKosong(d.getMonth()+1);
     var h = tambahKosong(d.getDate());
     $('.KPE_AIR_FLOWMETER_DEPARTEMEN_ID').attr("style","display:none;");
     $('.formulaFlowDept').attr("style","display:none;");
-    if (KPE_AIR_FLOWMETER_CATATAN_KALIBRASI=="on" || KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_REAL != "" || KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_SELISIH != "" || KPE_AIR_FLOWMETER_CATATAN_KALIBRASI != "") {
+    if (KPE_AIR_FLOWMETER_CATATAN_KALIBRASI=="on") {
       $('.rumusCatatan').removeAttr("style");
-      $('.GUNAKAN_ANGKA_SEBELUMNYA').attr("style","display:none;");
+      $('.KPE_AIR_FLOWMETER_KALIBRASI').removeAttr("style");
+      $("#KPE_AIR_FLOWMETER_KALIBRASI").prop("checked",true);
     } else {
       $('.rumusCatatan').attr("style","display:none;");
-      $('.GUNAKAN_ANGKA_SEBELUMNYA').removeAttr("style");
+      $("#KPE_AIR_FLOWMETER_KALIBRASI").prop("checked",false);
+      $('.KPE_AIR_FLOWMETER_KALIBRASI').attr("style","display:none;");
     }
 
     $("#modalCatatan").modal('show');
     $('input#KPE_AIR_FLOWMETER_CATATAN_ANGKA').val(KPE_AIR_FLOWMETER_CATATAN_ANGKA);
-    $('input#KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_REAL').val(KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_REAL);
-    $('input#KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_SELISIH').val(KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_SELISIH);
-    $('input#KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_PERSEN').val(KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_PERSEN);
+    $('input#KPE_AIR_FLOWMETER_KALIBRASI_REAL').val(KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_REAL);
+    $('input#KPE_AIR_FLOWMETER_KALIBRASI_SELISIH').val(KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_SELISIH);
+    $('input#KPE_AIR_FLOWMETER_KALIBRASI_PERSEN').val(KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_PERSEN);
     $('input#KPE_AIR_FLOWMETER_CATATAN_ID').val(KPE_AIR_FLOWMETER_CATATAN_ID);
     $('input#KPE_AIR_FLOWMETER_CATATAN_TANGGAL').val(t+"/"+b+"/"+h);
     $('input#KPE_AIR_FLOWMETER_NAMA').val(KPE_AIR_FLOWMETER_NAMA);
     // $('select#KPE_AIR_FLOWMETER_ID').val(KPE_AIR_FLOWMETER_ID);
     $(".selectpicker").selectpicker("val",KPE_AIR_FLOWMETER_ID);
   });
+  /*===== End edit catatan keliling =====*/
 
-  function formatNumber(num) {
-    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
-  }
-
+  /*===== Function list data catatan =====*/
   function tampil(curPage)
   {
     // var data = 'tampil_catatan&keyword='+$("input#keyword").val()+'&DATA_sDATE='+$("input#DATA_sDATE").val()+'&DATA_eDATE='+$("input#DATA_eDATE").val()+'&BULAN_FILTER='+$("select#BULAN_FILTER").val()+'&TAHUN_FILTER='+$("select#TAHUN_FILTER").val()+'&batas='+$("input#REC_PER_HALAMAN").val()+'&halaman='+ curPage;
@@ -717,9 +759,6 @@ tr.trData:hover{
       success: function(data) {
         if (data.respon.pesan == "sukses") 
         {
-          // console.log(data.result);
-          //alert(data.respon.text_msg);
-          // $("span.coba").html(data.respon.boaboa);
           $("tbody#zone_data").empty();
           $('#tujuan-light-pagination').pagination({
             pages: data.result_option.jml_halaman,
@@ -745,6 +784,8 @@ tr.trData:hover{
                 tableContent += /*html*/`<tr class="trData">
                                 <td class="bordered" rowspan="${rowspan}">${data.result[j].NO}.</td>
                                 <td class="bordered" rowspan="${rowspan}" colspan="${cols}">${data.result[j].KPE_AIR_FLOWMETER_SUB_NAMA}</td></tr>`;
+
+                /*===== Button disable setelah 2 hari penginputan =====*/
                 var d = new Date();
                 var strDate = d.getFullYear() + "/" + (d.getMonth()+1) + "/" + (d.getDate()-2) + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
                   
@@ -753,15 +794,15 @@ tr.trData:hover{
                 {
                   var date = new Date(data.result[j].FLOWMETER[i].ENTRI_WAKTU);
                   var tanggal = date.getFullYear() +"/" + (date.getMonth()+1) + "/" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds(); 
-                  // console.log(date);
-                  // console.log(tanggal);
                   if (new Date(tanggal) < new Date(strDate)) {
                     var disabled = 'disableda';
                   }
                   else{
                     var disabled = '';
                   }
+                  /*===== End button disable =====*/
                   
+                  /*===== Pengkondisian menampilkan button edit dan delete =====*/
                   const object = data.result[j].FLOWMETER[i];
                   var listData = '';
                   var property;
@@ -778,7 +819,7 @@ tr.trData:hover{
                                           <span class="sr-only">Toggle Dropleft</span>
                                         </button>
                                         <div class="dropdown-menu">
-                                          <li><a class="edit" KPE_AIR_FLOWMETER_ID="${data.result[j].FLOWMETER[i].KPE_AIR_FLOWMETER_ID}" KPE_AIR_FLOWMETER_CATATAN_ANGKA="${data.result[j].FLOWMETER[i].KPE_AIR_FLOWMETER_CATATAN_ANGKA}" KPE_AIR_FLOWMETER_CATATAN_TANGGAL="${data.result[j].FLOWMETER[i].KPE_AIR_FLOWMETER_CATATAN_TANGGAL}" KPE_AIR_FLOWMETER_NAMA="${data.result[j].FLOWMETER[i].KPE_AIR_FLOWMETER_NAMA}" KPE_AIR_FLOWMETER_CATATAN_ID="${data.result[j].FLOWMETER[i].KPE_AIR_FLOWMETER_CATATAN_ID}" KPE_AIR_FLOWMETER_CATATAN_KALIBRASI="${data.result[j].FLOWMETER[i].KPE_AIR_FLOWMETER_CATATAN_KALIBRASI}" KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_REAL="${data.result[j].FLOWMETER[i].KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_REAL}" KPE_AIR_FLOWMETER_CATATAN_SELISIH="${data.result[j].FLOWMETER[i].KPE_AIR_FLOWMETER_CATATAN_SELISIH}" KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_PERSEN="${data.result[j].FLOWMETER[i].KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_PERSEN}"><i class="fa fa-edit"></i>Edit </a></li>
+                                          <li><a class="edit" KPE_AIR_FLOWMETER_ID="${data.result[j].FLOWMETER[i].KPE_AIR_FLOWMETER_ID}" KPE_AIR_FLOWMETER_CATATAN_ANGKA="${data.result[j].FLOWMETER[i].KPE_AIR_FLOWMETER_CATATAN_ANGKA}" KPE_AIR_FLOWMETER_CATATAN_TANGGAL="${data.result[j].FLOWMETER[i].KPE_AIR_FLOWMETER_CATATAN_TANGGAL}" KPE_AIR_FLOWMETER_NAMA="${data.result[j].FLOWMETER[i].KPE_AIR_FLOWMETER_NAMA}" KPE_AIR_FLOWMETER_CATATAN_ID="${data.result[j].FLOWMETER[i].KPE_AIR_FLOWMETER_CATATAN_ID}" KPE_AIR_FLOWMETER_CATATAN_KALIBRASI="${data.result[j].FLOWMETER[i].KPE_AIR_FLOWMETER_CATATAN_KALIBRASI}" KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_REAL="${data.result[j].FLOWMETER[i].KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_REAL}" KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_SELISIH="${data.result[j].FLOWMETER[i].KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_SELISIH}" KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_PERSEN="${data.result[j].FLOWMETER[i].KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_PERSEN}"><i class="fa fa-edit"></i>Edit </a></li>
                                           <li><a class="hapus" KPE_AIR_FLOWMETER_CATATAN_ID="${data.result[j].FLOWMETER[i].KPE_AIR_FLOWMETER_CATATAN_ID}" KPE_AIR_FLOWMETER_ID="${data.result[j].FLOWMETER[i].KPE_AIR_FLOWMETER_ID}" KPE_AIR_FLOWMETER_CATATAN_TANGGAL="${data.result[j].FLOWMETER[i].KPE_AIR_FLOWMETER_CATATAN_TANGGAL}"><i class="fa fa-trash"></i> Hapus </a></li>
                                         </div>
                                       </div>
@@ -827,12 +868,13 @@ tr.trData:hover{
                   }
                   else{
                   }
+                  /*===== End pengkondisian =====*/
 
                   tableContent += /*html*/`<tr class="trData">${listData+btnEdit}</tr>`;
                                 
                 }
               }
-              $("tbody#zone_data").append(tableContent);
+              $("tbody#zone_data").append(tableContent);//append list catatan
             
 
         } else if (data.respon.pesan == "gagal") {
@@ -846,6 +888,7 @@ tr.trData:hover{
       } //end error
     });
   }
+  /*===== End function list catatan keliling =====*/
 
   $(function() {
   $('a.sidebar-toggle').click()
@@ -857,10 +900,8 @@ tr.trData:hover{
   $("input#REC_PER_HALAMAN").on('change', function() {
   tampil('1');
   });
-  // $("input#DATA_sDATE").on('change', function() {
-  // tampil('1');
-  // });
 
+  /*===== Hapus catatan keliling =====*/
   $('tbody').on('click', 'a.hapus', function(){
   var KPE_AIR_FLOWMETER_CATATAN_ID = $(this).attr('KPE_AIR_FLOWMETER_CATATAN_ID');
   var KPE_AIR_FLOWMETER_ID = $(this).attr('KPE_AIR_FLOWMETER_ID');
@@ -891,49 +932,18 @@ tr.trData:hover{
     });
   }
   })
-
-  function ambil_flowmeter()
-  {
-  $.ajax({
-    type: 'POST',
-    url: refseeAPI,
-    dataType: 'json',
-    data:'aplikasi=<?php echo $d0;?>&ref=ambil_daftar_flowmeter',
-    success: function(data) {
-      // console.log(data.result);
-      if (data.respon.pesan == "sukses") 
-      {
-        for (i = 0; i < data.result.length; i++) {
-          // $("select#KPE_AIR_FLOWMETER_ID").append("<option value='" + data.result[i].KPE_AIR_FLOWMETER_ID + "'>" + data.result[i].KPE_AIR_FLOWMETER_NAMA + "</option>");
-          var x = data.result[i].KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA;
-          var z = "";
-          var y = "";
-          if (x == "") {
-            y += "";
-            z = "";
-          } else {
-            y += JSON.parse(x);
-            z = y.split(",");
-          }
-          // console.log(z);
-        }
-        
-      }else
-      {}
-    }
-  })
-  }
+  /*===== End hapus catatan =====*/
 
   function tambahKosong(x){
     y=(x>9)?x:'0'+x;
     return y;
   }
 
+  /*===== Function list catatan hari sebelumnya dan Flowmeter yg dikalibrasi =====*/
   function listFlowDept() {
     
     var KPE_AIR_FLOWMETER_ID = $("#KPE_AIR_FLOWMETER_ID").val();
     var KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA = $("#KPE_AIR_FLOWMETER_DEPARTEMEN_ID").children("option:selected").text();
-    // console.log(KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA)
     var date = new Date($("#KPE_AIR_FLOWMETER_CATATAN_TANGGAL").val());
     var dates = $("#KPE_AIR_FLOWMETER_CATATAN_TANGGAL").val();
     date = new Date((new Date(date)).valueOf() - 1000*60*60*24);
@@ -944,86 +954,75 @@ tr.trData:hover{
     $(".GUNAKAN_KALIBRASI_SEBELUMNYA").attr("style","display:none");
     $(".rumusCatatan").attr("style","display:none");
     $(".formulaFlowDept").attr("style","display:none");
+    $("small.angkaSebelumnya").remove();
     list_flowmeter_kalibrasi()
 
-  $.ajax({
-    type: 'POST',
-    url: refseeAPI,
-    dataType: 'json',
-    data:'aplikasi=<?php echo $d0;?>&ref=list_flowmeter_departemen&KPE_AIR_FLOWMETER_ID='+KPE_AIR_FLOWMETER_ID+'&KPE_AIR_FLOWMETER_CATATAN_TANGGAL='+KPE_AIR_FLOWMETER_CATATAN_TANGGAL+'&KPE_AIR_FLOWMETER_DEPARTEMEN_FLOW_NAMA='+KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA+'&KPE_AIR_FLOWMETER_DEPARTEMEN_PERIODE='+dates,
-    success: function(data) {
-      // console.log(data.result);
-      if (data.respon.pesan == "sukses" && data.result[0].CATATAN != null) 
-      {
+    $.ajax({
+      type: 'POST',
+      url: refseeAPI,
+      dataType: 'json',
+      data:'aplikasi=<?php echo $d0;?>&ref=list_flowmeter_departemen&KPE_AIR_FLOWMETER_ID='+KPE_AIR_FLOWMETER_ID+'&KPE_AIR_FLOWMETER_CATATAN_TANGGAL='+KPE_AIR_FLOWMETER_CATATAN_TANGGAL+'&KPE_AIR_FLOWMETER_DEPARTEMEN_FLOW_NAMA='+KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA+'&KPE_AIR_FLOWMETER_DEPARTEMEN_PERIODE='+dates,
+      success: function(data) {
         // console.log(data.result);
-        // $("#btnKalibrasi").removeAttr("style");
-        for (var i = 0; i < data.result.length; i++) {
-          var x = data.result[i].KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA;
-          if (data.result[i].CATATAN == null) {
-            var q = "";
-            // $("#PERSONIL_DEPARTEMEN").val("");
-            // $("#TOTAL_PERSONIL").val("");
-            // $("#PERSEN").val("");
-            // $("#KPE_AIR_FLOWMETER_KALIBRASI_REAL").val("");
-            // $("#KPE_AIR_FLOWMETER_KALIBRASI_SELISIH").val("");
-            // $("#KPE_AIR_FLOWMETER_KALIBRASI_PERSEN").val("");
-            $("#btnKalibrasi").removeAttr("style");
-            $("#KPE_AIR_FLOWMETER_CATATAN_ANGKA").removeAttr("onkeyup");
-            $("#KPE_AIR_FLOWMETER_CATATAN_ANGKA_HIDDEN").val(""); 
-          } else {
-            q = data.result[i].CATATAN.KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_SELISIH; 
-            $("#KPE_AIR_FLOWMETER_CATATAN_ANGKA").attr("onkeyup","cekAngkaCatatan();"); 
-            $("#KPE_AIR_FLOWMETER_CATATAN_ANGKA_HIDDEN").val(data.result[i].CATATAN.KPE_AIR_FLOWMETER_CATATAN_ANGKA);
-            $(".KPE_AIR_FLOWMETER_CATATAN_ANGKA").append('<small class="angkaSebelumnya" style="color:#666"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Angka sebelumnya adalah : '+$("#KPE_AIR_FLOWMETER_CATATAN_ANGKA_HIDDEN").val()+'</small>');
-            if (q == null || q == "") {
-              // $(".formulaFlowDept").attr("style","display:none");
-              // $(".rumusCatatan").attr("style","display:none");
-              $(".GUNAKAN_KALIBRASI_SEBELUMNYA").attr("style","display:none");
-              $("#GUNAKAN_KALIBRASI_SEBELUMNYA").prop("checked",false);
-              $(".KPE_AIR_FLOWMETER_KALIBRASI").attr("style","display:none");
+        if (data.respon.pesan == "sukses" && data.result[0].CATATAN != null) 
+        {
+          for (var i = 0; i < data.result.length; i++) {
+            var x = data.result[i].KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA;
+            if (data.result[i].CATATAN == null) {
+              var q = "";
+              $("#btnKalibrasi").removeAttr("style");
+              $("#KPE_AIR_FLOWMETER_CATATAN_ANGKA").removeAttr("onkeyup");
+              $("#KPE_AIR_FLOWMETER_CATATAN_ANGKA_HIDDEN").val(""); 
             } else {
-              $(".KPE_AIR_FLOWMETER_KALIBRASI").removeAttr("style");
-              // $("#GUNAKAN_KALIBRASI_SEBELUMNYA").prop("checked",true);
-              // $(".GUNAKAN_KALIBRASI_SEBELUMNYA").removeAttr("style");
+              q = data.result[i].CATATAN.KPE_AIR_FLOWMETER_CATATAN_KALIBRASI; 
+              $("#KPE_AIR_FLOWMETER_CATATAN_ANGKA").attr("onkeyup","cekAngkaCatatan();"); 
+              $("#KPE_AIR_FLOWMETER_CATATAN_ANGKA_HIDDEN").val(data.result[i].CATATAN.KPE_AIR_FLOWMETER_CATATAN_ANGKA);
+              $(".KPE_AIR_FLOWMETER_CATATAN_ANGKA").append('<small class="angkaSebelumnya" style="color:#666"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Angka sebelumnya adalah : '+$("#KPE_AIR_FLOWMETER_CATATAN_ANGKA_HIDDEN").val()+'</small>');
+              if (q == "off") {
+                $(".GUNAKAN_KALIBRASI_SEBELUMNYA").attr("style","display:none");
+                $("#KPE_AIR_FLOWMETER_KALIBRASI").prop("checked",false);
+                $(".KPE_AIR_FLOWMETER_KALIBRASI").attr("style","display:none");
+              } else {
+                $(".KPE_AIR_FLOWMETER_KALIBRASI").removeAttr("style");
+                $("#KPE_AIR_FLOWMETER_KALIBRASI").prop("checked",true);
+                $("#KPE_AIR_FLOWMETER_KALIBRASI_REAL").val(data.result[i].KAL.KPE_AIR_FLOWMETER_KALIBRASI_REAL);
+                $("#KPE_AIR_FLOWMETER_KALIBRASI_SELISIH").val(data.result[i].KAL.KPE_AIR_FLOWMETER_KALIBRASI_SELISIH);
+                $("#KPE_AIR_FLOWMETER_KALIBRASI_PERSEN").val(data.result[i].KAL.KPE_AIR_FLOWMETER_KALIBRASI_PERSEN);
+              }
+            }
+
+            var z = "",y = "",v="";
+            if (x == "") {
+              y += "";
+              z = "";
+              $(".KPE_AIR_FLOWMETER_DEPARTEMEN_ID").attr("style","display:none");
+              $(".formulaFlowDept").attr("style","display:none");
+            } else {
+              $(".KPE_AIR_FLOWMETER_DEPARTEMEN_ID").removeAttr("style");
               // $(".formulaFlowDept").removeAttr("style");
-              // $(".rumusCatatan").removeAttr("style");
-              // $("#KPE_AIR_FLOWMETER_KALIBRASI_REAL").val(data.result[i].CATATAN.KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_REAL);
-              // $("#KPE_AIR_FLOWMETER_KALIBRASI_SELISIH").val(data.result[i].CATATAN.KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_SELISIH);
-              // $("#KPE_AIR_FLOWMETER_KALIBRASI_PERSEN").val(data.result[i].CATATAN.KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_PERSEN);
-              // $("#KPE_AIR_FLOWMETER_CATATAN_KALIBRASI").val(data.result[i].CATATAN.KPE_AIR_FLOWMETER_CATATAN_KALIBRASI);
+              y += JSON.parse(x);
+              z = y.split(",");
+            }          
+            // console.log(z);
+            for (var j = 0; j < z.length; j++) {
+              v += "<option value='" + data.result[i].KPE_AIR_FLOWMETER_ID + "'>" + z[j] + "</option>";
             }
           }
-
-          var z = "",y = "",v="";
-          if (x == "") {
-            y += "";
-            z = "";
-            // $(".KPE_AIR_FLOWMETER_DEPARTEMEN_ID").attr("style","display:none");
-            $(".formulaFlowDept").attr("style","display:none");
-          } else {
-            $(".KPE_AIR_FLOWMETER_DEPARTEMEN_ID").removeAttr("style");
-            // $(".formulaFlowDept").removeAttr("style");
-            y += JSON.parse(x);
-            z = y.split(",");
-          }          
-          // console.log(z);
-          for (var j = 0; j < z.length; j++) {
-            v += "<option value='" + data.result[i].KPE_AIR_FLOWMETER_ID + "'>" + z[j] + "</option>";
-          }
+          $("select#KPE_AIR_FLOWMETER_DEPARTEMEN_ID").append("<option value=''>--Pilih--</option>"+v);
+          
+        }else
+        {
+          // if(confirm("Catatan angka tanggal "+KPE_AIR_FLOWMETER_CATATAN_TANGGAL+" belum terisi")){
+            // alert("Catatan angka tanggal "+KPE_AIR_FLOWMETER_CATATAN_TANGGAL+" belum terisi");
+            // $("#modalCatatan").modal('hide');
+          // };
         }
-        $("select#KPE_AIR_FLOWMETER_DEPARTEMEN_ID").append("<option value=''>--Pilih--</option>"+v);
-        
-      }else
-      {
-        // if(confirm("Catatan angka tanggal "+KPE_AIR_FLOWMETER_CATATAN_TANGGAL+" belum terisi")){
-          alert("Catatan angka tanggal "+KPE_AIR_FLOWMETER_CATATAN_TANGGAL+" belum terisi");
-          $("#modalCatatan").modal('hide');
-        // };
       }
-    }
-  })
+    })
   }
+  /*===== End list catatan sebelumnya =====*/
 
+  /*===== Cek catatan yg diinput lebih besar atau lebih kecil dari angka sebelumnya =====*/
   function cekAngkaCatatan() {
     var catatanKSebelum = ($("#KPE_AIR_FLOWMETER_CATATAN_ANGKA_HIDDEN").val())*0.80;
     var catatanKSebelumnya = catatanKSebelum.toFixed(2);
@@ -1059,7 +1058,9 @@ tr.trData:hover{
       $("#btnSimpanCatatan").removeAttr("disabled");
     }
   }
+  /*===== End cek catatan =====*/
 
+  /*===== Function simpan jumlah personil departemen (Flow yg digunakan beberapa departemen) =====*/
   function simpanFlowDept(){
     var fData = $('#fData').serialize();
     var persen = tambahNol(($("#PERSONIL_DEPARTEMEN").val()/$("#TOTAL_PERSONIL").val()*$("#PERSEN").val()).toFixed());
@@ -1089,7 +1090,9 @@ tr.trData:hover{
       }//end error
     });
   }
+  /*===== End simpan personil =====*/
 
+  /*===== Function list flowmeter yg dikalibrasi (Real,Selisih dan Persen) =====*/
   function list_flowmeter_kalibrasi() 
   {
     var KPE_AIR_FLOWMETER_ID = $("#KPE_AIR_FLOWMETER_ID").val();
@@ -1120,6 +1123,7 @@ tr.trData:hover{
       }//end error
     });
   }
+  /*===== End list flowmeter kalibrasi =====*/
 
   $("input#GUNAKAN_KALIBRASI_SEBELUMNYA").on('change', function() {
     if ($('input.GUNAKAN_KALIBRASI_SEBELUMNYA').is(':checked')) {
@@ -1258,6 +1262,7 @@ tr.trData:hover{
   }
   // ------------------End Format Tanggal ------------------//
 
+  /*===== Append colom tanggal (<th>) =====*/
   $('#btn-reload').click(function(){
     var JENIS_LAPORAN = $('select#JENIS_LAPORAN').val();
     $('tr#colTgl').empty();
@@ -1265,14 +1270,14 @@ tr.trData:hover{
     {
       $('th#action-btn').removeAttr("style");
       $('th#tglCatatan').attr("colspan",1);
-      $('tr#colTgl').append(/*html*/`<th class="bordered">${format_tanggal($('input#DATA_sDATE').val())}</th>`)
+      $('tr#colTgl').append(/*html*/`<th class="bordered" style="top:35px;">${format_tanggal($('input#DATA_sDATE').val())}</th>`)
     } else if (JENIS_LAPORAN == "Mingguan")
     {	
       $('th#action-btn').attr("style","display:none");
       $('th#tglCatatan').attr("colspan",7);
       for (var j = 0; j < GetDays().length; j++) 
       {
-        $('tr#colTgl').append(/*html*/`<th class="bordered">${GetDays()[j]}</th>`)
+        $('tr#colTgl').append(/*html*/`<th class="bordered" style="top:35px;">${GetDays()[j]}</th>`)
       }
     } else if (JENIS_LAPORAN == "Bulanan")
     {	
@@ -1283,7 +1288,7 @@ tr.trData:hover{
       $('th#tglCatatan').attr("colspan",parseInt(monthEndDay.getDate()));
       for (var j = 0; j < monthEndDay.getDate(); j++) 
       {
-        $('tr#colTgl').append(/*html*/`<th class="bordered">${GetMonth(parseInt(monthEndDay.getDate()))[j]}</th>`)
+        $('tr#colTgl').append(/*html*/`<th class="bordered" style="top:35px;">${GetMonth(parseInt(monthEndDay.getDate()))[j]}</th>`)
       }
     
     }else if (JENIS_LAPORAN == "Tahunan")
@@ -1292,24 +1297,18 @@ tr.trData:hover{
       $('th#tglCatatan').attr("colspan",12);
       for (var j = 0; j < GetYear().length; j++) 
       {
-        $('tr#colTgl').append(/*html*/`<th class="bordered">${GetYear()[j]}</th>`)
+        $('tr#colTgl').append(/*html*/`<th class="bordered" style="top:35px;">${GetYear()[j]}</th>`)
       }
     } else {
 
     }
     tampil('1');
-    })
+  })
+  /*===== End append colom tanggal (<th>) =====*/
 
   function search() {
     tampil('1');
   }
-
-  $(function() {
-    ambil_flowmeter();
-    tampil('1');
-    $('tr#colTgl').append(/*html*/`<th class="bordered">${format_tanggal($('input#DATA_sDATE').val())}</th>`)
-  });
-
 
   $('#cetakPdf').on('click', function(){
     //tampil();

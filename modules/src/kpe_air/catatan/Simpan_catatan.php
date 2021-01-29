@@ -19,54 +19,44 @@ if (empty($params['case']))
 		$this->MYSQL->queri = $sql_fd;
 		$result_fd = $this->MYSQL->data();
 
-		$sql_c = "SELECT KPE_AIR_FLOWMETER_CATATAN_ANGKA,KPE_AIR_FLOWMETER_CATATAN_KALIBRASI,
-							KPE_AIR_FLOWMETER_CATATAN_PERSONIL_HASIL,KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_PERSEN
-							FROM KPE_AIR_FLOWMETER_CATATAN WHERE KPE_AIR_FLOWMETER_ID='".$input['KPE_AIR_FLOWMETER_ID']."' AND KPE_AIR_FLOWMETER_CATATAN_TANGGAL='".$input['KPE_AIR_FLOWMETER_CATATAN_TANGGAL_SEBELUMNYA']."' AND RECORD_STATUS='A' GROUP BY KPE_AIR_FLOWMETER_ID";
-		$this->MYSQL = new MYSQL();
-		$this->MYSQL->database = $this->CONFIG->mysql_koneksi()->db_nama;
-		$this->MYSQL->queri = $sql_c;
-		$result_c = $this->MYSQL->data();
-
-		if ($input['KPE_AIR_FLOWMETER_KALIBRASI_PERSEN'] == "") {
+		/*===================== Cek Flowmeter ini di kalibrasi atau tidak ===================*/
+		if ($input['KPE_AIR_FLOWMETER_KALIBRASI_PERSEN'] == "") {// Jika filed Kalibrasi Persen kosong (Flowmeter tidak di kalibrasi)
 			$KPE_AIR_FLOWMETER_CATATAN_KALIBRASI = 'off';
 			$KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_PERSEN = '';
-		} else {
+		} else {// Flowmeter dikalibrasi
 			$KPE_AIR_FLOWMETER_CATATAN_KALIBRASI = 'on';
 			$KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_PERSEN = $input['KPE_AIR_FLOWMETER_KALIBRASI_PERSEN'];
 		}
 
-		if (base64_decode($input['KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA']) == "") {
-				// $KPE_AIR_FLOWMETER_CATATAN_PAKAI = round($input['KPE_AIR_FLOWMETER_CATATAN_ANGKA'] - $result_c[0]['KPE_AIR_FLOWMETER_CATATAN_ANGKA'],3);
-			
-			$KPE_AIR_FLOWMETER_CATATAN_PAKAI = round($input['KPE_AIR_FLOWMETER_CATATAN_ANGKA'] - $result_c[0]['KPE_AIR_FLOWMETER_CATATAN_ANGKA'],2);
-		}else {
-			$KPE_AIR_FLOWMETER_CATATAN_PAKAI = round($input['KPE_AIR_FLOWMETER_CATATAN_ANGKA'] - $result_c[0]['KPE_AIR_FLOWMETER_CATATAN_ANGKA'],3);
+		/*===================== Mencari hasil Pakai ===================*/
+		if (base64_decode($input['KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA']) == "" || $input['KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA'] == "") { // Jika filed Departemen Nama kosong/Bukan flowmeter yg digunakan beberapa departemen (Pembulatan 2 angka dibelakang koma)
+			$KPE_AIR_FLOWMETER_CATATAN_PAKAI = round($input['KPE_AIR_FLOWMETER_CATATAN_ANGKA'] - $input['KPE_AIR_FLOWMETER_CATATAN_ANGKA_HIDDEN'],2);
 			$KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA = "";
+		}else {// Pembulatan 3 angka dibelakang koma
+			$KPE_AIR_FLOWMETER_CATATAN_PAKAI = round($input['KPE_AIR_FLOWMETER_CATATAN_ANGKA'] - $input['KPE_AIR_FLOWMETER_CATATAN_ANGKA_HIDDEN'],3);
+			$KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA =  base64_decode($input['KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA']);
 		}
 
-		if ($input['KPE_AIR_FLOWMETER_DEPARTEMEN_ID'] == "") {
-			$KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA = "";
-		}else {
-			$KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA = base64_decode($input['KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA']);
-		}
-
-		if ($input['KPE_AIR_FLOWMETER_KALIBRASI_PERSEN'] != "") {
-			if ($input['TOTAL_PERSONIL'] != "") {
+		/*===================== Mencari hasil Beban ===================*/
+		if ($input['KPE_AIR_FLOWMETER_KALIBRASI_PERSEN'] != "") {// Cek flowmeter di kalibrasi atau tidak
+			if ($input['TOTAL_PERSONIL'] != "") {// Cek flowmeter yg di kalibrasi ini apakah flowmeter yg digunakan beberapa departemen ataua tidak (Pembulatan 3 angka dibelakang koma)
 				$KPE_AIR_FLOWMETER_CATATAN_BEBAN = round($KPE_AIR_FLOWMETER_CATATAN_PAKAI-($KPE_AIR_FLOWMETER_CATATAN_PAKAI*$KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_PERSEN/100),3);		
+			} else { //Bukan flowmeter yg digunakan beberapa departemen (Pembualatan 2 angka dibelakang koma)
+				$KPE_AIR_FLOWMETER_CATATAN_BEBAN = round($KPE_AIR_FLOWMETER_CATATAN_PAKAI-($KPE_AIR_FLOWMETER_CATATAN_PAKAI*$KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_PERSEN/100),2);
 			}
-			$KPE_AIR_FLOWMETER_CATATAN_BEBAN = round($KPE_AIR_FLOWMETER_CATATAN_PAKAI-($KPE_AIR_FLOWMETER_CATATAN_PAKAI*$KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_PERSEN/100),2);
-		} else {
+		} else { //Flowmeter tidak di kalibrasi
 			$KPE_AIR_FLOWMETER_CATATAN_BEBAN = $KPE_AIR_FLOWMETER_CATATAN_PAKAI;
 		}
 
+		/*===================== Mencari hasil Beban jika flowmeter digunakan beberapa departemen ===================*/
 		if ($input['TOTAL_PERSONIL'] == "") {
 			$KPE_AIR_FLOWMETER_CATATAN_BEBAN_DEPARTEMEN = "";
 		} else {
 			$KPE_AIR_FLOWMETER_CATATAN_BEBAN_DEPARTEMEN = round($KPE_AIR_FLOWMETER_CATATAN_BEBAN*$input['KPE_AIR_FLOWMETER_DEPARTEMEN_PERSONIL_HASIL'],3);
 		}
 
+		/*===================== Looping insert ke database jika flowmeter digunakan beberapa departemen ===================*/
 		if ($result_fd > 0) {
-
 			foreach ($result_fd as $key => $value) {
 				$KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN_BEBAN_DEPARTEMEN = round($KPE_AIR_FLOWMETER_CATATAN_BEBAN*$result_fd[$key]['KPE_AIR_FLOWMETER_DEPARTEMEN_PERSONIL_HASIL'],3);
 				$data_master_catatan_dept = array(
@@ -100,33 +90,36 @@ if (empty($params['case']))
 				$this->MYSQL->simpan();
 			}
 		}
+		/*========End Looping========*/
 	
 		if($input['KPE_AIR_FLOWMETER_CATATAN_ID']=="")
 		{
-			if ($input['KPE_AIR_FLOWMETER_DEPARTEMEN_ID'] != "" && $input['KPE_AIR_FLOWMETER_CATATAN_TANGGAL'] == $tahun."/".$bulan."/01") {
+				/*========= Input data personil per departemen (Flowmeter yg digunaka beberapa departemen) ===========*/
+				if ($input['KPE_AIR_FLOWMETER_DEPARTEMEN_ID'] != "" && $input['KPE_AIR_FLOWMETER_CATATAN_TANGGAL'] == $tahun."/".$bulan."/01") {
 		
-						$data_master_dept_flow = array(
-							'KPE_AIR_FLOWMETER_DEPARTEMEN_FLOW_INDEX' => waktu_decimal(Date("Y-m-d H:i:s")),
-							'KPE_AIR_FLOWMETER_DEPARTEMEN_FLOW_ID' => waktu_decimal(Date("Y-m-d H:i:s")),
-							'KPE_AIR_FLOWMETER_ID' => $input['KPE_AIR_FLOWMETER_ID'],
-							'KPE_AIR_FLOWMETER_NAMA' => base64_decode($input['KPE_AIR_FLOWMETER_NAMA']),
-							'KPE_AIR_FLOWMETER_DEPARTEMEN_FLOW_NAMA' => base64_decode($input['KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA']),
-							'KPE_AIR_FLOWMETER_DEPARTEMEN_PERSONIL' => $input['PERSONIL_DEPARTEMEN'],
-							'KPE_AIR_FLOWMETER_DEPARTEMEN_TOTAL_PERSONIL' => $input['TOTAL_PERSONIL'],
-							'KPE_AIR_FLOWMETER_DEPARTEMEN_TOTAL_PERSEN' => $input['PERSEN'],
-							'KPE_AIR_FLOWMETER_DEPARTEMEN_PERSONIL_HASIL' => $input['KPE_AIR_FLOWMETER_DEPARTEMEN_PERSONIL_HASIL'],
-							'KPE_AIR_FLOWMETER_DEPARTEMEN_PERIODE' => $input['KPE_AIR_FLOWMETER_DEPARTEMEN_PERIODE'],
-							'ENTRI_WAKTU' => date("Y-m-d H:i:s"),
-							'ENTRI_OPERATOR' => $user_login['PERSONAL_NIK'],
-							'RECORD_STATUS' => "A"
-						);
-			
-						$this->MYSQL =new MYSQL;
-						$this->MYSQL->database = $this->CONFIG->mysql_koneksi()->db_nama;
-						$this->MYSQL->tabel ="KPE_AIR_FLOWMETER_DEPARTEMEN_FLOW";
-						$this->MYSQL->record = $data_master_dept_flow;	
-						$this->MYSQL->simpan();
+					$data_master_dept_flow = array(
+						'KPE_AIR_FLOWMETER_DEPARTEMEN_FLOW_INDEX' => waktu_decimal(Date("Y-m-d H:i:s")),
+						'KPE_AIR_FLOWMETER_DEPARTEMEN_FLOW_ID' => waktu_decimal(Date("Y-m-d H:i:s")),
+						'KPE_AIR_FLOWMETER_ID' => $input['KPE_AIR_FLOWMETER_ID'],
+						'KPE_AIR_FLOWMETER_NAMA' => base64_decode($input['KPE_AIR_FLOWMETER_NAMA']),
+						'KPE_AIR_FLOWMETER_DEPARTEMEN_FLOW_NAMA' => base64_decode($input['KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA']),
+						'KPE_AIR_FLOWMETER_DEPARTEMEN_PERSONIL' => $input['PERSONIL_DEPARTEMEN'],
+						'KPE_AIR_FLOWMETER_DEPARTEMEN_TOTAL_PERSONIL' => $input['TOTAL_PERSONIL'],
+						'KPE_AIR_FLOWMETER_DEPARTEMEN_TOTAL_PERSEN' => $input['PERSEN'],
+						'KPE_AIR_FLOWMETER_DEPARTEMEN_PERSONIL_HASIL' => $input['KPE_AIR_FLOWMETER_DEPARTEMEN_PERSONIL_HASIL'],
+						'KPE_AIR_FLOWMETER_DEPARTEMEN_PERIODE' => $input['KPE_AIR_FLOWMETER_DEPARTEMEN_PERIODE'],
+						'ENTRI_WAKTU' => date("Y-m-d H:i:s"),
+						'ENTRI_OPERATOR' => $user_login['PERSONAL_NIK'],
+						'RECORD_STATUS' => "A"
+					);
+		
+					$this->MYSQL =new MYSQL;
+					$this->MYSQL->database = $this->CONFIG->mysql_koneksi()->db_nama;
+					$this->MYSQL->tabel ="KPE_AIR_FLOWMETER_DEPARTEMEN_FLOW";
+					$this->MYSQL->record = $data_master_dept_flow;	
+					$this->MYSQL->simpan();
 				}	
+				/*======== End input ========*/
 				
 				$data_master = array(
 					'KPE_AIR_FLOWMETER_CATATAN_INDEX' => waktu_decimal(Date("Y-m-d H:i:s")),
@@ -170,6 +163,7 @@ if (empty($params['case']))
 					}
 			}else 
 			{
+				/*===== Edit catatan flowmeter yg digunakan beberapa departemen =====*/
 				$data_master_flow_edit = array(
 					'EDIT_WAKTU' => date("Y-m-d H:i:s"),
 					'EDIT_OPERATOR' => $user_login['PERSONAL_NIK'],
@@ -214,8 +208,9 @@ if (empty($params['case']))
 						$this->MYSQL->simpan();
 					}
 				}
+				/*===== End edit catatan flowmeter yg digunakan beberapa departemen =====*/
 
-
+				/*===== Edit catatan flowmeter =====*/
 				$data_master_edit = array(
 					
 					'EDIT_WAKTU' => date("Y-m-d H:i:s"),
@@ -277,6 +272,7 @@ if (empty($params['case']))
 					$this->callback['respon']['text_msg'] = "Gagal Mengubah";
 				}
 			}
+			/*===== End edit catatan flowmeter =====*/
 		
 		
 

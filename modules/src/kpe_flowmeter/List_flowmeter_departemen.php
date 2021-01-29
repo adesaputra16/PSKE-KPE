@@ -10,37 +10,29 @@ if (empty($params['case']))
 
   $input = $params['input_option'];
 
-  if ($input['KPE_AIR_FLOWMETER_ID'] == "") {
+  if ($input['KPE_AIR_FLOWMETER_ID'] == "") {//Jika Flowmeter ID kosong => query untuk list data Flowmeter yg di gunakan beberapa departemen
     $sql_d = "SELECT KPE_AIR_FLOWMETER_DEPARTEMEN_ID,KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA,KPE_AIR_FLOWMETER_DEPARTEMEN_PERIODE,
           KPE_AIR_FLOWMETER_NAMA,KPE_AIR_FLOWMETER_ID
           FROM KPE_AIR_FLOWMETER_DEPARTEMEN
           WHERE RECORD_STATUS='A'";
-  } else {
+  } else { //query untuk list flowmeter dan selanjutnya untuk mengecek catatan di tanggal sebelumnya 
     $sql_d = "SELECT KPE_AIR_FLOWMETER_NAMA,KPE_AIR_FLOWMETER_ID,KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA
           FROM KPE_AIR_FLOWMETER
           WHERE RECORD_STATUS='A' AND KPE_AIR_FLOWMETER_ID='".$input['KPE_AIR_FLOWMETER_ID']."'";
   }
-  
-// $sql_d = "SELECT KPE_AIR_FLOWMETER_DEPARTEMEN_ID,KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA,KPE_AIR_FLOWMETER_DEPARTEMEN_PERIODE,
-//           KPE_AIR_FLOWMETER_NAMA,KPE_AIR_FLOWMETER_ID
-//           FROM KPE_AIR_FLOWMETER_DEPARTEMEN
-//           WHERE RECORD_STATUS='A'";
-// $sql_d = "SELECT KPE_AIR_FLOWMETER_NAMA,KPE_AIR_FLOWMETER_ID,KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA
-//           FROM KPE_AIR_FLOWMETER
-//           WHERE RECORD_STATUS='A' AND KPE_AIR_FLOWMETER_ID='".$input['KPE_AIR_FLOWMETER_ID']."'";
 
 $this->MYSQL = new MYSQL();
 $this->MYSQL->database = $this->CONFIG->mysql_koneksi()->db_nama;
 $this->MYSQL->queri = $sql_d;
 $result_a = $this->MYSQL->data();
 
-// -- >>
 
 $no = $posisi + 1;
 $periode = substr($input['KPE_AIR_FLOWMETER_DEPARTEMEN_PERIODE'],0,7);
 
 foreach($result_a as $r)
 {
+  /*=============== Query list catatan berdasarkan tgl terakhir yg diinput ==============*/
   $this->MYSQL=new MYSQL();
   $this->MYSQL->database=$this->CONFIG->mysql_koneksi()->db_nama;
   $sql_e = "SELECT KPE_AIR_FLOWMETER_CATATAN_ID,KPE_AIR_FLOWMETER_CATATAN_ANGKA,KPE_AIR_FLOWMETER_CATATAN_TANGGAL,KPE_AIR_FLOWMETER_CATATAN_PAKAI_RUMUS,
@@ -61,6 +53,18 @@ foreach($result_a as $r)
   // $this->MYSQL->queri = $sql_d;                      
   // $result_d=$this->MYSQL->data()[0]; 
 
+
+  /*=============== Query list kalibrasi berdasarkan yg di inputkan terakhir ==============*/
+  $this->MYSQL=new MYSQL();
+  $this->MYSQL->database=$this->CONFIG->mysql_koneksi()->db_nama;
+  $sql_k = "SELECT KPE_AIR_FLOWMETER_KALIBRASI_REAL,KPE_AIR_FLOWMETER_KALIBRASI_SELISIH,
+                  KPE_AIR_FLOWMETER_KALIBRASI_PERSEN,KPE_AIR_FLOWMETER_KALIBRASI_TANGGAL
+                  FROM KPE_AIR_FLOWMETER_KALIBRASI
+                  WHERE RECORD_STATUS='A' AND KPE_AIR_FLOWMETER_ID='".$input['KPE_AIR_FLOWMETER_ID']."' ORDER BY KPE_AIR_FLOWMETER_KALIBRASI_TANGGAL DESC LIMIT 1";
+  $this->MYSQL->queri = $sql_k;                      
+  $result_k=$this->MYSQL->data()[0]; 
+
+  $r['KAL'] = $result_k;
   // $r['DEPT'] = $result_d;
   $r['CATATAN'] = $result_c;
   $r['NO'] = $no;
