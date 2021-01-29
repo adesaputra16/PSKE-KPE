@@ -406,7 +406,7 @@ $('tbody').on('click', 'a.edit', function(){
   $('input#KPE_AIR_FLOWMETER_ID').val(KPE_AIR_FLOWMETER_ID);
   $('select#KPE_AIR_FLOWMETER_SUB_ID').selectpicker("val",KPE_AIR_FLOWMETER_SUB_ID);
   $('input#KPE_AIR_FLOWMETER_DISTRIBUSI').val(KPE_AIR_FLOWMETER_DISTRIBUSI);
-  $('input#KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE').val(KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE);
+  $('select#KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE').val(KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE);
 });
 
 $(window).on('hashchange', function(e) {
@@ -648,7 +648,7 @@ $('tbody').on('click', 'a#pilihFlowDept', function(){
   $('#fDataFlowDept').removeAttr("style");
   $('#divFlowDept').removeAttr("style");
   $('#divFlowDepts').attr("style", "display:none");
-  $('select#KPE_AIR_FLOWMETER_NAMA_DEPT').val(KPE_AIR_FLOWMETER_ID);
+  $('select#KPE_AIR_FLOWMETER_NAMA_DEPT').selectpicker("val",KPE_AIR_FLOWMETER_ID);
   // $("select#KPE_AIR_FLOWMETER_NAMA").children("option:selected").text(KPE_AIR_FLOWMETER_NAMA);
   // console.log(KPE_AIR_FLOWMETER_ID+'---'+KPE_AIR_FLOWMETER_NAMA);
   $('input#KPE_AIR_FLOWMETER_DEPARTEMEN_ID').val(KPE_AIR_FLOWMETER_DEPARTEMEN_ID);

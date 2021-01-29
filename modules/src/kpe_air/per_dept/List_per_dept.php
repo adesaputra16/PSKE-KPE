@@ -102,7 +102,7 @@ for($iy = $begin; $iy <= $end; $iy->modify('+1 day'))
       $this->MYSQL->database=$this->CONFIG->mysql_koneksi()->db_nama;
       $this->MYSQL->queri = "SELECT *
                               FROM KPE_AIR_FLOWMETER_KALIBRASI
-                              WHERE KPE_AIR_FLOWMETER_ID='".$row_flow['KPE_AIR_FLOWMETER_ID']."' AND RECORD_STATUS='A'";
+                              WHERE KPE_AIR_FLOWMETER_ID='".$row_flow['KPE_AIR_FLOWMETER_ID']."' AND RECORD_STATUS='A' ORDER BY KPE_AIR_FLOWMETER_KALIBRASI_TANGGAL DESC LIMIT 1";
       $result_TOTAL["'".$no."'"]=$this->MYSQL->data()[0]; 
 
       if(count($result_TOTAL["'".$no."'"])>=1)

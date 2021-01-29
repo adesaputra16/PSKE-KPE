@@ -262,7 +262,7 @@ tr.drum2{
       <label>&nbsp;</label>
       <div class="input-group custom-search-form">
           <button type="button" class="btn btn-primary" id="btn-reload"><strong><i class="fa fa-refresh" aria-hidden="true"></i> Refresh</strong></button></button>&nbsp;
-          <button type="button" class="btn btn-default" id="btnFlowKalibrasi"><strong><i class="glyphicon glyphicon-gbp" aria-hidden="true"></i> Flowmeter Kalibrasi</strong></button></button>
+          <button type="button" class="btn btn-default" id="btnFlowKalibrasi"><strong><i class="fa fa-undo" aria-hidden="true"></i> Flowmeter Kalibrasi</strong></button></button>
       </div>
     </div>
 
@@ -580,7 +580,7 @@ tr.drum2{
           });
 
               var listData ="";
-              // console.log(data.result);
+              console.log(data.result);
               for (var i = 0; i < data.result.length; i++) 
               {
                 var tanggal = data.result[i].TANGGAL;
@@ -615,7 +615,7 @@ tr.drum2{
                   } 
 
                   var dept = "",angkapersonil="",kalkosong="";      
-                  console.log(data.result[1].FLOW[j].DEPARTEMEN);            
+                  // console.log(data.result[i].FLOW[j].DEPARTEMEN);            
                   if (data.result[i].FLOW[j].DEPARTEMEN == '' && data.result[i].FLOW[j].KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA != '' && data.result[i].FLOW[j].ANGKA == '') {
                     var rr = JSON.parse(data.result[i].FLOW[j].KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA);
                     // console.log(rr.length);
