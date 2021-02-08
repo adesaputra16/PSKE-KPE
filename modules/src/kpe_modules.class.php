@@ -139,8 +139,8 @@ CLASS KPE_MODULES extends USER_PRIVILEGES
 		case 'nonlogin_list_catatan_departemen':
 			require_once ("kpe_air/catatan/List_catatan_departemen.php");
 		break;
-		case 'nonlogin_simpan_flow_dept':
-			require_once ("kpe_air/catatan/Simpan_flow_dept.php");
+		case 'nonlogin_list_catatan_sebelumnya':
+			require_once ("kpe_air/catatan/List_catatan_sebelumnya.php");
 		break;
 		case 'nonlogin_cetak_catatan':
 			require_once ("kpe_air/catatan/Cetak_catatan.php");
@@ -162,15 +162,6 @@ CLASS KPE_MODULES extends USER_PRIVILEGES
 		case 'nonlogin_tampil_angka_pakai_rumus_per_dept':
 			require_once ("kpe_air/per_dept/Tampil_angka_pakai_rumus_per_dept.php");
 		break;
-		case 'nonlogin_simpan_angka_flowmeter_kalibrasi':
-			require_once ("kpe_air/per_dept/Simpan_angka_flowmeter_kalibrasi.php");
-		break;
-		case 'nonlogin_list_angka_flowmeter_kalibrasi':
-			require_once ("kpe_air/per_dept/List_angka_flowmeter_kalibrasi.php");
-		break;
-		case 'nonlogin_hapus_angka_flowmeter_kalibrasi':
-			require_once ("kpe_air/per_dept/Hapus_angka_flowmeter_kalibrasi.php");
-		break;
 		// Case Flowmeter
 		case 'nonlogin_simpan_flowmeter':
 			require_once ("kpe_flowmeter/Simpan_flowmeter.php");
@@ -186,15 +177,6 @@ CLASS KPE_MODULES extends USER_PRIVILEGES
 		break;
 		case 'nonlogin_ambil_daftar_flowmeter':
 			require_once ("kpe_flowmeter/Ambil_daftar_flowmeter.php");
-		break;
-		case 'nonlogin_simpan_flowmeter_departemen':
-			require_once ("kpe_flowmeter/Simpan_flowmeter_departemen.php");
-		break;
-		case 'nonlogin_list_flowmeter_departemen':
-			require_once ("kpe_flowmeter/List_flowmeter_departemen.php");
-		break;
-		case 'nonlogin_hapus_flowmeter_departemen':
-			require_once ("kpe_flowmeter/Hapus_flowmeter_departemen.php");
 		break;
 		case 'nonlogin_cari_air':
 			require_once ("kpe_flowmeter/Cari_air.php");
@@ -212,11 +194,39 @@ CLASS KPE_MODULES extends USER_PRIVILEGES
 		case 'nonlogin_ambil_sub_flowmeter':
 			require_once ("kpe_sub_flowmeter/Ambil_sub_flowmeter.php");
 		break;
+		//Case Konfigurasi
+		case 'nonlogin_simpan_flowmeter_departemen':
+			require_once ("konfigurasi/Simpan_flowmeter_departemen.php");
+		break;
+		case 'nonlogin_list_flowmeter_departemen':
+			require_once ("konfigurasi/List_flowmeter_departemen.php");
+		break;
+		case 'nonlogin_hapus_flowmeter_departemen':
+			require_once ("konfigurasi/Hapus_flowmeter_departemen.php");
+		break;
+		case 'nonlogin_list_personil_departemen':
+			require_once ("konfigurasi/List_personil_departemen.php");
+		break;
+		case 'nonlogin_list_departemen':
+			require_once ("konfigurasi/List_departemen.php");
+		break;
+		case 'nonlogin_simpan_flow_dept':
+			require_once ("konfigurasi/Simpan_flow_dept.php");
+		break;
+		case 'nonlogin_simpan_angka_flowmeter_kalibrasi':
+			require_once ("konfigurasi/Simpan_angka_flowmeter_kalibrasi.php");
+		break;
+		case 'nonlogin_list_angka_flowmeter_kalibrasi':
+			require_once ("konfigurasi/List_angka_flowmeter_kalibrasi.php");
+		break;
+		case 'nonlogin_hapus_angka_flowmeter_kalibrasi':
+			require_once ("konfigurasi/Hapus_angka_flowmeter_kalibrasi.php");
+		break;
 
-				//DAILY REPORT 
-				case 'nonlogin_ksb_list':
-					require_once ("dailyreport/ksb_list.php");
-				break;
+		//DAILY REPORT 
+		case 'nonlogin_ksb_list':
+			require_once ("dailyreport/ksb_list.php");
+		break;
 				
 			// ---------------------end case-----------------------------//
 

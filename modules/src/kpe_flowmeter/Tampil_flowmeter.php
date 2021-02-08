@@ -30,13 +30,13 @@ else
   $filter_b = "AND AF.KPE_AIR_FLOWMETER_ID='".$input['idFlowmeter']."'";
 }
 
-if (empty($input['lokasiFlowmeter']) or $input['lokasiFlowmeter'] == "" )
+if (empty($input['KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE']) or $input['KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE'] == "" )
 {
   $filter_c = "";
 }
 else
 {
-  $filter_c = "AND AF.KPE_AIR_FLOWMETER_ID='".$input['lokasiFlowmeter']."'";
+  $filter_c = "AND AF.KPE_AIR_FLOWMETER_DISTRIBUSI LIKE '%".$input['KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE']."%'";
 }
 
 if (empty($input['subFlowmeter']) or $input['subFlowmeter'] == "" )
@@ -50,21 +50,12 @@ else
 
 $sql_a = "SELECT * FROM KPE_AIR_FLOWMETER AS AF LEFT JOIN KPE_AIR_FLOWMETER_SUB AS S ON AF.KPE_AIR_FLOWMETER_SUB_ID=S.KPE_AIR_FLOWMETER_SUB_ID WHERE AF.RECORD_STATUS='A' AND S.RECORD_STATUS='A' ".$filter_a." ".$filter_b." ".$filter_c." ".$filter_d." ORDER BY KPE_AIR_FLOWMETER_NAMA ASC";
 
-//$sql_a = "SELECT * FROM KPE_AIR_FLOWMETER WHERE RECORD_STATUS='A' ".$filter_a." ".$filter_b." ".$filter_c." ORDER BY KPE_AIR_FLOWMETER_NAMA ASC";
+
 
 $this->MYSQL = new MYSQL();
 $this->MYSQL->database = $this->CONFIG->mysql_koneksi()->db_nama;
 $this->MYSQL->queri = $sql_a . " LIMIT " . $posisi . "," . $batas;
 $result_a = $this->MYSQL->data();
-
-// $this->MYSQL = new MYSQL();
-// $this->MYSQL->database = $this->CONFIG->mysql_koneksi()->db_nama;
-// $this->MYSQL->tabel = 'KPE_AIR_FLOWMETER';
-// $this->MYSQL->kolom = '*'; 
-// $this->MYSQL->dimana = "WHERE (KPE_AIR_FLOWMETER_NAMA LIKE '%".$input['keyword']. "%' OR KPE_AIR_FLOWMETER_LOKASI LIKE '%".$input['keyword']."%') AND (RECORD_STATUS='A' or RECORD_STATUS='N') ";
-// $result_a = $this->MYSQL->data();
-
-// -- >>
 
 $no = $posisi + 1;
 

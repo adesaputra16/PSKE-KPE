@@ -10,7 +10,6 @@
 	}
 
 ?>
-
 <div class="col-12">
     <div class="box box-primary box-outline box-outline-tabs">
       <div class="box-header p-0 border-bottom-0">

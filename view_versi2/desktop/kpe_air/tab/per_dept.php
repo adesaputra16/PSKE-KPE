@@ -15,6 +15,9 @@
 //exit();
 ?>
 
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<link rel="stylesheet" href="aplikasi/<?= $_SESSION['aplikasi']; ?>/asset/plugins/sweet-alert/sweetalert2.min.css">
+
 <style>
 .loader {
   border: 7px solid #f3f3f3;
@@ -44,7 +47,7 @@
     background:#fff;
 }
 
-tbody#zone_data>tr#kalibrasitext>td
+thead>tr#kalibrasitext>td
 {
 	background:rgba(202, 255, 191,1) !important;
 	/* color: #fff; */
@@ -52,7 +55,7 @@ tbody#zone_data>tr#kalibrasitext>td
 	position: sticky;
   z-index: 10;
 }
-tbody#zone_data>tr#kalibrasinull>td
+thead>tr#kalibrasinull>td
 {
 	background:rgba(202, 255, 191,1) !important;
 	/* color: #fff; */
@@ -60,7 +63,7 @@ tbody#zone_data>tr#kalibrasinull>td
 	position: sticky;
   z-index: 10;
 }
-tbody#zone_data>tr#kalibrasiangka>td
+thead>tr#kalibrasiangka>td
 {
 	background:rgba(202, 255, 191,1) !important;
 	/* color: #fff; */
@@ -69,9 +72,9 @@ tbody#zone_data>tr#kalibrasiangka>td
   z-index: 10;
 }
 
-tbody#zone_data>tr#kalibrasiangka>td.kalkosong,
-tbody#zone_data>tr#kalibrasinull>td.kalkosong,
-tbody#zone_data>tr#kalibrasitext>td.kalkosong
+thead>tr#kalibrasiangka>td.kalkosong,
+thead>tr#kalibrasinull>td.kalkosong,
+thead>tr#kalibrasitext>td.kalkosong
 {
 	background: white;
 	left: 0px;
@@ -191,6 +194,15 @@ tr.liter{
 tr.drum2{
   background:rgba(205, 243, 234, 0.5) !important;
 }
+
+.swal2-container {
+  z-index: 100005;
+}
+
+.swal2-popup {
+  font-size: 1.3rem !important; 
+}
+
 </style>
 
 
@@ -212,60 +224,93 @@ tr.drum2{
         </button>
       </div>
     </div>
-    <div class="box-body border-radius-none">
-      
-    <div class="row">
-      <div class="col-md-2 form-group">
-        <label for="JENIS_LAPORAN">Jenis Akumulasi</label>
-        <select class="form-control col-sm-2" name="JENIS_LAPORAN" id="JENIS_LAPORAN" onchange="jenisAkumulasi()" required>
-          <option value="Bulanan" selected>Bulanan</option>
-          <!-- <option value="Tahunan">Tahunan</option> -->
-        </select>
-      </div>
-      
-      <div class="col-md-2 form-group" id="divbulanfilter">
-        <label for="BULAN_FILTER">Bulan</label>
-          <select class="form-control col-sm-2" name="BULAN_FILTER" id="BULAN_FILTER">
-            <option value="">--Pilih bulan--</option>
-            <?php 
-              $array_bulan = array(1=>'Januari','Februari','Maret', 'April', 'Mei', 'Juni','Juli','Agustus','September','Oktober', 'November','Desember');
-              for($bln=1;$bln<=12;$bln++){
-                if($bln<=9)
-                {
-                  echo"<option value='0$bln'>$array_bulan[$bln]</option>";
-                }else
-                {
-                  echo"<option value='$bln'>$array_bulan[$bln]</option>";
+    <div class="box-body border-radius-none"> 
+      <div class="row">
+        <div class="col-md-2 form-group">
+          <label for="JENIS_LAPORAN">Jenis Akumulasi</label>
+          <select class="form-control col-sm-2" name="JENIS_LAPORAN" id="JENIS_LAPORAN" onchange="jenisAkumulasi()" required>
+            <option value="0">--Pilih--</option>
+            <!-- <option value="Harian">Harian</option> -->
+            <!-- <option value="Mingguan">Mingguan</option> -->
+            <option value="Bulanan">Bulanan</option>
+            <option value="Custom">Custom</option>
+          </select>
+        </div>
+        
+        <div class="col-md-2 form-group tanggalawal"  id="divtanggalawal" hidden>
+          <label for="DATA_sDATE" id="labelsDate">Tanggal</label>
+          <input id="DATA_sDATE" name="DATA_sDATE"  type="text" class="datepicker col-sm-2 form-control" placeholder="<?= Date("Y/m/d"); ?>" value="<?= Date("Y/m/d"); ?>" autocomplete="off">
+        </div>
+        <div class="col-md-2 form-group tanggalakhir" id="divtanggalakhir" hidden>
+          <label for="DATA_eDATE" id="eDate">Tanggal akhir</label>
+          <input id="DATA_eDATE" name="DATA_eDATE"  type="text" class="col-sm-2 form-control"  placeholder="<?= Date("Y/m/d"); ?>" value="" autocomplete="off">
+        </div>
+        <div class="col-md-2 form-group" id="divbulanfilter" hidden>
+          <label for="BULAN_FILTER">Bulan</label>
+            <select class="form-control col-sm-2" name="BULAN_FILTER" id="BULAN_FILTER">
+              <option value="">--Pilih bulan--</option>
+              <?php 
+                $array_bulan = array(1=>'Januari','Februari','Maret', 'April', 'Mei', 'Juni','Juli','Agustus','September','Oktober', 'November','Desember');
+                for($bln=1;$bln<=12;$bln++){
+                  if($bln<=9)
+                  {
+                    echo"<option value='0$bln'>$array_bulan[$bln]</option>";
+                  }else
+                  {
+                    echo"<option value='$bln'>$array_bulan[$bln]</option>";
+                  }
                 }
+              ?>
+            </select>
+        </div>
+        
+        <div class="col-md-2  form-group" id="divtahunfilter" hidden>
+          <label for="TAHUN_FILTER" >Tahun</label>
+          <select class="form-control col-sm-2" name="TAHUN_FILTER" id="TAHUN_FILTER">
+            <option value="">--Pilih tahun--</option>
+            <?php
+              $thnsekarang=Date('Y');
+              $thnsebelumnya=$thnsekarang-7;
+              for($thn=$thnsebelumnya;$thn<=$thnsekarang;$thn++){
+                echo"<option value='$thn'>$thn</option>";
+              } ?>
+          </select>
+        </div>
+        <div class="col-md-4" id="divDateRange" hidden>
+          <div class="form-group">
+            <label>Tanggal</label>
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <input type="text" class="form-control pull-right" id="dateRange" name="dateRange" autocomplete="off">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6  form-group" id="">
+          <label for="multiSearchFilter" >Flowmeter</label>
+          <select class="form-control col-sm-2 selectpicker" name="multiSearchFilter" id="multiSearchFilter" multiple data-live-search="true" data-selected-text-format="count > 4" data-max-options="10">
+            <?php 
+              foreach ($respon_flow['result'] as $rf) {
+                echo "<option value='$rf[KPE_AIR_FLOWMETER_ID]'>$rf[KPE_AIR_FLOWMETER_NAMA]</option>"; 
               }
             ?>
           </select>
+          <input type="hidden" name="multiSearchFlowmeter" id="multiSearchFlowmeter">
+        </div>
       </div>
-      <div class="col-md-2  form-group" id="divtahunfilter">
-        <label for="TAHUN_FILTER" >Tahun</label>
-        <select class="form-control col-sm-2" name="TAHUN_FILTER" id="TAHUN_FILTER">
-          <option value="">--Pilih tahun--</option>
-          <?php
-            $thnsekarang=Date('Y');
-            $thnsebelumnya=$thnsekarang-7;
-            for($thn=$thnsebelumnya;$thn<=$thnsekarang;$thn++){
-              echo"<option value='$thn'>$thn</option>";
-            } ?>
-        </select>
-      </div>
-      <!-- <div class="col-md-2  form-group" id="divtahunfilter">
-        <label for="DIVISI_FILTER" >Divisi</label>
-        <select class="form-control col-sm-2" name="DIVISI_FILTER" id="DIVISI_FILTER">
-          <option value="">--Pilih divisi--</option>
-        </select>
-      </div> -->
-      <label>&nbsp;</label>
-      <div class="input-group custom-search-form">
-          <button type="button" class="btn btn-primary" id="btn-reload"><strong><i class="fa fa-refresh" aria-hidden="true"></i> Refresh</strong></button></button>&nbsp;
-          <button type="button" class="btn btn-default" id="btnFlowKalibrasi"><strong><i class="fa fa-undo" aria-hidden="true"></i> Flowmeter Kalibrasi</strong></button></button>
-      </div>
-    </div>
 
+      <div class="row">
+        
+        <div class="col-md-4">
+          <!-- <label>&nbsp;</label> -->
+          <div class="input-group custom-search-form">
+              <button type="button" class="btn btn-primary" id="btn-reload"><strong><i class="fa fa-refresh" aria-hidden="true"></i> Refresh</strong></button></button>&nbsp;
+              <!-- <small class="help-block"><i role="button" class="glyphicon glyphicon-info-sign text-muted" data-container="body" data-toggle="popover" data-placement="top" title="What this ?" data-content="Pilih unit penempatan karyawan/ personal"></i></small> -->
+              <!-- <button type="button" class="btn btn-default" id="btnFlowKalibrasi"><strong><i class="fa fa-undo" aria-hidden="true"></i> Flowmeter Kalibrasi</strong></button></button> -->
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <!-- /.End Pencarian -->
@@ -282,6 +327,18 @@ tr.drum2{
                     
                   </tr>
                   <tr id="colAngka">
+
+                  </tr>
+                  <tr id='kalibrasitext' class='kalibrasi bordered text-center'>
+
+                  </tr>
+                  <tr id='kalibrasinull' class='kalibrasi bordered text-center'>
+
+                  </tr>
+                  <tr id='kalibrasiangka' class='kalibrasi bordered text-center' >
+
+                  </tr>
+                  <tr id="tdAngka">
 
                   </tr>
               </thead>
@@ -381,7 +438,7 @@ tr.drum2{
   </div>
 </div>
 <!-- Modal Edit Rumus -->
-<div class="modal fade" id="modalEditFlowKalibrasi" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index:110000;">
+<div class="modal fade" id="modalEditFlowKalibrasi" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index:100004;">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
     <div class="modal-header">
@@ -464,21 +521,180 @@ tr.drum2{
 </div>
 <!-- end Modal -->
 
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<script src="aplikasi/<?= $_SESSION['aplikasi']; ?>/asset/plugins/sweet-alert/sweetalert2.min.js"></script>
 <script>
 
-  $(function() {
-    // ambil_flowmeter();
+$(document).ready(function () {
+  $(function(){
+    $('.information').popover({
+      title:'Test',
+      html:true,
+      placement:'right'
+    });
     listPerDept('1');
     list_rumus('1');
-  });
+    $('input[name="dateRange"]').daterangepicker();
+    $(".selectpicker").selectpicker();
+  });	
+})
+  
 
   $(function(){
-    $(".selectpicker").selectpicker();
-    $("input#KPE_AIR_FLOWMETER_KALIBRASI_TANGGAL").datepicker().on('changeDate', function(ev)
+    $('input#DATA_eDATE').attr("readonly","readonly");
+    $("input#DATA_sDATE").datepicker().on('changeDate', function(ev)
     {  
+      var TANGGAL_AWAL=$("input#DATA_sDATE").val();   
+      // alert(TANGGAL_AWAL);          
+      //MENENTUKAN TANGGAL AKHIRNYA SEMINGGU DARI TANGGAL AWAL
+      var myDate = new Date(TANGGAL_AWAL);
+      myDate.setDate(myDate.getDate() + 6);
+      
+      var month = '' + (myDate.getMonth() + 1),day = '' + myDate.getDate(),year = myDate.getFullYear();
+      if (month.length < 2) 
+        month = '0' + month;
+      if (day.length < 2) 
+        day = '0' + day;
+      var TANGGAL_AKHIR=year+"/"+month+"/"+day;
+      //END MENETUKAN TANGGAL AKHIRNYA
+      // alert(TANGGAL_AKHIR);
+      var JENIS_LAPORAN=$('select#JENIS_LAPORAN').val();
+      if (JENIS_LAPORAN == "Harian") 
+      {
+        $('input#DATA_eDATE').val('');
+      } else {
+        $("input#DATA_eDATE").val(TANGGAL_AKHIR);
+      }
       $('.datepicker').datepicker('hide');
-    });
+      });
   });	
+
+  function jenisAkumulasi(){
+    var JENIS_LAPORAN=$('select#JENIS_LAPORAN').val(); 
+    if (JENIS_LAPORAN == "0") 
+    {
+    
+      $('input#DATA_sDATE').removeAttr("disabled");
+      $('input#DATA_sDATE').attr("required");
+      $('div#divtanggalawal').attr("style", "display:none");
+      $('label#labelsDate').html("Tanggal");
+      $('input#DATA_sDATE').val("");
+      
+      $('input#DATA_eDATE').removeAttr("disabled");
+      $('input#DATA_eDATE').attr("readonly","readonly");
+      $('div#divtanggalakhir').attr("style", "display:none");
+      
+      $('select#BULAN_FILTER').attr("disabled","disabled");
+      $('select#BULAN_FILTER').removeAttr("required");
+      $('select#BULAN_FILTER').val("");
+      $('div#divbulanfilter').attr("style", "display:none");
+      
+      $('select#TAHUN_FILTER').attr("disabled","disabled");
+      $('select#TAHUN_FILTER').removeAttr("required");
+      $('div#divtahunfilter').attr("style", "display:none");
+      $('select#TAHUN_FILTER').val("");
+
+      $('input#dateRange').attr("disabled","disabled");
+      $('input#dateRange').removeAttr("required");
+      $('div#divDateRange').attr("style", "display:none");
+      $('input#dateRange').val("");
+      
+    } else if (JENIS_LAPORAN == "Mingguan")
+    {	
+      $('input#DATA_sDATE').removeAttr("disabled");
+      $('input#DATA_sDATE').attr("required");
+      $('div#divtanggalawal').attr("style", "display:block");
+      $('label#labelsDate').html("Tanggal Awal");
+      $('input#DATA_sDATE').val("");
+    
+      $('input#DATA_eDATE').removeAttr("disabled");
+      $('input#DATA_eDATE').attr("readonly","readonly");
+      $('div#divtanggalakhir').attr("style", "display:block");
+    
+      $('select#BULAN_FILTER').attr("disabled","disabled");
+      $('select#BULAN_FILTER').removeAttr("required");
+      $('select#BULAN_FILTER').val("");
+      $('div#divbulanfilter').attr("style", "display:none");
+      
+      $('select#TAHUN_FILTER').attr("disabled","disabled");
+      $('select#TAHUN_FILTER').removeAttr("required");
+      $('div#divtahunfilter').attr("style", "display:none");
+
+      $('input#dateRange').attr("disabled","disabled");
+      $('input#dateRange').removeAttr("required");
+      $('div#divDateRange').attr("style", "display:none");
+      $('input#dateRange').val("");
+    
+    }else if (JENIS_LAPORAN == "Bulanan")
+    {	
+      $('input#DATA_sDATE').attr("disabled","disabled");
+      $('input#DATA_sDATE').removeAttr("required");
+      $('input#DATA_sDATE').val("");
+      $('div#divtanggalawal').attr("style", "display:none");
+    
+      $('input#DATA_eDATE').attr("disabled","disabled");
+      $('input#DATA_eDATE').removeAttr("required");
+      $('input#DATA_eDATE').val("");
+      $('div#divtanggalakhir').attr("style", "display:none");
+    
+      $('select#BULAN_FILTER').removeAttr("disabled");
+      $('select#BULAN_FILTER').attr("required");
+      $('div#divbulanfilter').attr("style", "display:block");
+      
+      $('select#TAHUN_FILTER').removeAttr("disabled");
+      $('select#TAHUN_FILTER').attr("required");
+      $('select#TAHUN_FILTER').val("");
+      $('div#divtahunfilter').attr("style", "display:block");
+
+      $('input#dateRange').attr("disabled","disabled");
+      $('input#dateRange').removeAttr("required");
+      $('div#divDateRange').attr("style", "display:none");
+      $('input#dateRange').val("");
+    
+    }else if (JENIS_LAPORAN == "Custom")
+    {
+      $('input#DATA_sDATE').attr("disabled","disabled");
+      $('input#DATA_sDATE').removeAttr("required");
+      $('input#DATA_sDATE').val("");
+      $('div#divtanggalawal').attr("style", "display:none");
+    
+      $('input#DATA_eDATE').attr("disabled","disabled");
+      $('input#DATA_eDATE').removeAttr("required");
+      $('input#DATA_eDATE').val("");
+      $('div#divtanggalakhir').attr("style", "display:none");
+    
+      $('select#BULAN_FILTER').attr("disabled","disabled");
+      $('select#BULAN_FILTER').removeAttr("required");
+      $('select#BULAN_FILTER').val("");
+      $('div#divbulanfilter').attr("style", "display:none");
+      
+      $('input#dateRange').removeAttr("disabled");
+      $('input#dateRange').attr("required");
+      $('input#dateRange').val("");
+      $('div#divDateRange').attr("style", "display:block");
+
+      $('select#TAHUN_FILTER').attr("disabled","disabled");
+      $('select#TAHUN_FILTER').removeAttr("required");
+      $('div#divtahunfilter').attr("style", "display:none");
+      $('select#TAHUN_FILTER').val("");
+    
+    }else{
+      $('input#DATA_eDATE').attr("readonly","readonly");}
+    //search();
+  }
+
+  function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-');
+  }
 
   function list_rumus(curPage)
   {
@@ -492,24 +708,39 @@ tr.drum2{
       var curPage = pageB[1];
     }
   }
+  
+
+  $('#multiSearchFlowmeter').val($('#multiSearchFilter').val());
+  let multiFilter = $('#multiSearchFlowmeter').val();
+  let fromDate = $("#dateRange").val().split("-");
+  let dateRangeS = formatDate((new Date(fromDate[0])).valueOf() - 1000*60*60*24);
+  let dateRangeE = formatDate(fromDate[1]);
+
   $.ajax({
     type:'POST',
     url:refseeAPI,
     dataType:'json',
-    data:'aplikasi=<?php echo $d0;?>&ref=list_rumus_per_dept&batas='+$("input#REC_PER_HALAMAN").val()+'&halaman='+ curPage,
+    data:'aplikasi=<?php echo $d0;?>&ref=list_rumus_per_dept&MULTI_FILTER='+multiFilter+'&dateRangeS='+dateRangeS+'&dateRangeE='+dateRangeE+'&BULAN_FILTER='+$("select#BULAN_FILTER").val()+'&TAHUN_FILTER='+$("select#TAHUN_FILTER").val()+'&batas='+$("input#REC_PER_HALAMAN").val()+'&halaman='+ curPage,
     success:function(data)
     { 
-      // console.log(data.result);
       {
         var nFlowmeter = '';
         $("tr#nFlowmeter").empty();
         $("tr#colAngka").empty();
+        $("tr#tdAngka").empty();
+        $('tr#kalibrasitext').empty();
+        $('tr#kalibrasinull').empty();
+        $('tr#kalibrasiangka').empty();
         for (i = 0; i < data.result.length; i++) {
-          // $("select#KPE_AIR_FLOWMETER_ID").append(/*html*/`<option value="${data.result[i].KPE_AIR_FLOWMETER_ID}">${data.result[i].KPE_AIR_FLOWMETER_NAMA}</option>`);
-          // $("select#KPE_AIR_FLOWMETER_KALIBRASI").append(/*html*/`<option value="${data.result[i].KPE_AIR_FLOWMETER_ID}">${data.result[i].KPE_AIR_FLOWMETER_NAMA}</option>`);
-
-          var namaFlow = data.result[i].KPE_AIR_FLOWMETER_NAMA;
-          var rr = '';
+          if (i==0) {
+            var tdKosong = /*html*/`<td class="bordered kalkosong fixed"></td>
+                                    <td class="bordered kalkosong fixed" style='left: 66px;'></td>`;
+          }else {
+            tdKosong = "";
+          }
+          let namaFlow = data.result[i].KPE_AIR_FLOWMETER_NAMA;
+          let rr = '';
+          let td ='',kalibrasitext='',kalibrasinull='',kalibrasiangka='',kalkosong="";  
           if (data.result[i].KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA == '') {
             rr = '';  
             var arr = '';
@@ -522,12 +753,26 @@ tr.drum2{
           if (namaFlow != "" && data.result[i].KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA != ""){
             colspan = 3+len;
             // beban = /*html*/`<th class="cBeban bordered">Beban</th>`;
-            for (var j = 0; j < arr.length; j++) {
+            for (var j = 0; j < arr.sort().length; j++) {
+              kalkosong += /*html*/`<td class="bordered">&nbsp;</td>`;
               th += /*html*/`<th class="bordered" style='top: 52px;'>${arr[j]}</th>`;
+              td += /*html*/`<td class="bordered text-right">${data.result[i].DEPT_FLOW[j].KPE_AIR_FLOWMETER_DEPARTEMEN_PERSONIL_HASIL}</td>`;
             }             
           } else {
+            // for (var k = 0; k < arr.length; k++) {
+            //   kalkosong += /*html*/`<td class="bordered">&nbsp;2</td>`;
+            // }  
             colspan = 3;
             th = '';
+          }
+          if (data.result[i].KAL == ''){
+            $('tr#kalibrasitext').append(/*html*/`${tdKosong}<td class="bordered">&nbsp;</td><td class="bordered">&nbsp;</td><td class="bordered">&nbsp;</td>${kalkosong}`);
+            $('tr#kalibrasinull').append(/*html*/` ${tdKosong}<td class="bordered">&nbsp;</td><td class="bordered">&nbsp;</td><td class="bordered">&nbsp;</td>${kalkosong}`);
+            $('tr#kalibrasiangka').append(/*html*/`${tdKosong}<td class="bordered">&nbsp;</td><td class="bordered">&nbsp;</td><td class="bordered">&nbsp;</td>${kalkosong}`); 
+          } else {
+            $('tr#kalibrasitext').append(/*html*/`${tdKosong}<td class="bordered kalibrasii">Real</td><td class="bordered kalibrasii">Selisih</td><td class="bordered kalibrasii">%</td>${kalkosong}`);
+            $('tr#kalibrasinull').append(/*html*/`${tdKosong}<td class="bordered kalibrasii">&nbsp;</td><td class="bordered kalibrasii">&nbsp;</td><td class="bordered kalibrasii">&nbsp;</td>${kalkosong}`);
+            $('tr#kalibrasiangka').append(/*html*/`${tdKosong}<td class="bordered kalibrasii">${data.result[i].KAL.KPE_AIR_FLOWMETER_KALIBRASI_REAL}</td><td class="bordered kalibrasii">${data.result[i].KAL.KPE_AIR_FLOWMETER_KALIBRASI_SELISIH}</td><td class="bordered kalibrasii">${data.result[i].KAL.KPE_AIR_FLOWMETER_KALIBRASI_PERSEN}</td>${kalkosong}`);
           }
 
           nFlowmeter += /*html*/`<th class="bordered" height="57" colspan="${colspan}"><center>${data.result[i].KPE_AIR_FLOWMETER_NAMA}</center></th>`;
@@ -535,6 +780,17 @@ tr.drum2{
                                           <th class="bordered" style='top: 52px;' height="77">Pakai</th>
                                           <th class="cBeban bordered" style='top: 52px;' height="77">Beban</th>
                                           ${th}`);
+
+          if (data.result[i].ANGKA == "") {
+            var cAngka = '0.00';
+          } else {
+            cAngka = parseFloat(data.result[i].ANGKA.KPE_AIR_FLOWMETER_CATATAN_ANGKA).toFixed(2);
+          }
+          $("tr#tdAngka").append(/*html*/`${tdKosong}
+                                          <td class="bordered text-right" style='top: 52px;'>${cAngka}</td>
+                                          <td class="bordered" style='top: 52px;'></td>
+                                          <td class="bordered" style='top: 52px;'></td>
+                                          ${td}`);
         }
 
         var th = /*html*/`<th rowspan="2" width="68" class="text-center bordered fixsudut">Tanggal</th>
@@ -543,7 +799,7 @@ tr.drum2{
       }
     },
     error:function(x,e){
-      alert('error');
+      console.log('error');
     }//end error
   });
   }
@@ -560,18 +816,27 @@ tr.drum2{
         var curPage = pageB[1];
       }
     }
+
+    $('#multiSearchFlowmeter').val($('#multiSearchFilter').val());
+    let multiFilter = $('#multiSearchFlowmeter').val();
+
+    let fromDate = $("#dateRange").val().split("-");
+    let dateRangeS = formatDate(fromDate[0]);
+    // let dateRangeS = formatDate((new Date(fromDate[0])).valueOf() - 1000*60*60*24);
+    let dateRangeE = formatDate(fromDate[1]);
+    // return
     $.ajax({
       type: 'POST',
       url: refseeAPI,
       dataType: 'json',
-      data:'aplikasi=<?php echo $d0;?>&ref=list_per_dept&keyword='+$("input#keyword").val()+'&BULAN_FILTER='+$("select#BULAN_FILTER").val()+'&TAHUN_FILTER='+$("select#TAHUN_FILTER").val()+'&TAHUN_FILTER2='+$("select#TAHUN_FILTER2").val()+'&batas='+$("input#REC_PER_HALAMAN").val()+'&halaman='+ curPage,
+      data:'aplikasi=<?php echo $d0;?>&ref=list_per_dept&keyword='+$("input#keyword").val()+'&dateRange='+$("#dateRange").val()+'&dateRangeS='+dateRangeS+'&dateRangeE='+dateRangeE+'&BULAN_FILTER='+$("select#BULAN_FILTER").val()+'&MULTI_FILTER='+multiFilter+'&TAHUN_FILTER='+$("select#TAHUN_FILTER").val()+'&batas='+$("input#REC_PER_HALAMAN").val()+'&halaman='+ curPage,
       
       success: function(data) {
         
         if (data.respon.pesan == "sukses") 
         {
           $("tbody#zone_data").empty();
-          $("tbody#zone_data").append("<tr id='kalibrasitext' class='kalibrasi bordered text-center'></tr><tr id='kalibrasinull' class='kalibrasi bordered text-center'></tr><tr id='kalibrasiangka' class='kalibrasi bordered text-center' ></tr>")
+          // $("tbody#zone_data").append("<tr id='kalibrasitext' class='kalibrasi bordered text-center'></tr><tr id='kalibrasinull' class='kalibrasi bordered text-center'></tr><tr id='kalibrasiangka' class='kalibrasi bordered text-center' ></tr>")
           $('tfoot#zone_total').empty();
           $('#tujuan-light-pagination').pagination({
             pages: data.result_option.jml_halaman,
@@ -579,12 +844,12 @@ tr.drum2{
             currentPage: curPage,
           });
 
+          console.log(data.MULTI);
               var listData ="";
-              console.log(data.result);
               for (var i = 0; i < data.result.length; i++) 
               {
                 var tanggal = data.result[i].TANGGAL;
-                var kolom=i,totalCatatan='',listTotal='',angkabelumformat,angkaPakaiBeban,len = data.result[i].FLOW.length,actionButton = '',kalibrasitext='',kalibrasinull='',kalibrasiangka='';
+                var kolom=i,listTotal='',angkabelumformat,angkaPakaiBeban,len = data.result[i].FLOW.length,actionButton = '',kalibrasitext='',kalibrasinull='',kalibrasiangka='';
                
                 for (var j = 0; j < len; j++) 
                 {
@@ -596,35 +861,23 @@ tr.drum2{
                     angkaNol = "cBeban";
                   }
 
-                  if(i == 0){
-                    tanggal = "";
-                    angkaPakai = "";
-                    angkaBeban = "";
-                    actionButton = "";
+                  if(data.result[i].FLOW[j].ANGKA.KPE_AIR_FLOWMETER_CATATAN_PAKAI == null || data.result[i].FLOW[j].ANGKA.KPE_AIR_FLOWMETER_CATATAN_BEBAN == null){
+                    angkaPakai = "0.00";
+                    angkaBeban = "0.00";
+                  }else {
+                    angkaPakai = parseFloat(data.result[i].FLOW[j].ANGKA.KPE_AIR_FLOWMETER_CATATAN_PAKAI).toFixed(2);
+                    angkaBeban = parseFloat(data.result[i].FLOW[j].ANGKA.KPE_AIR_FLOWMETER_CATATAN_BEBAN).toFixed(2);
                   }
-                  else{
-                    if(data.result[i].FLOW[j].ANGKA.KPE_AIR_FLOWMETER_CATATAN_PAKAI == null || data.result[i].FLOW[j].ANGKA.KPE_AIR_FLOWMETER_CATATAN_BEBAN == null){
-                      angkaPakai = "0.00";
-                      angkaBeban = "0.00";
-                    }else {
-                      angkaPakai = parseFloat(data.result[i].FLOW[j].ANGKA.KPE_AIR_FLOWMETER_CATATAN_PAKAI).toFixed(2);
-                      angkaBeban = parseFloat(data.result[i].FLOW[j].ANGKA.KPE_AIR_FLOWMETER_CATATAN_BEBAN).toFixed(2);
-                    }
-                    actionButton = '<button class="btn btn-xs btn-success btnTambah" id="btnTambah" onclick="addRumus('+tanggal+')" data-toggle="tooltip" data-placement="top" title="Tambah pengkondisian"><span class="fa fa-plus-circle"></span></button> ';
-                    tanggal = tanggal;
-                  } 
 
                   var dept = "",angkapersonil="",kalkosong="";      
-                  // console.log(data.result[i].FLOW[j].DEPARTEMEN);            
                   if (data.result[i].FLOW[j].DEPARTEMEN == '' && data.result[i].FLOW[j].KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA != '' && data.result[i].FLOW[j].ANGKA == '') {
-                    var rr = JSON.parse(data.result[i].FLOW[j].KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA);
-                    // console.log(rr.length);
-                    for (var f = 0; f < rr.length; f++) {
+                    let rr = JSON.parse(data.result[i].FLOW[j].KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA);
+                    for (let f = 0; f < rr.length; f++) {
                       angka += /*html*/`<td class="text-right bordered">0.00</td>`;
                       kalkosong += /*html*/`<td class="bordered">&nbsp;</td>`;
                     }
                   } else {
-                    for (var e = 0; e < data.result[i].FLOW[j].DEPARTEMEN.length; e++) {
+                    for (let e = 0; e < data.result[i].FLOW[j].DEPARTEMEN.length; e++) {
                       kalkosong += /*html*/`<td class="bordered" style="top:100px;">&nbsp;</td>`;
                       depts = parseFloat(data.result[i].FLOW[j].DEPARTEMEN[e].KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN_BEBAN_DEPARTEMEN).toFixed(3);
                       deptss = data.result[i].FLOW[j].DEPARTEMEN[e].KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN_PERSONIL_HASIL;
@@ -636,17 +889,6 @@ tr.drum2{
                     }
                   }
 
-                  if (data.result[i].FLOW[j].KAL == ''){
-                    // var kalibrasi = /*html*/`<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>`; 
-                    kalibrasitext += /*html*/` <td class="bordered">&nbsp;</td><td class="bordered">&nbsp;</td><td class="bordered">&nbsp;</td>${kalkosong}`;
-                    kalibrasinull += /*html*/` <td class="bordered">&nbsp;</td><td class="bordered">&nbsp;</td><td class="bordered">&nbsp;</td>${kalkosong}`;
-                    kalibrasiangka += /*html*/`<td class="bordered">&nbsp;</td><td class="bordered">&nbsp;</td><td class="bordered">&nbsp;</td>${kalkosong}`; 
-                  } else {
-                    kalibrasitext += /*html*/`<td class="bordered kalibrasii">Real</td><td class="bordered kalibrasii">Selisih</td><td class="bordered kalibrasii">%</td>${kalkosong}`;
-                    kalibrasinull += /*html*/`<td class="bordered kalibrasii">&nbsp;</td><td class="bordered kalibrasii">&nbsp;</td><td class="bordered kalibrasii">&nbsp;</td>${kalkosong}`;
-                    kalibrasiangka+=/*html*/`<td class="bordered kalibrasii">${data.result[i].FLOW[j].KAL.KPE_AIR_FLOWMETER_KALIBRASI_REAL}</td><td class="bordered kalibrasii">${data.result[i].FLOW[j].KAL.KPE_AIR_FLOWMETER_KALIBRASI_SELISIH}</td><td class="bordered kalibrasii">${data.result[i].FLOW[j].KAL.KPE_AIR_FLOWMETER_KALIBRASI_PERSEN}</td>${kalkosong}`;
-                  }
-
                   kolom += /*html*/`<td id="tdAngka" class="text-right bordered">${formatNumber(angka)}</td>
                                     <td  class="text-right bordered">${angkaPakai}</td>
                                     <td class="${angkaNol} text-right bordered">${angkaBeban}</td>
@@ -656,7 +898,7 @@ tr.drum2{
                 
                 listData += /*html*/`<tr class="trData bordered">
                                       <td class="bordered fixed">${tanggal}</td>
-                                      <td class="bordered fixed" style="left:66px;">${actionButton}</td>
+                                      <td class="bordered fixed" style="left:66px;"><button class="btn btn-xs btn-success btnTambah" id="btnTambah" onclick="addRumus('${tanggal}')" data-toggle="tooltip" data-placement="top" title="Tambah pengkondisian"><span class="fa fa-plus-circle"></span></button></td>
                                       ${kolom}
                                      </tr>`; 
               
@@ -705,13 +947,13 @@ tr.drum2{
                                 </tr>`;
             
             $("tbody#zone_data").append(listData);
-            $('tr#kalibrasitext').append(/*html*/`<td class="bordered kalkosong">&nbsp;</td><td class="bordered kalkosong" style="left:66px;">&nbsp;</td>${kalibrasitext}`);
-            $('tr#kalibrasinull').append(/*html*/`<td class="bordered kalkosong">&nbsp;</td><td class="bordered kalkosong" style="left:66px;">&nbsp;</td>${kalibrasinull}`);
-            $('tr#kalibrasiangka').append(/*html*/`<td class="bordered kalkosong">&nbsp;</td><td class="bordered kalkosong" style="left:66px;">&nbsp;</td>${kalibrasiangka}`);
-            $("tfoot#zone_total").append(listTotal+haverage+hdrum+hliter+hdrum2);
+            if ($('#JENIS_LAPORAN').val() != "Custom") {
+              $("tfoot#zone_total").append(listTotal+haverage+hdrum+hliter+hdrum2);
+            }
           
         } else if (data.respon.pesan == "gagal") {
           // alert(data.respon.text_msg);
+          // console.log(data.respon.text_msg);
           $("tbody#zone_data").html("<tr><td colspan='7'><div class='alert alert-danger' role='alert'><span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span> " + data.respon.text_msg + "</div></td></tr>");
         }
       }, //end success
@@ -723,41 +965,6 @@ tr.drum2{
   }
 
   var months = {'01':'Januari', '02':'Februari', '03':'Maret', '04':'April', '05':'Mei', '06':'Juni', '07':'Juli', '08':'Agustus', '09':'September', '10':'Oktober', '11': 'November', '12':'Desember'};
-
-  function jenisAkumulasi(){
-    var JENIS_LAPORAN=$('select#JENIS_LAPORAN').val(); 
-    if (JENIS_LAPORAN == "Bulanan")
-    {	    
-      $('select#BULAN_FILTER').removeAttr("disabled");
-      $('select#BULAN_FILTER').attr("required");
-      $('div#divbulanfilter').attr("style", "display:block");
-
-      $('select#TAHUN_FILTER').removeAttr("disabled");
-      $('select#TAHUN_FILTER').attr("required");
-      $('div#divtahunfilter').attr("style", "display:block");
-      $('select#TAHUN_FILTER').val("");
-    
-    }else if (JENIS_LAPORAN == "Tahunan")
-    {
-      $('select#BULAN_FILTER').attr("disabled","disabled");
-      $('select#BULAN_FILTER').removeAttr("required");
-      $('select#BULAN_FILTER').val("");
-      $('div#divbulanfilter').attr("style", "display:none");
-      
-      $('select#TAHUN_FILTER').removeAttr("disabled");
-      $('select#TAHUN_FILTER').attr("required");
-      $('select#TAHUN_FILTER').val("");
-      $('div#divtahunfilter').attr("style", "display:block");
-
-      $('select#TAHUN_FILTER2').attr("disabled","disabled");
-      $('select#TAHUN_FILTER2').removeAttr("required");
-      $('div#divtahunfilter2').attr("style", "display:none");
-      $('select#TAHUN_FILTER2').val("");
-    
-    }else{
-      $('select#TAHUN_FILTER2').attr("readonly","readonly");}
-    //search();
-  }
 
   $(function() {
   $('a.sidebar-toggle').click()
@@ -846,7 +1053,7 @@ tr.drum2{
       if(data.respon.pesan=="sukses")
       {
         $("#modalPerDept").modal('hide');
-        console.log(data.respon.text_msg1);
+        // console.log(data.respon.text_msg1);
         listPerDept('1');
         
       }else if(data.respon.pesan=="gagal")
@@ -1023,7 +1230,27 @@ tr.drum2{
 
   // remove row
   $(document).on('click', 'button#remove_rumus', function () {
-    $(this).closest('#inputFormRow').remove();
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          timer: 1000,
+          timerProgressBar: true,
+          title: 'Deleted!',
+          text: 'Your file has been deleted.',
+          icon: 'success'
+        })
+        $(this).closest('#inputFormRow').remove()
+      }
+    })
+    
   });
 
   function list_flowmeter_kalibrasi() 
@@ -1064,33 +1291,55 @@ tr.drum2{
   $('tbody').on('click', 'a#hapusFlowKal', function(){
     var KPE_AIR_FLOWMETER_KALIBRASI_ID = $(this).attr('KPE_AIR_FLOWMETER_KALIBRASI_ID');
   // alert(KPE_AIR_FLOWMETER_KALIBRASI_ID);
-  if (confirm('Yakin akan menghapus data ini??')){
-    $.ajax({
-      type:'POST',
-      url:refseeAPI,
-      dataType:'json',
-      data:'aplikasi=<?php echo $d0;?>&ref=hapus_angka_flowmeter_kalibrasi&KPE_AIR_FLOWMETER_KALIBRASI_ID='+KPE_AIR_FLOWMETER_KALIBRASI_ID,
-      success:function(data)
-      { 
-        $('tfoot#zone_total').empty();
-        if(data.respon.pesan=="sukses")
-        {
-          $("#modalEditFlowKalibrasi").modal('hide');
-          alert(data.respon.text_msg);  
-          listPerDept('1');
-          
-        }else if(data.respon.pesan=="gagal")
-        {
-          alert(data.respon.text_msg);
-          listPerDept('1');
-        }
-      },
-      error:function(x,e){
-        // error_handler_json(x,e,'=> hapus_catatan()');
-        alert('error')
-      }//end error
-    });
-  }
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          type:'POST',
+          url:refseeAPI,
+          dataType:'json',
+          data:'aplikasi=<?php echo $d0;?>&ref=hapus_angka_flowmeter_kalibrasi&KPE_AIR_FLOWMETER_KALIBRASI_ID='+KPE_AIR_FLOWMETER_KALIBRASI_ID,
+          success:function(data)
+          { 
+            $('tfoot#zone_total').empty();
+            if(data.respon.pesan=="sukses")
+            {
+              Swal.fire({
+                timer: 1000,
+                timerProgressBar: true,
+                title: 'Deleted!',
+                text: 'Your file has been deleted.',
+                icon: 'success',
+              })
+              $("#modalEditFlowKalibrasi").modal('hide');
+              listPerDept('1');
+              
+            }else if(data.respon.pesan=="gagal")
+            {
+              Swal.fire({
+                timer: 1000,
+                timerProgressBar: true,
+                title: 'Cant Deleted!',
+                text: 'Your file cant be deleted.',
+                icon: 'error'
+              })
+              listPerDept('1');
+            }
+          },
+          error:function(x,e){
+            // error_handler_json(x,e,'=> hapus_catatan()');
+            alert('error')
+          }//end error
+        });
+      }
+    })
   })
 
 </script>

@@ -13,16 +13,16 @@ $batas = $params['batas'];
 $posisi = $this->PAGING->cariPosisi($batas, $halaman);
 $input = $params['input_option'];
 
-$sql_a = "SELECT F.KPE_AIR_FLOWMETER_ID,F.KPE_AIR_FLOWMETER_NAMA,F.KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA FROM KPE_AIR_FLOWMETER AS F
-          WHERE F.RECORD_STATUS='A' ORDER BY F.KPE_AIR_FLOWMETER_NAMA";
-// $sql_a = "SELECT F.KPE_AIR_FLOWMETER_ID,F.KPE_AIR_FLOWMETER_NAMA,FD.KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA FROM KPE_AIR_FLOWMETER AS F 
-//           INNER JOIN KPE_AIR_FLOWMETER_DEPARTEMEN AS FD ON F.KPE_AIR_FLOWMETER_ID=FD.KPE_AIR_FLOWMETER_ID
-//           WHERE F.RECORD_STATUS='A' AND FD.RECORD_STATUS='A' ORDER BY F.KPE_AIR_FLOWMETER_NAMA";
+if (empty($input['MULTI_FILTER'])) {
+  $sql_a = "SELECT KPE_AIR_FLOWMETER_ID,KPE_AIR_FLOWMETER_NAMA,KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA FROM KPE_AIR_FLOWMETER
+          WHERE RECORD_STATUS='A' ORDER BY KPE_AIR_FLOWMETER_NAMA";
+} else {
+  $search_array = explode(",", $input['MULTI_FILTER']);
+  $search_text = "'" . implode("', '", $search_array) . "'";
+  $sql_a = "SELECT KPE_AIR_FLOWMETER_ID,KPE_AIR_FLOWMETER_NAMA,KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA FROM KPE_AIR_FLOWMETER
+          WHERE RECORD_STATUS='A' AND KPE_AIR_FLOWMETER_ID IN (".$search_text.") ORDER BY KPE_AIR_FLOWMETER_NAMA";
+}
 
-$this->MYSQL = new MYSQL();
-$this->MYSQL->database = $this->CONFIG->mysql_koneksi()->db_nama;
-$this->MYSQL->queri = $sql_a. " LIMIT " . $posisi . "," . $batas;
-$result_ab = $this->MYSQL->data();
 
 $no = $posisi + 1;
 
@@ -38,14 +38,22 @@ if($input['BULAN_FILTER']==""){
 }
 
 $tanggalAwals=$periodeTahunSekarang."-".$periodeBulanSekarang."-01";
-$tanggalbulankemaren = Date('Y-m-d',strtotime($tanggalAwals.'-1 day'));
+// $tanggalbulankemaren = Date('Y-m-d',strtotime($tanggalAwals.'-1 day'));
 
 $tanggalterakhir = date("Y-m-t", strtotime($periodeTahunSekarang.'-'.$periodeBulanSekarang));
 $tanggalAkhirs= Date('Y-m-d',strtotime($tanggalterakhir));
 $tanggalterakhirnya = date("d",strtotime($tanggalterakhir));
 
-$begin = new DateTime($tanggalbulankemaren);
-$end   = new DateTime($tanggalAkhirs);
+
+
+if ($input['dateRangeS'] == "NaN-NaN-NaN" || $input['dateRangeSE'] == "NaN-NaN-NaN") {
+  $begin = new DateTime($tanggalAwals);
+  $end   = new DateTime($tanggalAkhirs);
+} 
+else {
+  $begin = new DateTime($input['dateRangeS']);
+  $end   = new DateTime($input['dateRangeE']);
+}
 $no=0;
 for($iy = $begin; $iy <= $end; $iy->modify('+1 day'))
 {
@@ -97,21 +105,6 @@ for($iy = $begin; $iy <= $end; $iy->modify('+1 day'))
       } else {
         $row_flow['DEPARTEMEN']="";
       }
-
-      $this->MYSQL=new MYSQL();
-      $this->MYSQL->database=$this->CONFIG->mysql_koneksi()->db_nama;
-      $this->MYSQL->queri = "SELECT *
-                              FROM KPE_AIR_FLOWMETER_KALIBRASI
-                              WHERE KPE_AIR_FLOWMETER_ID='".$row_flow['KPE_AIR_FLOWMETER_ID']."' AND RECORD_STATUS='A' ORDER BY KPE_AIR_FLOWMETER_KALIBRASI_TANGGAL DESC LIMIT 1";
-      $result_TOTAL["'".$no."'"]=$this->MYSQL->data()[0]; 
-
-      if(count($result_TOTAL["'".$no."'"])>=1)
-      {
-        $row_flow['KAL']=$result_TOTAL["'".$no."'"];
-      }else
-      {
-        $row_flow['KAL']=array();
-      }
     $xy["'".$no."'"][]=$row_flow;
     $iys['FLOW'] = $xy["'".$no."'"];
 			
@@ -121,7 +114,6 @@ for($iy = $begin; $iy <= $end; $iy->modify('+1 day'))
 }
 
 
-// for ($k=0; $k < count($result_FLOWMETER); $k++) {
   
   for ($i=0; $i < count($result_FLOWMETER[0]['FLOW']); $i++) {
 
@@ -132,7 +124,7 @@ for($iy = $begin; $iy <= $end; $iy->modify('+1 day'))
       $tdept = "SELECT SUM(KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN_BEBAN_DEPARTEMEN) AS TOTAL,(SUM(KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN_BEBAN_DEPARTEMEN)/".count($result_FLOWMETER).") AS AVRG,
       (SUM(KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN_BEBAN_DEPARTEMEN)/".count($result_FLOWMETER)."*1000/200) AS DRUM,(SUM(KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN_BEBAN_DEPARTEMEN)*1000) AS LITER,
       (SUM(KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN_BEBAN_DEPARTEMEN)/200) AS DRUM2
-      FROM KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN WHERE KPE_AIR_FLOWMETER_ID='".$result_FLOWMETER[$j]['FLOW'][$i]['KPE_AIR_FLOWMETER_ID']."'
+      FROM KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN WHERE KPE_AIR_FLOWMETER_ID='".$result_FLOWMETER[0]['FLOW'][$i]['KPE_AIR_FLOWMETER_ID']."'
       AND KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN_TANGGAL>='".$periodeTahunSekarang."-".$periodeBulanSekarang."-01' AND KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN_TANGGAL<='".$periodeTahunSekarang."-".$periodeBulanSekarang."-31' AND RECORD_STATUS='A' GROUP BY KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN_NAMA ORDER BY KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN_NAMA";
       $this->MYSQL->queri = $tdept;
       $result_TOTAL_DEPT=$this->MYSQL->data();
@@ -181,8 +173,8 @@ if (empty($result_FLOWMETER))
     $this->callback['respon']['text_msg'] = "Data Ada ".print_r($result_FLOWMETER,true);
     $this->callback['filter'] = $params;
     $this->callback['result'] = $result_FLOWMETER;
-    // $this->callback['HASIL_PAKAI'] = $hasil_pakai;
-    // $this->callback['TOTAL'] = $TOTAL;
+    $this->callback['HASIL_PAKAI'] = $begin;
+    $this->callback['MULTI'] = $end;
     $this->callback['CATATAN'] = $SUM_CATATAN;
     $this->callback['AVERAGE'] = $AVRG;
     $this->callback['DRUM'] = $DRUM;

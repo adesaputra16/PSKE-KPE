@@ -34,29 +34,38 @@ if (empty($params['case']))
 				// $this->MYSQL->tabel ="KPE_AIR_FLOWMETER_DEPARTEMEN";
 				// $this->MYSQL->record = $data_master_dept;
 				// $this->MYSQL->simpan();
+				$sql_ca = "SELECT KPE_AIR_FLOWMETER_ID FROM KPE_AIR_FLOWMETER WHERE KPE_AIR_FLOWMETER_NAMA='".$input['KPE_AIR_FLOWMETER_NAMA']."' AND RECORD_STATUS='A'";
 
-				$data_master = array(
-					'KPE_AIR_FLOWMETER_INDEX' => waktu_decimal(Date("Y-m-d H:i:s")),
-					'KPE_AIR_FLOWMETER_ID' => waktu_decimal(Date("Y-m-d H:i:s")),
-					'KPE_AIR_FLOWMETER_NAMA' => $input['KPE_AIR_FLOWMETER_NAMA'],
-					'KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA' => $KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA,
-					'KPE_AIR_FLOWMETER_PERIODE' => $input['KPE_AIR_FLOWMETER_PERIODE'],
-					'KPE_AIR_FLOWMETER_SUB_ID' => $input['KPE_AIR_FLOWMETER_SUB_ID'],
-					'KPE_AIR_FLOWMETER_SUB_NAMA' => base64_decode($input['KPE_AIR_FLOWMETER_SUB_NAMA']),
-					'KPE_AIR_FLOWMETER_LOKASI' => $input['KPE_AIR_FLOWMETER_LOKASI'],
-					'KPE_AIR_FLOWMETER_DISTRIBUSI' => $input['KPE_AIR_FLOWMETER_DISTRIBUSI'],
-					'KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE' => $input['KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE'],
-					'ENTRI_WAKTU' => date("Y-m-d H:i:s"),
-					'ENTRI_OPERATOR' => $user_login['PERSONAL_NIK'],
-					'RECORD_STATUS' => "A"
-				);
-	
-				$this->MYSQL =new MYSQL;
+				$this->MYSQL = new MYSQL();
 				$this->MYSQL->database = $this->CONFIG->mysql_koneksi()->db_nama;
-				$this->MYSQL->tabel ="KPE_AIR_FLOWMETER";
-				$this->MYSQL->record = $data_master;
-	
-				if ($this->MYSQL->simpan() == true)
+				$this->MYSQL->queri = $sql_ca;
+				$result_ca = $this->MYSQL->data();
+				if ($result_ca >= 1) {
+					$this->callback['respon']['pesan'] = "gagal";
+					$this->callback['respon']['text_msg'] = "Flowmeter sudah pernah di input";
+				} else {
+					$data_master = array(
+						'KPE_AIR_FLOWMETER_INDEX' => waktu_decimal(Date("Y-m-d H:i:s")),
+						'KPE_AIR_FLOWMETER_ID' => waktu_decimal(Date("Y-m-d H:i:s")),
+						'KPE_AIR_FLOWMETER_NAMA' => $input['KPE_AIR_FLOWMETER_NAMA'],
+						'KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA' => $KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA,
+						'KPE_AIR_FLOWMETER_PERIODE' => $input['KPE_AIR_FLOWMETER_PERIODE'],
+						'KPE_AIR_FLOWMETER_SUB_ID' => $input['KPE_AIR_FLOWMETER_SUB_ID'],
+						'KPE_AIR_FLOWMETER_SUB_NAMA' => base64_decode($input['KPE_AIR_FLOWMETER_SUB_NAMA']),
+						'KPE_AIR_FLOWMETER_LOKASI' => $input['KPE_AIR_FLOWMETER_LOKASI'],
+						'KPE_AIR_FLOWMETER_DISTRIBUSI' => $input['KPE_AIR_FLOWMETER_DISTRIBUSI'],
+						'KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE' => $input['KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE'],
+						'ENTRI_WAKTU' => date("Y-m-d H:i:s"),
+						'ENTRI_OPERATOR' => $user_login['PERSONAL_NIK'],
+						'RECORD_STATUS' => "A"
+					);
+		
+					$this->MYSQL =new MYSQL;
+					$this->MYSQL->database = $this->CONFIG->mysql_koneksi()->db_nama;
+					$this->MYSQL->tabel ="KPE_AIR_FLOWMETER";
+					$this->MYSQL->record = $data_master;
+		
+					if ($this->MYSQL->simpan() == true)
 					{
 						
 							$this->callback['respon']['pesan']="sukses";
@@ -68,6 +77,7 @@ if (empty($params['case']))
 					$this->callback['respon']['pesan'] = "gagal";
 					$this->callback['respon']['text_msg'] = "Gagal Simpan";
 					}
+				}
 			}else 
 			{
 				$data_master_edit = array(

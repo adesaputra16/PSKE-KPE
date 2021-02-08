@@ -27,6 +27,12 @@ if (empty($input['keyword']) or $input['keyword'] == "")
   $filter_a1 = "AND FS.KPE_AIR_FLOWMETER_SUB_NAMA LIKE '%" . $input['keyword'] . "%'";
 }
 
+if ($input['KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE'] == '') {
+  $distribusi_type = '';
+} else {
+  $distribusi_type = "AND b.KPE_AIR_FLOWMETER_DISTRIBUSI LIKE '%".$input['KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE']."%'";
+}
+
 if ($input['BULAN_FILTER'] != "")
 {
 
@@ -74,13 +80,13 @@ foreach($result_a as $r)
         $DATE = Date('Y/m/d');
         $DATE = $input['DATA_sDATE'];
         $filter_b = "AND a.KPE_AIR_FLOWMETER_CATATAN_TANGGAL>='".$DATE."' AND a.KPE_AIR_FLOWMETER_CATATAN_TANGGAL<='".$DATE."'";
-        $sql_flow = "SELECT a.KPE_AIR_FLOWMETER_CATATAN_TANGGAL,a.KPE_AIR_FLOWMETER_CATATAN_ID,
+        $sql_flow = "SELECT a.KPE_AIR_FLOWMETER_CATATAN_TANGGAL,a.KPE_AIR_FLOWMETER_CATATAN_ID,a.KPE_AIR_FLOWMETER_CATATAN_BEBAN,
                     a.KPE_AIR_FLOWMETER_CATATAN_ANGKA,a.KPE_AIR_FLOWMETER_CATATAN_KALIBRASI,a.KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_REAL,a.ENTRI_WAKTU,
                     a.KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_SELISIH,a.KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_PERSEN,
                     b.KPE_AIR_FLOWMETER_NAMA,b.KPE_AIR_FLOWMETER_DISTRIBUSI,b.KPE_AIR_FLOWMETER_LOKASI,b.KPE_AIR_FLOWMETER_ID        
                     FROM KPE_AIR_FLOWMETER AS b LEFT JOIN KPE_AIR_FLOWMETER_CATATAN AS a ON a.KPE_AIR_FLOWMETER_ID=b.KPE_AIR_FLOWMETER_ID  
                     WHERE b.KPE_AIR_FLOWMETER_SUB_ID='".$r['KPE_AIR_FLOWMETER_SUB_ID']."'  
-                    AND b.RECORD_STATUS='A' AND  a.RECORD_STATUS='A' ".$filter_a." ".$filter_b." GROUP BY b.KPE_AIR_FLOWMETER_NAMA";
+                    AND b.RECORD_STATUS='A' AND  a.RECORD_STATUS='A' ".$filter_a." ".$filter_b." ".$distribusi_type." GROUP BY b.KPE_AIR_FLOWMETER_NAMA";
       }
       if ($input['DATA_eDATE'] != "")
       {

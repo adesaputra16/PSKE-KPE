@@ -16,25 +16,14 @@ $params_flow=array(
 'data_http'=>$_COOKIE['data_http'],
 'input_option'=>$input_option,
 );
-//$respon=$WO_MASTER->wo($params)->load->module;
+
 $sub = $KPE->kpe_modules($params_sub)->load->module;
 $flow = $KPE->kpe_modules($params_flow)->load->module;
-//print json_encode($respon);
-// $no=1;
-// foreach($respon['result'] as $r){
-// $detail_records .='<tr height="'.$height.'">
-//             <td valign="top" align="right"  height="'.$height.'">'.$no.'.</td>
-//             <td valign="top" >'.$r['KPE_AIR_FLOWMETER_NAMA'].'</td>
-//             <td valign="top" >'.$r['KPE_AIR_FLOWMETER_LOKASI'].'</td>
-//                       </tr>';
-//                       $no++;
-// }
 
-
-// echo "<pre>".print_r($respon,true)."</pre>";
-// exit();
 
 ?>
+
+<link rel="stylesheet" href="aplikasi/<?= $_SESSION['aplikasi']; ?>/asset/plugins/sweet-alert/sweetalert2.min.css">
 
 <style>
 
@@ -71,6 +60,14 @@ tr.trData:hover{
   background:rgba(250, 240, 202,0.5) !important;
 }
 
+.swal2-container {
+  z-index: 100005;
+}
+
+.swal2-popup {
+  font-size: 1.3rem !important; 
+}
+
 </style>
 
 <div class="box-body">
@@ -87,24 +84,37 @@ tr.trData:hover{
     <div class="col-md-4">
       <div class="form-group">
         <label for="KPE_AIR_FLOWMETER_NAMA">Flowmeter :</label>
-        <select id="KPE_AIR_FLOWMETER_NAMA" name="KPE_AIR_FLOWMETER_NAMA" class="form-control">
+        <select id="KPE_AIR_FLOWMETER_NAMA" name="KPE_AIR_FLOWMETER_NAMA" class="form-control selectpicker" data-live-search="true" onchange="tampil('1');">
           <option value="">--Pilih--</option>
+          <?php 
+            foreach ($flow['result'] as $rf) {
+              echo "<option value='$rf[KPE_AIR_FLOWMETER_ID]'>$rf[KPE_AIR_FLOWMETER_NAMA]</option>"; 
+            }
+          ?>
         </select>
       </div>
     </div>
     <div class="col-md-4">
       <div class="form-group">
         <label for="subFlowmeter">Sub Flowmeter :</label>
-        <select id="subFlowmeter" name="subFlowmeter" class="form-control">
+        <select id="subFlowmeter" name="subFlowmeter" class="form-control selectpicker" data-live-search="true" onchange="tampil('1');">
           <option value="">--Pilih--</option>
+          <?php 
+            foreach ($sub['result'] as $s) {
+              echo "<option value='$s[KPE_AIR_FLOWMETER_SUB_ID]'>$s[KPE_AIR_FLOWMETER_SUB_NAMA]</option>"; 
+            }
+          ?>
         </select>
       </div>
     </div>
     <div class="col-md-4">
       <div class="form-group">
-        <label for="lokasiFlowmeter">Lokasi :</label>
-        <select id="lokasiFlowmeter" name="lokasiFlowmeter" class="form-control">
+        <label for="KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE">Distribusi Type :</label>
+        <select id="KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE" name="KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE" class="form-control" onchange="tampil('1');">
           <option value="">--Pilih--</option>
+          <option value="PRE">PRE</option>
+          <option value="RO">RO</option>
+          <option value="REJECT">REJECT</option>
         </select>
       </div>
     </div>
@@ -120,8 +130,8 @@ tr.trData:hover{
                 <tr class="bordered">
                   <th class="bordered">No.</th>
                   <th class="bordered text-center">Aksi</th>
-                  <th class="bordered">Flowmeter</th>
                   <th class="bordered">Sub Flowmeter</th>
+                  <th class="bordered">Flowmeter</th>
                   <th class="bordered">Lokasi</th>
                   <th class="bordered">Distribusi</th>
                 </tr>
@@ -206,7 +216,7 @@ tr.trData:hover{
   </div>
 </div>
 <!-- Modal Edit Flow Dept -->
-<div class="modal fade" id="modalEditFlowDept" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index:110000;">
+<div class="modal fade" id="modalEditFlowDept" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index:100004;">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
     <div class="modal-header">
@@ -286,7 +296,7 @@ tr.trData:hover{
             </div>
             <div class="form-group">
               <label for="KPE_AIR_FLOWMETER_DISTRIBUSI">Distribusi</label>
-              <input type="text" class="form-control" id="KPE_AIR_FLOWMETER_DISTRIBUSI" name="KPE_AIR_FLOWMETER_DISTRIBUSI" placeholder="KPE_AIR_FLOWMETER_DISTRIBUSI">
+              <input type="text" class="form-control" id="KPE_AIR_FLOWMETER_DISTRIBUSI" name="KPE_AIR_FLOWMETER_DISTRIBUSI" placeholder="KPE_AIR_FLOWMETER_DISTRIBUSI" autocomplete="off">
             </div>
             <div class="form-group">
               <label for="KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE">Type Distribusi</label>
@@ -314,9 +324,12 @@ tr.trData:hover{
     </div>
   </div>
 </div>
+
+<script src="aplikasi/<?= $_SESSION['aplikasi']; ?>/asset/plugins/sweet-alert/sweetalert2.min.js"></script>
 <script>
 
 $(function(){
+  tampil('1');
   $('.selectpicker').selectpicker();
   $("input#KPE_AIR_FLOWMETER_DEPARTEMEN_TANGGAL").datepicker().on('changeDate', function(ev)
   {  
@@ -342,8 +355,7 @@ function simpan()
 {
   var fData=$("#fData").serialize();
   var data = "&KPE_AIR_FLOWMETER_SUB_NAMA="+btoa($("#KPE_AIR_FLOWMETER_SUB_ID").children("option:selected").text())+"&"+fData
-  // alert(KPE_AIR_FLOWMETER_SUB_NAMA);
-  // alert(data)
+  // console.log(data);
   // return
   $.ajax({
     type:'POST',
@@ -352,24 +364,37 @@ function simpan()
     data:'aplikasi=<?php echo $d0;?>&ref=simpan_flowmeter'+data,
     success:function(data)
     { 
-      
+      $('tfoot#zone_total').empty();
       if(data.respon.pesan=="sukses")
       {
+        Swal.fire({
+          timer: 1200,
+          timerProgressBar: true,
+          title: 'Berhasil!',
+          text: 'Data berhasil tersimpan!',
+          icon: 'success',
+        })
         $("#modalFlowmeter").modal('hide');
         $('.selectpicker').selectpicker("val","");
-        alert(data.respon.text_msg);
+        // alert(data.respon.text_msg);
         tampil('1');
         
       }else if(data.respon.pesan=="gagal")
       {
-        alert(data.respon.text_msg);
+        Swal.fire({
+          title: 'Gagal',
+          text: ''+data.respon.text_msg+'',
+          icon: 'error'
+        })
         tampil('1');
       }
     },
     error:function(x,e){
-      error_handler_json(x,e,'=> simpan_flowmeter()');
+      // error_handler_json(x,e,'=> hapus_catatan()');
+      console.log('error')
     }//end error
   });
+     
 }
 
 
@@ -381,25 +406,25 @@ $('tbody').on('click', 'a.edit', function(){
   var KPE_AIR_FLOWMETER_DISTRIBUSI = $(this).attr('KPE_AIR_FLOWMETER_DISTRIBUSI');
   var KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE = $(this).attr('KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE');
   var KPE_AIR_FLOWMETER_SUB_ID = $(this).attr('KPE_AIR_FLOWMETER_SUB_ID');
-  var KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA = $(this).attr('KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA');
+  // var KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA = $(this).attr('KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA');
   // console.log(KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA);
-  var arr = KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA.split(",");
-  // console.log(arr);
-  if (arr == "") {
-    $("#newRow").empty();
-  } else {
-    for (var d = 0; d < arr.length; d++) {
-      $('#newRow').append( /*html*/`<div id="inputFormRow" class="form-group">
-                                      <label>Departemen</label>
-                                      <div class="input-group">
-                                      <input type="text" class="form-control" id="KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA" name="KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA[]" autocomplete="off" placeholder="KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA" step="any" value="${arr[d]}">
-                                        <span class="input-group-btn">
-                                        <button attrid="1" type="button" class="removeFlowDept btn btn-danger" name="removeFlowDept" id="removeFlowDept" data-placement="top" title="Remove"><i class="fa fa-minus"></i></button>
-                                        </span>
-                                      </div>
-                                    </div>`);
-    }
-  }
+  // var arr = KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA.split(",");
+  // // console.log(arr);
+  // if (arr == "") {
+  //   $("#newRow").empty();
+  // } else {
+  //   for (var d = 0; d < arr.length; d++) {
+  //     $('#newRow').append( /*html*/`<div id="inputFormRow" class="form-group">
+  //                                     <label>Departemen</label>
+  //                                     <div class="input-group">
+  //                                     <input type="text" class="form-control" id="KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA" name="KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA[]" autocomplete="off" placeholder="KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA" step="any" value="${arr[d]}">
+  //                                       <span class="input-group-btn">
+  //                                       <button attrid="1" type="button" class="removeFlowDept btn btn-danger" name="removeFlowDept" id="removeFlowDept" data-placement="top" title="Remove"><i class="fa fa-minus"></i></button>
+  //                                       </span>
+  //                                     </div>
+  //                                   </div>`);
+  //   }
+  // }
   $("#modalFlowmeter").modal('show');
   $('input#KPE_AIR_FLOWMETER_NAMA_ID').val(KPE_AIR_FLOWMETER_NAMA);
   $('input#KPE_AIR_FLOWMETER_LOKASI').val(KPE_AIR_FLOWMETER_LOKASI);
@@ -413,15 +438,6 @@ $(window).on('hashchange', function(e) {
   tampil('1');
 });
 $("input#REC_PER_HALAMAN").on('change', function() {
-  tampil('1');
-});
-$("select#KPE_AIR_FLOWMETER_NAMA_ID").on('change', function() {
-  tampil('1');
-});
-$("select#lokasiFlowmeter").on('change', function() {
-  tampil('1');
-});
-$("select#subFlowmeter").on('change', function() {
   tampil('1');
 });
 
@@ -441,9 +457,10 @@ function tampil(curPage)
     type: 'POST',
     url: refseeAPI,
     dataType: 'json',
-    data:'aplikasi=<?php echo $d0;?>&ref=tampil_flowmeter&keyword='+$("input#keyword").val()+'&idFlowmeter='+$("select#KPE_AIR_FLOWMETER_NAMA").val()+'&lokasiFlowmeter='+$("select#lokasiFlowmeter").val()+'&subFlowmeter='+$("select#subFlowmeter").val()+'&batas='+$("input#REC_PER_HALAMAN").val()+'&halaman='+ curPage,
+    data:'aplikasi=<?php echo $d0;?>&ref=tampil_flowmeter&keyword='+$("input#keyword").val()+'&idFlowmeter='+$("select#KPE_AIR_FLOWMETER_NAMA").val()+'&subFlowmeter='+$("select#subFlowmeter").val()+'&KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE='+$("select#KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE").val()+'&batas='+$("input#REC_PER_HALAMAN").val()+'&halaman='+ curPage,
     success: function(data) {
-			// console.log(data.result);
+			// console.log(data.tes);
+			console.log(data.result);
       if (data.respon.pesan == "sukses") {
         $("tbody#zone_data").empty();
         $('#tujuan-light-pagination').pagination({
@@ -467,13 +484,13 @@ function tampil(curPage)
                   "<i class='caret'></i>"+
                 "</button>"+
                 "<ul class='dropdown-menu'>"+
-                  "<li><a class='edit' KPE_AIR_FLOWMETER_ID='" + data.result[i].KPE_AIR_FLOWMETER_ID + "' KPE_AIR_FLOWMETER_NAMA='" + data.result[i].KPE_AIR_FLOWMETER_NAMA + "' KPE_AIR_FLOWMETER_DISTRIBUSI='" + data.result[i].KPE_AIR_FLOWMETER_DISTRIBUSI + "' KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE='" + data.result[i].KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE + "' KPE_AIR_FLOWMETER_SUB_ID='" + data.result[i].KPE_AIR_FLOWMETER_SUB_ID + "' KPE_AIR_FLOWMETER_LOKASI='" + data.result[i].KPE_AIR_FLOWMETER_LOKASI + "' KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA='" + KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA +"'><i class='fa fa-edit'></i>Edit</a></li>"+
-                  "<li><a class='hapus' KPE_AIR_FLOWMETER_ID='" + data.result[i].KPE_AIR_FLOWMETER_ID + "'><i class='fa fa-trash'></i>Hapus</a></li>"+
+                  "<li><a class='edit' style='color:rgb(0, 48, 73);' KPE_AIR_FLOWMETER_ID='" + data.result[i].KPE_AIR_FLOWMETER_ID + "' KPE_AIR_FLOWMETER_NAMA='" + data.result[i].KPE_AIR_FLOWMETER_NAMA + "' KPE_AIR_FLOWMETER_DISTRIBUSI='" + data.result[i].KPE_AIR_FLOWMETER_DISTRIBUSI + "' KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE='" + data.result[i].KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE + "' KPE_AIR_FLOWMETER_SUB_ID='" + data.result[i].KPE_AIR_FLOWMETER_SUB_ID + "' KPE_AIR_FLOWMETER_LOKASI='" + data.result[i].KPE_AIR_FLOWMETER_LOKASI + "' KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA='" + KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA +"'><i class='fa fa-edit'></i>Edit</a></li>"+
+                  "<li><a class='hapus' style='color:brown;' KPE_AIR_FLOWMETER_ID='" + data.result[i].KPE_AIR_FLOWMETER_ID + "'><i class='fa fa-trash'></i>Hapus</a></li>"+
                 "</ul>"+
               "</div>"+
             "</td>"+
-            "<td class='bordered'>" + data.result[i].KPE_AIR_FLOWMETER_NAMA + "</td>" +
             "<td class='bordered'>" + data.result[i].KPE_AIR_FLOWMETER_SUB_NAMA + "</td>" +
+            "<td class='bordered'>" + data.result[i].KPE_AIR_FLOWMETER_NAMA + "</td>" +
             "<td class='bordered'>" + data.result[i].KPE_AIR_FLOWMETER_LOKASI + "</td>" +
             "<td class='bordered'>" + data.result[i].KPE_AIR_FLOWMETER_DISTRIBUSI + "</td>" +
             "</tr>");
@@ -489,76 +506,57 @@ function tampil(curPage)
   });
 }
 
-function ambil_flowmeter()
-{
-  $.ajax({
-    type: 'POST',
-    url: refseeAPI,
-    dataType: 'json',
-    data:'aplikasi=<?php echo $d0;?>&ref=ambil_daftar_flowmeter',
-    success: function(data) {
-			//console.log("List");
-      if (data.respon.pesan == "sukses") 
-      {
-        for (i = 0; i < data.result.length; i++) {
-          $("select#KPE_AIR_FLOWMETER_NAMA").append("<option value='" + data.result[i].KPE_AIR_FLOWMETER_ID + "'>" + data.result[i].KPE_AIR_FLOWMETER_NAMA + "</option>");
-          // $("select#KPE_AIR_FLOWMETER_NAMA_DEPT").append("<option value='" + data.result[i].KPE_AIR_FLOWMETER_ID + "'>" + data.result[i].KPE_AIR_FLOWMETER_NAMA + "</option>");
-          $("select#lokasiFlowmeter").append("<option value='" + data.result[i].KPE_AIR_FLOWMETER_ID + "'>" + data.result[i].KPE_AIR_FLOWMETER_LOKASI + "</option>");
-          $("select#subFlowmeter").append("<option value='" + data.result[i].KPE_AIR_FLOWMETER_SUB_ID + "'>" + data.result[i].KPE_AIR_FLOWMETER_SUB_NAMA + "</option>");
-        }
-      }else
-      {}
-    }
-  })
-}
-
-function ambil_subflowmeter()
-{
-  $.ajax({
-    type: 'POST',
-    url: refseeAPI,
-    dataType: 'json',
-    data:'aplikasi=<?php echo $d0;?>&ref=ambil_sub_flowmeter',
-    success: function(data) {
-			//console.log("List");
-      if (data.respon.pesan == "sukses") 
-      {
-        // for (i = 0; i < data.result.length; i++) {
-        //   $("select#KPE_AIR_FLOWMETER_SUB_ID").append("<option value='" + data.result[i].KPE_AIR_FLOWMETER_SUB_ID + "'>" + data.result[i].KPE_AIR_FLOWMETER_SUB_NAMA + "</option>");
-        // }
-      }else
-      {
-      }
-    }
-  })
-}
-
 $('tbody').on('click', 'a.hapus', function(){
   var KPE_AIR_FLOWMETER_ID = $(this).attr('KPE_AIR_FLOWMETER_ID');
-  if (confirm('Yakin akan menghapus data ini??')){
-    $.ajax({
-      type:'POST',
-      url:refseeAPI,
-      dataType:'json',
-      data:'aplikasi=<?php echo $d0;?>&ref=hapus_flowmeter&KPE_AIR_FLOWMETER_ID='+KPE_AIR_FLOWMETER_ID,
-      success:function(data)
-      { 
-        if(data.respon.pesan=="sukses")
-        {
-          alert(data.respon.text_msg);
-          tampil('1');
-          
-        }else if(data.respon.pesan=="gagal")
-        {
-          alert(data.respon.text_msg);
-          tampil('1');
-        }
-      },
-      error:function(x,e){
-        error_handler_json(x,e,'=> hapus_flowmeter()');
-      }//end error
-    });
-  }
+
+  Swal.fire({
+      title: 'Apakah anda yakin?',
+      text: "Setelah dihapus data tidak bisa dikembalikan!",
+      icon: 'warning',
+      showCancelButton: true,
+      cancelButtonText: 'Tidak!',
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Ya, yakin!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        type:'POST',
+        url:refseeAPI,
+        dataType:'json',
+        data:'aplikasi=<?php echo $d0;?>&ref=hapus_flowmeter&KPE_AIR_FLOWMETER_ID='+KPE_AIR_FLOWMETER_ID,
+        success:function(data)
+        { 
+          if(data.respon.pesan=="sukses")
+          {
+            Swal.fire({
+              timer: 1000,
+              timerProgressBar: true,
+              title: 'Terhapus!',
+              text: 'Data berhasil dihapus.',
+              icon: 'success',
+            })
+            tampil('1');
+            
+          }else if(data.respon.pesan=="gagal")
+          {
+            Swal.fire({
+              timer: 1000,
+              timerProgressBar: true,
+              title: 'Gagal!',
+              text: 'Data gagal terhapus.',
+              icon: 'error'
+            })
+            tampil('1');
+          }
+        },
+        error:function(x,e){
+          // error_handler_json(x,e,'=> hapus_catatan()');
+          alert('error')
+        }//end error
+      });
+    }
+  })
 })
 
 $('#cetakPdf').on('click', function(){
@@ -578,12 +576,6 @@ $('#btn-reload').on('click', function(){
   $('select#subFlowmeter').val('')
   tampil('1');
 })
-
-$(function() {
-  ambil_flowmeter();
-  tampil('1');
-  ambil_subflowmeter();
-});
 
 function search(){
 	tampil('1');
@@ -738,7 +730,7 @@ function list_flowmeter_departemen()
                                                               <td class="bordered text-center">${data.result[i].KPE_AIR_FLOWMETER_DEPARTEMEN_PERIODE}</td>
                                                               <td class="bordered text-center">
                                                                 <a id="pilihFlowDept" type="button" class="btn btn-xs btn-info" KPE_AIR_FLOWMETER_ID="${data.result[i].KPE_AIR_FLOWMETER_ID}" KPE_AIR_FLOWMETER_DEPARTEMEN_ID="${data.result[i].KPE_AIR_FLOWMETER_DEPARTEMEN_ID}" KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA="${JSON.parse(data.result[i].KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA)}" KPE_AIR_FLOWMETER_DEPARTEMEN_PERIODE="${data.result[i].KPE_AIR_FLOWMETER_DEPARTEMEN_PERIODE}" KPE_AIR_FLOWMETER_NAMA="${data.result[i].KPE_AIR_FLOWMETER_NAMA}">Pilih</a>
-                                                                <a id="hapusFlowDept" type="button" class="btn btn-xs btn-danger" KPE_AIR_FLOWMETER_DEPARTEMEN_ID="${data.result[i].KPE_AIR_FLOWMETER_DEPARTEMEN_ID}">Hapus</a>
+                                                                <a id="hapusFlowDept" type="button" class="btn btn-xs btn-danger" KPE_AIR_FLOWMETER_DEPARTEMEN_ID="${data.result[i].KPE_AIR_FLOWMETER_DEPARTEMEN_ID}" KPE_AIR_FLOWMETER_ID="${data.result[i].KPE_AIR_FLOWMETER_ID}">Hapus</a>
                                                               </td>
                                                              </tr>`);    
         }
@@ -752,34 +744,57 @@ function list_flowmeter_departemen()
 
   $('tbody').on('click', 'a#hapusFlowDept', function(){
     var KPE_AIR_FLOWMETER_DEPARTEMEN_ID = $(this).attr('KPE_AIR_FLOWMETER_DEPARTEMEN_ID');
+    var KPE_AIR_FLOWMETER_ID = $(this).attr('KPE_AIR_FLOWMETER_ID');
   // alert(KPE_AIR_FLOWMETER_KALIBRASI_ID);
-  if (confirm('Yakin akan menghapus data ini??')){
-    $.ajax({
-      type:'POST',
-      url:refseeAPI,
-      dataType:'json',
-      data:'aplikasi=<?php echo $d0;?>&ref=hapus_flowmeter_departemen&KPE_AIR_FLOWMETER_DEPARTEMEN_ID='+KPE_AIR_FLOWMETER_DEPARTEMEN_ID,
-      success:function(data)
-      { 
-        $('tfoot#zone_total').empty();
-        if(data.respon.pesan=="sukses")
-        {
-          $("#modalEditFlowDept").modal('hide');
-          alert(data.respon.text_msg);  
-          tampil('1');
-          
-        }else if(data.respon.pesan=="gagal")
-        {
-          alert(data.respon.text_msg);
-          tampil('1');
-        }
-      },
-      error:function(x,e){
-        // error_handler_json(x,e,'=> hapus_catatan()');
-        alert('error')
-      }//end error
-    });
-  }
+
+    Swal.fire({
+      title: 'Apakah anda yakin?',
+      text: "Setelah dihapus data tidak bisa dikembalikan!",
+      icon: 'warning',
+      showCancelButton: true,
+      cancelButtonText: 'Tidak!',
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Ya, yakin!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          type:'POST',
+          url:refseeAPI,
+          dataType:'json',
+          data:'aplikasi=<?php echo $d0;?>&ref=hapus_flowmeter_departemen&KPE_AIR_FLOWMETER_DEPARTEMEN_ID='+KPE_AIR_FLOWMETER_DEPARTEMEN_ID+'&KPE_AIR_FLOWMETER_ID='+KPE_AIR_FLOWMETER_ID,
+          success:function(data)
+          { 
+            if(data.respon.pesan=="sukses")
+            {
+              Swal.fire({
+                timer: 1000,
+                timerProgressBar: true,
+                title: 'Terhapus!',
+                text: 'Data berhasil dihapus.',
+                icon: 'success',
+              })
+              tampil('1');
+              
+            }else if(data.respon.pesan=="gagal")
+            {
+              Swal.fire({
+                timer: 1000,
+                timerProgressBar: true,
+                title: 'Gagal!',
+                text: 'Data gagal terhapus.',
+                icon: 'error'
+              })
+              tampil('1');
+            }
+          },
+          error:function(x,e){
+            // error_handler_json(x,e,'=> hapus_catatan()');
+            alert('error')
+          }//end error
+        });
+      }
+    })
   })
 
 </script>
