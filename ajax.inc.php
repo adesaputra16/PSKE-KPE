@@ -26,6 +26,9 @@ switch($ref){
 			case 'list_beban_harian':
 				require_once("ajax/air/beban_harian/list_beban_harian.php");
 			break;
+			case 'simpan_beban_pre':
+				require_once("ajax/air/beban_harian/simpan_beban_pre.php");
+			break;
 
 			// Case Per Dept
 			case 'list_per_dept':

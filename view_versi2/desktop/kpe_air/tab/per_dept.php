@@ -19,6 +19,7 @@
 <link rel="stylesheet" href="aplikasi/<?= $_SESSION['aplikasi']; ?>/asset/plugins/sweet-alert/sweetalert2.min.css">
 
 <style>
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
 .loader {
   border: 7px solid #f3f3f3;
   border-radius: 50%;
@@ -203,6 +204,116 @@ tr.drum2{
   font-size: 1.3rem !important; 
 }
 
+.circular{
+  height: 100px;
+  width: 100px;
+  position: relative;
+}
+.circular .inner, .circular .outer, .circular .circle{
+  position: absolute;
+  z-index: 6;
+  height: 100%;
+  width: 100%;
+  border-radius: 100%;
+  box-shadow: inset 0 1px 0 rgba(0,0,0,0.2);
+}
+.circular .inner{
+  top: 50%;
+  left: 50%;
+  height: 80px;
+  width: 80px;
+  margin: -40px 0 0 -40px;
+  background-color: #dde6f0;
+  border-radius: 100%;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.2);
+}
+.circular .circle{
+  z-index: 1;
+  box-shadow: none;
+}
+.circular .numb{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  font-size: 18px;
+  font-weight: 500;
+  color: #4158d0;
+  font-family: 'Poppins', sans-serif;
+}
+.circular .bar{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: #fff;
+  -webkit-border-radius: 100%;
+  clip: rect(0px, 100px, 100px, 50px);
+}
+.circle .bar .progress{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  -webkit-border-radius: 100%;
+  clip: rect(0px, 50px, 100px, 0px);
+}
+.circle .bar .progress, .dot span{
+  background: #4158d0;
+}
+.circle .left .progress{
+  z-index: 1;
+  animation: left 2s linear both;
+}
+@keyframes left {
+  100%{
+    transform: rotate(180deg);
+  }
+}
+.circle .right{
+  z-index: 3;
+  transform: rotate(180deg);
+}
+.circle .right .progress{
+  animation: right 2s linear both;
+  animation-delay: 2s;
+}
+@keyframes right {
+  100%{
+    transform: rotate(180deg);
+  }
+}
+.circle .dot{
+  z-index: 2;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 50%;
+  height: 10px;
+  margin-top: -5px;
+  animation: dot 4s linear both;
+  transform-origin: 0% 50%;
+}
+.circle .dot span {
+  position: absolute;
+  right: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+}
+@keyframes dot{
+  0% {
+    transform: rotate(-90deg);
+  }
+  50% {
+    transform: rotate(90deg);
+    z-index: 4;
+  }
+  100% {
+    transform: rotate(270deg);
+    z-index: 4;
+  }
+}
+
 </style>
 
 
@@ -343,13 +454,35 @@ tr.drum2{
                   </tr>
               </thead>
               <tbody id="zone_data">
-                <tr>
+                <!-- <tr>
                   <td class="backloader" colspan="20">
                     <center>
                       <div class="loader"></div>
                     </center>
                   </td>
-                </tr>
+                </tr> -->
+                <center id="preloader">
+                  <br><br>
+                  <div class="circular">
+                    <div class="inner"></div>
+                      <div class="outer"></div>
+                        <div class="numb">0%</div>
+                      <div class="circle">
+                        <div class="dot">
+                          <span></span>
+                        </div>
+                      <div class="bar left">
+                        <div class="progress">
+                      </div>
+                      </div>
+                        <div class="bar right">
+                          <div class="progress">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <br><br>
+                </center>
               </tbody>
               <tfoot class="total" id="zone_total">
               </tfoot>
@@ -533,13 +666,26 @@ $(document).ready(function () {
       html:true,
       placement:'right'
     });
-    listPerDept('1');
-    list_rumus('1');
+    // listPerDept('1');
+    // list_rumus('1');
     $('input[name="dateRange"]').daterangepicker();
     $(".selectpicker").selectpicker();
   });	
 })
   
+  const numb = document.querySelector(".numb");
+  let counter = 0;
+  const timeValue = setInterval(()=>{
+    if(counter == 100){
+      $('#preloader').remove();
+      clearInterval(timeValue);
+      listPerDept('1');
+      list_rumus('1');
+    }else{
+      counter+=1;
+      numb.textContent = counter + "%";
+    }
+  }, 40);
 
   $(function(){
     $('input#DATA_eDATE').attr("readonly","readonly");
@@ -844,7 +990,7 @@ $(document).ready(function () {
             currentPage: curPage,
           });
 
-          console.log(data.MULTI);
+          // console.log(data.result);
               var listData ="";
               for (var i = 0; i < data.result.length; i++) 
               {
@@ -881,11 +1027,11 @@ $(document).ready(function () {
                       kalkosong += /*html*/`<td class="bordered" style="top:100px;">&nbsp;</td>`;
                       depts = parseFloat(data.result[i].FLOW[j].DEPARTEMEN[e].KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN_BEBAN_DEPARTEMEN).toFixed(3);
                       deptss = data.result[i].FLOW[j].DEPARTEMEN[e].KPE_AIR_FLOWMETER_CATATAN_DEPARTEMEN_PERSONIL_HASIL;
-                      if (i == 0) {
-                        dept +=/*html*/`<td class="text-right bordered">${deptss}</td>`;
-                      }else {
+                      // if (i == 0) {
+                      //   dept +=/*html*/`<td class="text-right bordered">${deptss}</td>`;
+                      // }else {
                         dept +=/*html*/`<td class="text-right bordered">${depts}</td>`;
-                      }
+                      // }
                     }
                   }
 

@@ -72,7 +72,7 @@ tr.trData:hover{
 
 <div class="box-body">
   <button type="button" class="btn btn-sm btn-success btnFlowmeter"><i class="fa fa-plus-square" aria-hidden="true"></i> Tambah Flowmeter</button>
-  <button type="button" class="btn btn-sm btn-info btnFlowmeterDept">Flowmeter Departemen</button>
+  <!-- <button type="button" class="btn btn-sm btn-info btnFlowmeterDept">Flowmeter Departemen</button> -->
   <!-- <div class="pull-right">
     <button type="button" class="btn btn-sm btn-primary" id="btn-reload"><i class="fa fa-refresh" aria-hidden="true"></i> Refresh</button>
     <a href=""  type="button" id="cetakPdf" class="btn btn-sm btn-warning"><i class="fa fa-print" aria-hidden="true"></i> Cetak</a> 
@@ -159,7 +159,7 @@ tr.trData:hover{
     </div>
     <div class="col-md-3 text-right">
       <label>Jumlah Baris Per Halaman</label>
-      <input class="form-control" id="REC_PER_HALAMAN" max='1000' min="1" name="REC_PER_HALAMAN" required="" type="number" value="10">
+      <input class="form-control" id="REC_PER_HALAMAN" max='1000' min="1" name="REC_PER_HALAMAN" required="" type="number" value="100">
     </div>
   </div>
 </div>

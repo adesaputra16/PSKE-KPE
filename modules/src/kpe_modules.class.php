@@ -149,6 +149,9 @@ CLASS KPE_MODULES extends USER_PRIVILEGES
 		case 'nonlogin_list_beban_harian':
 			require_once ("kpe_air/beban_harian/List_beban_harian.php");
 		break;
+		case 'nonlogin_simpan_beban_pre':
+			require_once ("kpe_air/beban_harian/Simpan_beban_pre.php");
+		break;
 		// Case Per Dept
 		case 'nonlogin_list_per_dept':
 			require_once ("kpe_air/per_dept/List_per_dept.php");

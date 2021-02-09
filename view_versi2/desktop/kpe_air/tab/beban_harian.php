@@ -1,5 +1,5 @@
 
-
+<link rel="stylesheet" href="aplikasi/<?= $_SESSION['aplikasi']; ?>/asset/plugins/sweet-alert/sweetalert2.min.css">
 <style> 
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
 
@@ -58,7 +58,7 @@
     font-size: 1.3rem !important; 
   }
 
-  .circular{
+.circular{
   height: 100px;
   width: 100px;
   position: relative;
@@ -116,7 +116,7 @@
 }
 .circle .left .progress{
   z-index: 1;
-  animation: left 4s linear both;
+  animation: left 2s linear both;
 }
 @keyframes left {
   100%{
@@ -128,8 +128,8 @@
   transform: rotate(180deg);
 }
 .circle .right .progress{
-  animation: right 4s linear both;
-  animation-delay: 4s;
+  animation: right 2s linear both;
+  animation-delay: 2s;
 }
 @keyframes right {
   100%{
@@ -144,7 +144,7 @@
   width: 50%;
   height: 10px;
   margin-top: -5px;
-  animation: dot 8s linear both;
+  animation: dot 4s linear both;
   transform-origin: 0% 50%;
 }
 .circle .dot span {
@@ -255,18 +255,33 @@
         <div class="box-body">
           <!-- <div class="col-md-12"> -->
             <div class="table-responsive Content">
-              <table class="table table-hover table-bordered table-sticky" id="sum_table">
+              <table class="table table-hover table-bordered table-sticky">
                 <thead>
+                    <script>
+                      function tHead() {
+                        $('tr#nFlowmeter').html(/*html*/`<th width="10" class="text-center">No</th>
+                                                          <th width="" class="text-center">Aksi</th>
+                                                          <th width="" class="text-center">DEPT.</th>
+                                                          <th colspan="2" width="" class="text-center" style="width:130px">AVG Bulan Lalu(M&sup3;/Day) </th>
+                                                          <th width="" class="text-center">AVG (M&sup3;/Day) </th>
+                                                          <th colspan="2" width="" class="text-center">TOTAL (M&sup3;/Bulan) </th>`);
+                      }
+                    </script>
+                    <!-- <script>
+                      function tHead() {
+                        $('tr#nFlowmeter').html(/*html*/`<th width="10" class="text-center">No</th>
+                                                          <th width="" class="text-center">Aksi</th>
+                                                          <th width="" class="text-center">DEPT.</th>
+                                                          <th colspan="2" width="" class="text-center">Domestik (M&sup2;/Day)</th>
+                                                          <th colspan="2" width="" class="text-center">Produk/Evap/Steam (M&sup3;/Day)</th>
+                                                          <th colspan="2" width="" class="text-center">Proses (M&sup3;/Day)</th>
+                                                          <th colspan="2" width="" class="text-center" style="width:130px">AVG Bulan Lalu(M&sup3;/Day) </th>
+                                                          <th width="" class="text-center">AVG (M&sup3;/Day) </th>
+                                                          <th colspan="2" width="" class="text-center">TOTAL (M&sup3;/Bulan) </th>`);
+                      }
+                    </script> -->
                     <tr id="nFlowmeter">
-                      <th width="10" class="text-center">No</th>
-                      <th colspan="2" width="" class="text-center">Aksi</th>
-                      <th width="" class="text-center">DEPT.</th>
-                      <th colspan="2" width="" class="text-center">Domestik (M&sup2;/Day)</th>
-                      <th colspan="2" width="" class="text-center">Produk/Evap/Steam (M&sup3;/Day)</th>
-                      <th colspan="2" width="" class="text-center">Proses (M&sup3;/Day)</th>
-                      <th colspan="2" width="" class="text-center" style="width:130px">AVG Bulan Lalu(M&sup3;/Day) </th>
-                      <th width="" class="text-center">AVG (M&sup3;/Day) </th>
-                      <th colspan="2" width="" class="text-center">TOTAL (M&sup3;/Bulan) </th>
+                      
                       <!-- <script>
                         $(document).ready(function () {
                         
@@ -348,14 +363,35 @@
                       </script> -->
                     </tr>
                 </thead>
-                <tbody id="zone_data">
-                  <tr> 
+                <tbody id="zone_data_pre">
+                  <!-- <tr> 
                     <td class="backloader" colspan="30">
                       <center>
                         <div class="loader"></div>
                       </center>
                     </td>
-                  </tr>
+                  </tr> -->
+                  <center id="preloader">
+                    <div class="circular">
+                      <div class="inner"></div>
+                        <div class="outer"></div>
+                          <div class="numb">0%</div>
+                        <div class="circle">
+                          <div class="dot">
+                            <span></span>
+                          </div>
+                        <div class="bar left">
+                          <div class="progress">
+                        </div>
+                        </div>
+                          <div class="bar right">
+                            <div class="progress">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <br><br>
+                  </center>
                 </tbody>
                 <tfoot id="zone_total">
                 </tfoot>
@@ -387,37 +423,13 @@
         <div class="box-body">
           <!-- <div class="col-md-12"> -->
             <div class="table-responsive Content">
-              <table class="table table-hover table-bordered table-sticky" id="sum_table">
+              <table class="table table-hover table-bordered table-sticky">
                 <thead>
                     <tr id="nFlowmeter">
                     </tr>
                 </thead>
-                <tbody id="">
-                  <!-- <tr>  -->
-                    <!-- <td colspan="30"> -->
-                      <center>
-                        <div class="circular">
-                          <div class="inner"></div>
-                            <div class="outer"></div>
-                              <div class="numb">0%</div>
-                            <div class="circle">
-                              <div class="dot">
-                                <span></span>
-                              </div>
-                            <div class="bar left">
-                              <div class="progress">
-                            </div>
-                            </div>
-                              <div class="bar right">
-                                <div class="progress">
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <br><br>
-                      </center>
-                    <!-- </td> -->
-                  <!-- </tr> -->
+                <tbody id="zone_data_ro">
+
                 </tbody>
                 <tfoot id="zone_total">
                 </tfoot>
@@ -449,7 +461,7 @@
         <div class="box-body">
           <!-- <div class="col-md-12"> -->
             <div class="table-responsive Content">
-              <table class="table table-hover table-bordered table-sticky" id="sum_table">
+              <table class="table table-hover table-bordered table-sticky" id="bebanPRE">
                 <thead>
                     <tr id="nFlowmeter">
                       
@@ -669,22 +681,27 @@
 
 </div>
 
+<script src="aplikasi/<?= $_SESSION['aplikasi']; ?>/asset/plugins/sweet-alert/sweetalert2.min.js"></script>
+
 <script>
 
   const numb = document.querySelector(".numb");
   let counter = 0;
-  setInterval(()=>{
+  const timeValue = setInterval(()=>{
     if(counter == 100){
-      clearInterval();
+      $('#preloader').remove();
+      clearInterval(timeValue);
+      listBebanHarian('1');
+      tHead();
     }else{
       counter+=1;
       numb.textContent = counter + "%";
     }
-  }, 80);
+  }, 40);
 
   $(function() {
     $('a.sidebar-toggle').click()
-    listBebanHarian('1')
+    // listBebanHarian('1')
   });
 
   function formatNumber(num) {
@@ -695,6 +712,16 @@
     listBebanHarian('1');
   })
 
+  function tambahKosong(x){
+    y=(x>9)?x:'0'+x;
+    return y;
+  }
+
+  //? =============================================================== ?//
+  //? ================== CODE DISTRIBUSI PRE ======================== ?//
+  //? =============================================================== ?//
+
+  //TODO ================== LIST BEBAN HARIAN ======================== TODO//
   function listBebanHarian(curPage)
   {
     var url = window.location.href;
@@ -718,46 +745,41 @@
         
         if (data.respon.pesan == "sukses") 
         {
-          console.log(data.result);
-          console.log(formatNumber(data.TOTAL_BEBAN));
-          console.log(data.SUM_TOTAL_BEBAN_HARIAN);
-          console.log(data.AVG_BEBAN_BULAN_LALU);
+          console.log(data.RESULT_RO[0]);
+          console.log(data.RESULT_PRE[0]);
+          // console.log(data.TOTAL_BEBAN_RO);
+          // console.log(data.SUM_TOTAL_BEBAN_HARIAN_RO);
           console.log(data.SUM_TOTAL_BEBAN_HARIAN_BULAN_LALU);
+          console.log(data.SUM_TOTAL_BEBAN_HARIAN_BULAN_LALU_RO);
           
           // $("span.hasil_beban").html(data.respon.hasil_beban);
-          $("tbody#zone_data").empty();
+          $("tbody#zone_data_pre").empty();
+          $("tbody#zone_data_ro").empty();
+          $("tbody#zone_data_pre").empty();
           $('#tujuan-light-pagination').pagination({
             pages: data.result_option.jml_halaman,
             cssStyle: 'light-theme',
             currentPage: curPage,
           });
 
-          var listBeban='';
-          var listFlow = '';
-          var listTd = '';
-          var tableContent = '';
-          var listTable = '';
-          var listBeban = '';
+          var listFlowPre='';
+          var listFlowRo='';
+          var tableContentPre = '';
+          var tableContentRo = '';
 
-          for (var i = 0; i < data.result.length; i++) { 
-            var object = data.result[i].BEBAN;
+          //!============= LOOPING FLOWMETER PRE ==============!//
+          for (var i = 0; i < data.RESULT_PRE.length; i++) { 
+            var object = data.RESULT_PRE[i].BEBAN;
             
-            // console.log(data.result+'==='+object);
-            listFlow = /*html*/`<td>${data.result[i].NO}</td>
-                                <td><button type="button" class="btn btn-sm btn-primary editBeban"  NO="${data.result[i].NO}" KPE_AIR_FLOWMETER_NAMA="${data.result[i].KPE_AIR_FLOWMETER_NAMA}" BEBAN_AVRG="${data.result[i].TOTAL.AVG}" TOTAL_BEBAN="${data.result[i].TOTAL.TOTAL_BEBAN}"><i class="fa fa-edit"></i></button></td>
-                                <td><button type="button" class="btn btn-sm btn-warning"><i class="fa fa-save"></i></button></td>
-                                <td>${data.result[i].KPE_AIR_FLOWMETER_NAMA}</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>${parseFloat(data.result[i].TOTAL_BULAN_LALU.AVG_BULAN_LALU).toFixed(2)}</td>
-                                <td>${parseFloat(data.result[i].TOTAL_BULAN_LALU.AVG_BULAN_LALU / data.AVG_BEBAN_BULAN_LALU * 100).toFixed(2)}</td>
-                                <td>${data.result[i].TOTAL.AVG}</td>
-                                <td>${data.result[i].TOTAL.TOTAL_BEBAN}</td>
-                                <td>${parseFloat(data.result[i].TOTAL.TOTAL_BEBAN / data.TOTAL_BEBAN * 100).toFixed(2)}</td>`;
+            // console.log(data.RESULT_PRE+'==='+object);
+            listFlowPre = /*html*/`<td>${data.RESULT_PRE[i].NO}</td>
+                                  <td class="text-center"><button type="button" class="btn btn-sm btn-primary editBebanPRE"  NO="${data.RESULT_PRE[i].NO}" KPE_AIR_FLOWMETER_NAMA="${data.RESULT_PRE[i].KPE_AIR_FLOWMETER_NAMA}" KPE_AIR_FLOWMETER_ID="${data.RESULT_PRE[i].KPE_AIR_FLOWMETER_ID}" BEBAN_AVRG="${data.RESULT_PRE[i].TOTAL.AVG}" TOTAL_BEBAN="${formatNumber(parseFloat(data.RESULT_PRE[i].TOTAL.TOTAL_BEBAN).toFixed(2))}" TOTAL_BEBAN_HASIL_RUMUS="${parseFloat(data.RESULT_PRE[i].TOTAL.TOTAL_BEBAN / data.TOTAL_BEBAN * 100).toFixed(2)}" AVG_BULAN_LALU="${parseFloat(data.RESULT_PRE[i].TOTAL_BULAN_LALU.AVG_BULAN_LALU).toFixed(2)}" AVG_BULAN_LALU_HASIL_RUMUS="${parseFloat(data.RESULT_PRE[i].TOTAL_BULAN_LALU.AVG_BULAN_LALU / data.AVG_BEBAN_BULAN_LALU * 100).toFixed(2)}" KPE_AIR_FLOWMETER_BEBAN_DOMESTIK_A="${data.RESULT_PRE[i].BEBAN_BULANAN.KPE_AIR_FLOWMETER_BEBAN_DOMESTIK_A}" KPE_AIR_FLOWMETER_BEBAN_DOMESTIK_B="${data.RESULT_PRE[i].BEBAN_BULANAN.KPE_AIR_FLOWMETER_BEBAN_DOMESTIK_B}" KPE_AIR_FLOWMETER_BEBAN_PRODUK_A="${data.RESULT_PRE[i].BEBAN_BULANAN.KPE_AIR_FLOWMETER_BEBAN_PRODUK_A}" KPE_AIR_FLOWMETER_BEBAN_PRODUK_B="${data.RESULT_PRE[i].BEBAN_BULANAN.KPE_AIR_FLOWMETER_BEBAN_PRODUK_B}" KPE_AIR_FLOWMETER_BEBAN_PROSES_A="${data.RESULT_PRE[i].BEBAN_BULANAN.KPE_AIR_FLOWMETER_BEBAN_PROSES_A}" KPE_AIR_FLOWMETER_BEBAN_PROSES_B="${data.RESULT_PRE[i].BEBAN_BULANAN.KPE_AIR_FLOWMETER_BEBAN_PROSES_B}"><i class="fa fa-edit"></i></button></td>
+                                  <td>${data.RESULT_PRE[i].KPE_AIR_FLOWMETER_NAMA}</td>
+                                  <td>${parseFloat(data.RESULT_PRE[i].TOTAL_BULAN_LALU.AVG_BULAN_LALU).toFixed(2)}</td>
+                                  <td>${parseFloat(data.RESULT_PRE[i].TOTAL_BULAN_LALU.AVG_BULAN_LALU / data.AVG_BEBAN_BULAN_LALU * 100).toFixed(2)}</td>
+                                  <td>${data.RESULT_PRE[i].TOTAL.AVG}</td>
+                                  <td>${formatNumber(parseFloat(data.RESULT_PRE[i].TOTAL.TOTAL_BEBAN).toFixed(2))}</td>
+                                  <td>${parseFloat(data.RESULT_PRE[i].TOTAL.TOTAL_BEBAN / data.TOTAL_BEBAN * 100).toFixed(2)}</td>`;
 
               // for (var property=i in object) {
               //   listBeban +=  /*html*/`<td class="bordered">${(object[property])}</td>`;
@@ -768,15 +790,43 @@
                                     
           //   // } 
           //   // tableContent += /*html*/`<tr class="trData">${listData+btnEdit}</tr>`;
-            tableContent += /*html*/`<tr>${listFlow} ${listBeban}</tr>`;
+            tableContentPre += /*html*/`<tr>${listFlowPre}</tr>`;
+            
+          }
+
+          //!============= LOOPING FLOWMETER RO ==============!//
+          for (var i = 0; i < data.RESULT_RO.length; i++) { 
+            var object = data.RESULT_RO[i].BEBAN;
+            
+            // console.log(data.RESULT_RO+'==='+object);
+            listFlowRo = /*html*/`<td>${data.RESULT_RO[i].NO}</td>
+                                <td class="text-center"><button type="button" class="btn btn-sm btn-primary editBebanRO"  NO="${data.RESULT_RO[i].NO}" KPE_AIR_FLOWMETER_NAMA="${data.RESULT_RO[i].KPE_AIR_FLOWMETER_NAMA}" KPE_AIR_FLOWMETER_ID="${data.RESULT_RO[i].KPE_AIR_FLOWMETER_ID}" BEBAN_AVRG="${data.RESULT_RO[i].TOTAL_RO.AVG}" TOTAL_BEBAN="${formatNumber(parseFloat(data.RESULT_RO[i].TOTAL_RO.TOTAL_BEBAN).toFixed(2))}" TOTAL_BEBAN_HASIL_RUMUS="${parseFloat(data.RESULT_RO[i].TOTAL_RO.TOTAL_BEBAN / data.TOTAL_BEBAN_RO * 100).toFixed(2)}" AVG_BULAN_LALU="${parseFloat(data.RESULT_RO[i].TOTAL_BULAN_LALU_RO.AVG_BULAN_LALU).toFixed(2)}" AVG_BULAN_LALU_HASIL_RUMUS="${parseFloat(data.RESULT_RO[i].TOTAL_BULAN_LALU_RO.AVG_BULAN_LALU / data.AVG_BEBAN_BULAN_LALU_RO * 100).toFixed(2)}" KPE_AIR_FLOWMETER_BEBAN_DOMESTIK_A="${data.RESULT_RO[i].BEBAN_BULANAN_RO.KPE_AIR_FLOWMETER_BEBAN_DOMESTIK_A}" KPE_AIR_FLOWMETER_BEBAN_DOMESTIK_B="${data.RESULT_RO[i].BEBAN_BULANAN_RO.KPE_AIR_FLOWMETER_BEBAN_DOMESTIK_B}" KPE_AIR_FLOWMETER_BEBAN_PRODUK_A="${data.RESULT_RO[i].BEBAN_BULANAN_RO.KPE_AIR_FLOWMETER_BEBAN_PRODUK_A}" KPE_AIR_FLOWMETER_BEBAN_PRODUK_B="${data.RESULT_RO[i].BEBAN_BULANAN_RO.KPE_AIR_FLOWMETER_BEBAN_PRODUK_B}" KPE_AIR_FLOWMETER_BEBAN_PROSES_A="${data.RESULT_RO[i].BEBAN_BULANAN_RO.KPE_AIR_FLOWMETER_BEBAN_PROSES_A}" KPE_AIR_FLOWMETER_BEBAN_PROSES_B="${data.RESULT_RO[i].BEBAN_BULANAN_RO.KPE_AIR_FLOWMETER_BEBAN_PROSES_B}"><i class="fa fa-edit"></i></button></td>
+                                <td>${data.RESULT_RO[i].KPE_AIR_FLOWMETER_NAMA}</td>
+                                <td>${parseFloat(data.RESULT_RO[i].TOTAL_BULAN_LALU_RO.AVG_BULAN_LALU).toFixed(2)}</td>
+                                <td>${parseFloat(data.RESULT_RO[i].TOTAL_BULAN_LALU_RO.AVG_BULAN_LALU / data.AVG_BEBAN_BULAN_LALU_RO * 100).toFixed(2)}</td>
+                                <td>${data.RESULT_RO[i].TOTAL_RO.AVG}</td>
+                                <td>${formatNumber(parseFloat(data.RESULT_RO[i].TOTAL_RO.TOTAL_BEBAN).toFixed(2))}</td>
+                                <td>${parseFloat(data.RESULT_RO[i].TOTAL_RO.TOTAL_BEBAN / data.TOTAL_BEBAN_RO * 100).toFixed(2)}</td>`;
+
+              // for (var property=i in object) {
+              //   listBeban +=  /*html*/`<td class="bordered">${(object[property])}</td>`;
+              // }
+            
+          //   // for (property in object) {
+          //   //   listFlow += /*html*/`<td>${object[property]}</td>`;
+                                    
+          //   // } 
+          //   // tableContent += /*html*/`<tr class="trData">${listData+btnEdit}</tr>`;
+            tableContentRo += /*html*/`<tr>${listFlowRo}</tr>`;
             
           }
                                   
-          $('tbody#zone_data').append(tableContent);
+          $('tbody#zone_data_pre').append(tableContentPre);
+          $('tbody#zone_data_ro').append(tableContentRo);
           
         } else if (data.respon.pesan == "gagal") {
           // alert(data.respon.text_msg);
-          $("tbody#zone_data").html("<tr><td colspan='7'><div class='alert alert-danger' role='alert'><span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span> " + data.respon.text_msg + "</div></td></tr>");
+          $("tbody#zone_data_pre").html("<tr><td colspan='7'><div class='alert alert-danger' role='alert'><span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span> " + data.respon.text_msg + "</div></td></tr>");
         }
       }, //end success
       error: function(x, e) {
@@ -785,54 +835,119 @@
       } //end error
     });
   }
+  //TODO ================== END LIST BEBAN HARIAN ======================== TODO//
 
-  $(document).on('click', '.editBeban', function(){
+  //TODO ================== EDIT BEBAN HARIAN ======================== TODO//
+  $(document).on('click', '.editBebanPRE', function(){
+    $('button.editBebanPRE').attr('disabled','disabled');
     let html = '';
 
       html += '<td>'+$(this).attr('NO')+'</td>';
-      html += '<td><button type="button" class="btn btn-sm btn-danger cancelEdit" NO="'+$(this).attr('NO')+'" KPE_AIR_FLOWMETER_NAMA="'+$(this).attr('KPE_AIR_FLOWMETER_NAMA')+'" BEBAN_AVRG="'+$(this).attr('BEBAN_AVRG')+'" TOTAL_BEBAN="'+$(this).attr('TOTAL_BEBAN')+'"><i class="fa fa-undo" aria-hidden="true"></i></button></td>';
-      html += '<td><button type="button" class="btn btn-sm btn-warning simpanBeban"><i class="fa fa-save"></i></button></td>';
+      html += '<td class="text-center"><button type="button" class="btn btn-sm btn-danger cancelEditPRE" NO="'+$(this).attr('NO')+'" KPE_AIR_FLOWMETER_NAMA="'+$(this).attr('KPE_AIR_FLOWMETER_NAMA')+'" KPE_AIR_FLOWMETER_ID="'+$(this).attr('KPE_AIR_FLOWMETER_ID')+'" BEBAN_AVRG="'+$(this).attr('BEBAN_AVRG')+'" TOTAL_BEBAN="'+$(this).attr('TOTAL_BEBAN')+'" TOTAL_BEBAN_HASIL_RUMUS="'+$(this).attr('TOTAL_BEBAN_HASIL_RUMUS')+'" AVG_BULAN_LALU="'+$(this).attr('AVG_BULAN_LALU')+'" AVG_BULAN_LALU_HASIL_RUMUS="'+$(this).attr('AVG_BULAN_LALU_HASIL_RUMUS')+'" KPE_AIR_FLOWMETER_BEBAN_DOMESTIK_A="'+$(this).attr('KPE_AIR_FLOWMETER_BEBAN_DOMESTIK_A')+'" KPE_AIR_FLOWMETER_BEBAN_DOMESTIK_B="'+$(this).attr('KPE_AIR_FLOWMETER_BEBAN_DOMESTIK_B')+'" KPE_AIR_FLOWMETER_BEBAN_PRODUK_A="'+$(this).attr('KPE_AIR_FLOWMETER_BEBAN_PRODUK_A')+'" KPE_AIR_FLOWMETER_BEBAN_PRODUK_B="'+$(this).attr('KPE_AIR_FLOWMETER_BEBAN_PRODUK_B')+'" KPE_AIR_FLOWMETER_BEBAN_PROSES_A="'+$(this).attr('KPE_AIR_FLOWMETER_BEBAN_PROSES_A')+'" KPE_AIR_FLOWMETER_BEBAN_PROSES_B="'+$(this).attr('KPE_AIR_FLOWMETER_BEBAN_PROSES_B')+'"><i class="fa fa-undo" aria-hidden="true"></i></button>&nbsp;<button type="button" class="btn btn-sm btn-warning simpanBebanPRE" BEBAN_AVRG="'+$(this).attr('BEBAN_AVRG')+'" KPE_AIR_FLOWMETER_NAMA="'+$(this).attr('KPE_AIR_FLOWMETER_NAMA')+'" KPE_AIR_FLOWMETER_ID="'+$(this).attr('KPE_AIR_FLOWMETER_ID')+'"><i class="fa fa-save"></i></button></td>';
       html += '<td>'+$(this).attr('KPE_AIR_FLOWMETER_NAMA')+'</td>';
-      html += '<td>13.03</td>';
-      html += '<td>13.03</td>';
-      html += '<td><input class="form-control" id="REC_PER_HALAMAN1" name="REC_PER_HALAMAN1" required type="text" pattern="[0-9]+" title="please enter number only" required="required" ></td>';
-      html += '<td>13.03</td>';
-      html += '<td><input class="form-control" id="REC_PER_HALAMAN" name="REC_PER_HALAMAN" required type="text" pattern="[0-9]+" title="please enter number only" required="required" ></td>';
-      html += '<td>13.03</td>';
-      html += '<td>13.03</td>';
-      html += '<td>13.03</td>';
+      // html += '<td>'+$(this).attr('KPE_AIR_FLOWMETER_BEBAN_DOMESTIK_A')+'</td>';
+      // html += '<td>'+$(this).attr('KPE_AIR_FLOWMETER_BEBAN_DOMESTIK_B')+'</td>';
+      // html += '<td><input class="form-control" id="KPE_AIR_FLOWMETER_BEBAN_PRODUK_A" name="KPE_AIR_FLOWMETER_BEBAN_PRODUK_A" required type="text" pattern="[0-9]+" title="please enter number only" value="'+$(this).attr('KPE_AIR_FLOWMETER_BEBAN_PRODUK_A')+'"></td>';
+      // html += '<td>'+$(this).attr('KPE_AIR_FLOWMETER_BEBAN_PRODUK_B')+'</td>';
+      // html += '<td><input class="form-control" id="KPE_AIR_FLOWMETER_BEBAN_PROSES_A" name="KPE_AIR_FLOWMETER_BEBAN_PROSES_A" required type="text" pattern="[0-9]+" title="please enter number only" value="'+$(this).attr('KPE_AIR_FLOWMETER_BEBAN_PROSES_A')+'"></td>';
+      // html += '<td>'+$(this).attr('KPE_AIR_FLOWMETER_BEBAN_PROSES_B')+'</td>';
+      html += '<td>'+$(this).attr('AVG_BULAN_LALU')+'</td>';
+      html += '<td>'+$(this).attr('AVG_BULAN_LALU_HASIL_RUMUS')+'</td>';
       html += '<td>'+$(this).attr('BEBAN_AVRG')+'</td>';
       html += '<td>'+$(this).attr('TOTAL_BEBAN')+'</td>';
-      html += '<td>13.03</td>';
+      html += '<td>'+$(this).attr('TOTAL_BEBAN_HASIL_RUMUS')+'</td>';
    
     $(this).closest('tr').html(html);
   });
 
-  $(document).on('click', '.cancelEdit', function(){
+  $(document).on('click', '.cancelEditPRE', function(){
+    $('button.editBebanPRE').removeAttr('disabled');
     let html = '';
 
       html += '<td>'+$(this).attr('NO')+'</td>';
-      html += '<td><button type="button" class="btn btn-sm btn-primary editBeban" NO="'+$(this).attr('NO')+'" KPE_AIR_FLOWMETER_NAMA="'+$(this).attr('KPE_AIR_FLOWMETER_NAMA')+'" BEBAN_AVRG="'+$(this).attr('BEBAN_AVRG')+'" TOTAL_BEBAN="'+$(this).attr('TOTAL_BEBAN')+'"><i class="fa fa-edit" aria-hidden="true"></i></button></td>';
-      html += '<td><button type="button" class="btn btn-sm btn-warning simpanBeban"><i class="fa fa-save"></i></button></td>';
+      html += '<td class="text-center"><button type="button" class="btn btn-sm btn-primary editBebanPRE" NO="'+$(this).attr('NO')+'" KPE_AIR_FLOWMETER_NAMA="'+$(this).attr('KPE_AIR_FLOWMETER_NAMA')+'" KPE_AIR_FLOWMETER_ID="'+$(this).attr('KPE_AIR_FLOWMETER_ID')+'" BEBAN_AVRG="'+$(this).attr('BEBAN_AVRG')+'" TOTAL_BEBAN="'+$(this).attr('TOTAL_BEBAN')+'" TOTAL_BEBAN_HASIL_RUMUS="'+$(this).attr('TOTAL_BEBAN_HASIL_RUMUS')+'" AVG_BULAN_LALU="'+$(this).attr('AVG_BULAN_LALU')+'" AVG_BULAN_LALU_HASIL_RUMUS="'+$(this).attr('AVG_BULAN_LALU_HASIL_RUMUS')+'" KPE_AIR_FLOWMETER_BEBAN_DOMESTIK_A="'+$(this).attr('KPE_AIR_FLOWMETER_BEBAN_DOMESTIK_A')+'" KPE_AIR_FLOWMETER_BEBAN_DOMESTIK_B="'+$(this).attr('KPE_AIR_FLOWMETER_BEBAN_DOMESTIK_B')+'" KPE_AIR_FLOWMETER_BEBAN_PRODUK_A="'+$(this).attr('KPE_AIR_FLOWMETER_BEBAN_PRODUK_A')+'" KPE_AIR_FLOWMETER_BEBAN_PRODUK_B="'+$(this).attr('KPE_AIR_FLOWMETER_BEBAN_PRODUK_B')+'" KPE_AIR_FLOWMETER_BEBAN_PROSES_A="'+$(this).attr('KPE_AIR_FLOWMETER_BEBAN_PROSES_A')+'" KPE_AIR_FLOWMETER_BEBAN_PROSES_B="'+$(this).attr('KPE_AIR_FLOWMETER_BEBAN_PROSES_B')+'"><i class="fa fa-edit" aria-hidden="true"></i></button></td>';
       html += '<td>'+$(this).attr('KPE_AIR_FLOWMETER_NAMA')+'</td>';
-      html += '<td>13.03</td>';
-      html += '<td>13.03</td>';
-      html += '<td>13.03</td>';
-      html += '<td>13.03</td>';
-      html += '<td>13.03</td>';
-      html += '<td>13.03</td>';
-      html += '<td>13.03</td>';
-      html += '<td>13.03</td>';
+      // html += '<td>'+$(this).attr('KPE_AIR_FLOWMETER_BEBAN_DOMESTIK_A')+'</td>';
+      // html += '<td>'+$(this).attr('KPE_AIR_FLOWMETER_BEBAN_DOMESTIK_B')+'</td>';
+      // html += '<td>'+$(this).attr('KPE_AIR_FLOWMETER_BEBAN_PRODUK_A')+'</td>';
+      // html += '<td>'+$(this).attr('KPE_AIR_FLOWMETER_BEBAN_PRODUK_B')+'</td>';
+      // html += '<td>'+$(this).attr('KPE_AIR_FLOWMETER_BEBAN_PROSES_A')+'</td>';
+      // html += '<td>'+$(this).attr('KPE_AIR_FLOWMETER_BEBAN_PROSES_B')+'</td>';
+      html += '<td>'+$(this).attr('AVG_BULAN_LALU')+'</td>';
+      html += '<td>'+$(this).attr('AVG_BULAN_LALU_HASIL_RUMUS')+'</td>';
       html += '<td>'+$(this).attr('BEBAN_AVRG')+'</td>';
       html += '<td>'+$(this).attr('TOTAL_BEBAN')+'</td>';
-      html += '<td>13.03</td>';
+      html += '<td>'+$(this).attr('TOTAL_BEBAN_HASIL_RUMUS')+'</td>';
    
     $(this).closest('tr').html(html);
   });
+  //TODO ================== END EDIT BEBAN HARIAN ======================== TODO//
 
-  $(document).on('click', '.simpanBeban', function(){
-    let a = $('#REC_PER_HALAMAN1').val();
-    let b = $('#REC_PER_HALAMAN').val();
-    alert(a+'='+b)
+  //TODO ================== SIMPAN BEBAN HARIAN ======================== TODO//
+  $(document).on('click', '.simpanBebanPRE', function(){
+    let date = new Date();
+    if ($('#BULAN_FILTER').val() == "" && $('#TAHUN_FILTER').val() == "") {
+      var PERIODE = date.getFullYear()+'-'+tambahKosong(date.getMonth()+1);
+    } else {  
+      PERIODE = $('#BULAN_FILTER').val()+'-'+$('#TAHUN_FILTER').val();
+    }
+    let KPE_AIR_FLOWMETER_BEBAN_PRODUK_A = $('#KPE_AIR_FLOWMETER_BEBAN_PRODUK_A').val();
+    let KPE_AIR_FLOWMETER_BEBAN_PROSES_A = $('#KPE_AIR_FLOWMETER_BEBAN_PROSES_A').val();
+    let BEBAN_AVRG = $(this).attr('BEBAN_AVRG');
+    let KPE_AIR_FLOWMETER_ID=$(this).attr('KPE_AIR_FLOWMETER_ID');
+    let KPE_AIR_FLOWMETER_NAMA=$(this).attr('KPE_AIR_FLOWMETER_NAMA');
+    let data = 'KPE_AIR_FLOWMETER_BEBAN_PRODUK_A='+KPE_AIR_FLOWMETER_BEBAN_PRODUK_A+'&KPE_AIR_FLOWMETER_BEBAN_PROSES_A='+KPE_AIR_FLOWMETER_BEBAN_PROSES_A+'&BEBAN_AVRG='+BEBAN_AVRG+'&KPE_AIR_FLOWMETER_ID='+KPE_AIR_FLOWMETER_ID+'&KPE_AIR_FLOWMETER_NAMA='+KPE_AIR_FLOWMETER_NAMA+'&KPE_AIR_FLOWMETER_BEBAN_PERIODE='+PERIODE+'';
+    // console.log(data)
+    // return
+    Swal.fire({
+        title: 'Yakin ingin menyimpan?',
+        text: "Data akan disimpan!",
+        icon: 'warning',
+        showCancelButton: true,
+        cancelButtonText: 'Tidak!',
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, yakin!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          type:'POST',
+          url:refseeAPI,
+          dataType:'json',
+          data:'aplikasi=<?php echo $d0;?>&ref=simpan_beban_pre&'+data,
+          success:function(data)
+          { 
+            
+            if(data.respon.pesan=="sukses")
+            {
+              // Swal.fire({
+              //   timer: 1000,
+              //   timerProgressBar: true,
+              //   title: 'Berhasil!',
+              //   text: ''+data.respon.text_msg+'',
+              //   icon: 'success',
+              // })
+              listBebanHarian('1');
+            }else if(data.respon.pesan=="gagal")
+            {
+              Swal.fire({
+                title: 'Gagal!',
+                text: ''+data.respon.text_msg+'',
+                icon: 'error'
+              })
+              listBebanHarian('1');
+            }
+          },
+          error:function(x,e){
+            error_handler_json(x,e,'=> simpan_beban_pre()');
+          }//end error
+        });
+      }
+    })
   });
+  //TODO ================== END SIMPAN BEBAN HARIAN ======================== TODO//
+
+  //? =============================================================== ?//
+  //? ================== CODE DISTRIBUSI RO ========================= ?//
+  //? =============================================================== ?//
 </script>

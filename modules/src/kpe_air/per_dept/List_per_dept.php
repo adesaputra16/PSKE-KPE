@@ -46,7 +46,7 @@ $tanggalterakhirnya = date("d",strtotime($tanggalterakhir));
 
 
 
-if ($input['dateRangeS'] == "NaN-NaN-NaN" || $input['dateRangeSE'] == "NaN-NaN-NaN") {
+if ($input['dateRangeS'] == "NaN-NaN-NaN" || $input['dateRangeSE'] == "NaN-NaN-NaN" || $input['BULAN_FILTER'] == "") {
   $begin = new DateTime($tanggalAwals);
   $end   = new DateTime($tanggalAkhirs);
 } 
