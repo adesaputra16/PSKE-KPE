@@ -1,7 +1,20 @@
+<?php
+  $input_option=array();
+  $params=array(
+    'case'=>"nonlogin_list_beban_harian",
+    'batas'=>100,
+    'halaman'=>1,
+    'data_http'=>$_COOKIE['data_http'],
+    'input_option'=>$input_option,
+  );
+  $respon_flow = $KPE->kpe_modules($params)->load->module;
+  // echo "<pre>".print_r($respon_flow['RESULT_PRE'],true)."</pre>";
+  // exit();
+?>
 
 <link rel="stylesheet" href="aplikasi/<?= $_SESSION['aplikasi']; ?>/asset/plugins/sweet-alert/sweetalert2.min.css">
 <style> 
-@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+ @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
 
   .loader {
     border: 7px solid #f3f3f3;
@@ -58,115 +71,115 @@
     font-size: 1.3rem !important; 
   }
 
-.circular{
-  height: 100px;
-  width: 100px;
-  position: relative;
-}
-.circular .inner, .circular .outer, .circular .circle{
-  position: absolute;
-  z-index: 6;
-  height: 100%;
-  width: 100%;
-  border-radius: 100%;
-  box-shadow: inset 0 1px 0 rgba(0,0,0,0.2);
-}
-.circular .inner{
-  top: 50%;
-  left: 50%;
-  height: 80px;
-  width: 80px;
-  margin: -40px 0 0 -40px;
-  background-color: #dde6f0;
-  border-radius: 100%;
-  box-shadow: 0 1px 0 rgba(0,0,0,0.2);
-}
-.circular .circle{
-  z-index: 1;
-  box-shadow: none;
-}
-.circular .numb{
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 10;
-  font-size: 18px;
-  font-weight: 500;
-  color: #4158d0;
-  font-family: 'Poppins', sans-serif;
-}
-.circular .bar{
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  background: #fff;
-  -webkit-border-radius: 100%;
-  clip: rect(0px, 100px, 100px, 50px);
-}
-.circle .bar .progress{
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  -webkit-border-radius: 100%;
-  clip: rect(0px, 50px, 100px, 0px);
-}
-.circle .bar .progress, .dot span{
-  background: #4158d0;
-}
-.circle .left .progress{
-  z-index: 1;
-  animation: left 2s linear both;
-}
-@keyframes left {
-  100%{
+  .circular{
+    height: 100px;
+    width: 100px;
+    position: relative;
+  }
+  .circular .inner, .circular .outer, .circular .circle{
+    position: absolute;
+    z-index: 6;
+    height: 100%;
+    width: 100%;
+    border-radius: 100%;
+    box-shadow: inset 0 1px 0 rgba(0,0,0,0.2);
+  }
+  .circular .inner{
+    top: 50%;
+    left: 50%;
+    height: 80px;
+    width: 80px;
+    margin: -40px 0 0 -40px;
+    background-color: #dde6f0;
+    border-radius: 100%;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.2);
+  }
+  .circular .circle{
+    z-index: 1;
+    box-shadow: none;
+  }
+  .circular .numb{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    font-size: 18px;
+    font-weight: 500;
+    color: #4158d0;
+    font-family: 'Poppins', sans-serif;
+  }
+  .circular .bar{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: #fff;
+    -webkit-border-radius: 100%;
+    clip: rect(0px, 100px, 100px, 50px);
+  }
+  .circle .bar .progress{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    -webkit-border-radius: 100%;
+    clip: rect(0px, 50px, 100px, 0px);
+  }
+  .circle .bar .progress, .dot span{
+    background: #4158d0;
+  }
+  .circle .left .progress{
+    z-index: 1;
+    animation: left 2s linear both;
+  }
+  @keyframes left {
+    100%{
+      transform: rotate(180deg);
+    }
+  }
+  .circle .right{
+    z-index: 3;
     transform: rotate(180deg);
   }
-}
-.circle .right{
-  z-index: 3;
-  transform: rotate(180deg);
-}
-.circle .right .progress{
-  animation: right 2s linear both;
-  animation-delay: 2s;
-}
-@keyframes right {
-  100%{
-    transform: rotate(180deg);
+  .circle .right .progress{
+    animation: right 2s linear both;
+    animation-delay: 2s;
   }
-}
-.circle .dot{
-  z-index: 2;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 50%;
-  height: 10px;
-  margin-top: -5px;
-  animation: dot 4s linear both;
-  transform-origin: 0% 50%;
-}
-.circle .dot span {
-  position: absolute;
-  right: 0;
-  width: 10px;
-  height: 10px;
-  border-radius: 100%;
-}
-@keyframes dot{
-  0% {
-    transform: rotate(-90deg);
+  @keyframes right {
+    100%{
+      transform: rotate(180deg);
+    }
   }
-  50% {
-    transform: rotate(90deg);
-    z-index: 4;
+  .circle .dot{
+    z-index: 2;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 50%;
+    height: 10px;
+    margin-top: -5px;
+    animation: dot 4s linear both;
+    transform-origin: 0% 50%;
   }
-  100% {
-    transform: rotate(270deg);
-    z-index: 4;
+  .circle .dot span {
+    position: absolute;
+    right: 0;
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
   }
-}
+  @keyframes dot{
+    0% {
+      transform: rotate(-90deg);
+    }
+    50% {
+      transform: rotate(90deg);
+      z-index: 4;
+    }
+    100% {
+      transform: rotate(270deg);
+      z-index: 4;
+    }
+  }
 </style>
 
 <div class="box-body">
@@ -238,6 +251,11 @@
   </div>
   <!-- /.End Pencarian -->
 
+  <!-- //? TOTAL DISTRIBUSI PRE & RO -->
+    <div class="TOTAL_DISTRIBUSI_PRE_RO"></div>
+  <!-- //? END TOTAL DISTRIBUSI PRE & RO -->
+    
+
   <!-- List data flowmeter PRE -->
   <div class="row">
     <div class="col-md-12">
@@ -254,14 +272,14 @@
         <!-- /.box-header -->
         <div class="box-body">
           <!-- <div class="col-md-12"> -->
+          <div id="totalPre"></div>
             <div class="table-responsive Content">
               <table class="table table-hover table-bordered table-sticky">
                 <thead>
                     <script>
                       function tHead() {
                         $('tr#nFlowmeter').html(/*html*/`<th width="10" class="text-center">No</th>
-                                                          <th width="" class="text-center">Aksi</th>
-                                                          <th width="" class="text-center">DEPT.</th>
+                                                          <th width="" class="text-center">DEPARTEMEN</th>
                                                           <th colspan="2" width="" class="text-center" style="width:130px">AVG Bulan Lalu(M&sup3;/Day) </th>
                                                           <th width="" class="text-center">AVG (M&sup3;/Day) </th>
                                                           <th colspan="2" width="" class="text-center">TOTAL (M&sup3;/Bulan) </th>`);
@@ -422,6 +440,7 @@
         <!-- /.box-header -->
         <div class="box-body">
           <!-- <div class="col-md-12"> -->
+          <div id="totalRo"></div>
             <div class="table-responsive Content">
               <table class="table table-hover table-bordered table-sticky">
                 <thead>
@@ -447,7 +466,7 @@
   <!-- List data flowmeter Reject -->
   <div class="row">
     <div class="col-md-12">
-      <div class="box box-danger">
+      <div class="box box-danger collapsed-box">
         <div class="box-header with-border">
           <h3 class="box-title">Distribusi Reject</h3>
 
@@ -676,9 +695,53 @@
       <label>Jumlah Baris Per Halaman</label>
       <input class="form-control" id="REC_PER_HALAMAN" max='1000' min="1" name="REC_PER_HALAMAN" required="" type="number" value="100">
     </div>
-  <span class="hasil_beban">beban</span>
   </div>
 
+</div>
+
+<!-- //? ============== MODAL ============== ?// -->
+<div class="modal fade" id="modalDetailFlow" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+        <h4 class="modal-title" id="exampleModalLabel">Detail Beban Departemen</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="table-responsive">
+              <table class="table table-hover table-bordered table-sticky">
+                <thead>
+                    <tr>
+                      <th class="text-center">No</th>
+                      <th class="text-center">DEPARTEMEN</th>
+                      <th class="text-center" colspan="2">AVG Bulan Lalu(M³/Day)</th>
+                      <th class="text-center">AVG (M³/Day)</th>
+                      <th class="text-center" colspan="2">TOTAL (M³/Bulan)</th>
+                    </tr>
+                </thead>
+                <tbody id="detailBeban">
+                  <tr> 
+                    <td class="backloader" colspan="3">
+                      <center>
+                        <div class="loader"></div>
+                      </center>
+                    </td>
+                  </tr>
+                </tbody>
+                <tfoot id="zone_total">
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script src="aplikasi/<?= $_SESSION['aplikasi']; ?>/asset/plugins/sweet-alert/sweetalert2.min.js"></script>
@@ -689,10 +752,10 @@
   let counter = 0;
   const timeValue = setInterval(()=>{
     if(counter == 100){
-      $('#preloader').remove();
       clearInterval(timeValue);
       listBebanHarian('1');
       tHead();
+      $('#preloader').remove();
     }else{
       counter+=1;
       numb.textContent = counter + "%";
@@ -701,7 +764,7 @@
 
   $(function() {
     $('a.sidebar-toggle').click()
-    // listBebanHarian('1')
+    $('[data-toggle="popover"]').popover();
   });
 
   function formatNumber(num) {
@@ -745,14 +808,6 @@
         
         if (data.respon.pesan == "sukses") 
         {
-          console.log(data.RESULT_RO[0]);
-          console.log(data.RESULT_PRE[0]);
-          // console.log(data.TOTAL_BEBAN_RO);
-          // console.log(data.SUM_TOTAL_BEBAN_HARIAN_RO);
-          console.log(data.SUM_TOTAL_BEBAN_HARIAN_BULAN_LALU);
-          console.log(data.SUM_TOTAL_BEBAN_HARIAN_BULAN_LALU_RO);
-          
-          // $("span.hasil_beban").html(data.respon.hasil_beban);
           $("tbody#zone_data_pre").empty();
           $("tbody#zone_data_ro").empty();
           $("tbody#zone_data_pre").empty();
@@ -767,65 +822,154 @@
           var tableContentPre = '';
           var tableContentRo = '';
 
-          //!============= LOOPING FLOWMETER PRE ==============!//
-          for (var i = 0; i < data.RESULT_PRE.length; i++) { 
-            var object = data.RESULT_PRE[i].BEBAN;
-            
-            // console.log(data.RESULT_PRE+'==='+object);
-            listFlowPre = /*html*/`<td>${data.RESULT_PRE[i].NO}</td>
-                                  <td class="text-center"><button type="button" class="btn btn-sm btn-primary editBebanPRE"  NO="${data.RESULT_PRE[i].NO}" KPE_AIR_FLOWMETER_NAMA="${data.RESULT_PRE[i].KPE_AIR_FLOWMETER_NAMA}" KPE_AIR_FLOWMETER_ID="${data.RESULT_PRE[i].KPE_AIR_FLOWMETER_ID}" BEBAN_AVRG="${data.RESULT_PRE[i].TOTAL.AVG}" TOTAL_BEBAN="${formatNumber(parseFloat(data.RESULT_PRE[i].TOTAL.TOTAL_BEBAN).toFixed(2))}" TOTAL_BEBAN_HASIL_RUMUS="${parseFloat(data.RESULT_PRE[i].TOTAL.TOTAL_BEBAN / data.TOTAL_BEBAN * 100).toFixed(2)}" AVG_BULAN_LALU="${parseFloat(data.RESULT_PRE[i].TOTAL_BULAN_LALU.AVG_BULAN_LALU).toFixed(2)}" AVG_BULAN_LALU_HASIL_RUMUS="${parseFloat(data.RESULT_PRE[i].TOTAL_BULAN_LALU.AVG_BULAN_LALU / data.AVG_BEBAN_BULAN_LALU * 100).toFixed(2)}" KPE_AIR_FLOWMETER_BEBAN_DOMESTIK_A="${data.RESULT_PRE[i].BEBAN_BULANAN.KPE_AIR_FLOWMETER_BEBAN_DOMESTIK_A}" KPE_AIR_FLOWMETER_BEBAN_DOMESTIK_B="${data.RESULT_PRE[i].BEBAN_BULANAN.KPE_AIR_FLOWMETER_BEBAN_DOMESTIK_B}" KPE_AIR_FLOWMETER_BEBAN_PRODUK_A="${data.RESULT_PRE[i].BEBAN_BULANAN.KPE_AIR_FLOWMETER_BEBAN_PRODUK_A}" KPE_AIR_FLOWMETER_BEBAN_PRODUK_B="${data.RESULT_PRE[i].BEBAN_BULANAN.KPE_AIR_FLOWMETER_BEBAN_PRODUK_B}" KPE_AIR_FLOWMETER_BEBAN_PROSES_A="${data.RESULT_PRE[i].BEBAN_BULANAN.KPE_AIR_FLOWMETER_BEBAN_PROSES_A}" KPE_AIR_FLOWMETER_BEBAN_PROSES_B="${data.RESULT_PRE[i].BEBAN_BULANAN.KPE_AIR_FLOWMETER_BEBAN_PROSES_B}"><i class="fa fa-edit"></i></button></td>
-                                  <td>${data.RESULT_PRE[i].KPE_AIR_FLOWMETER_NAMA}</td>
-                                  <td>${parseFloat(data.RESULT_PRE[i].TOTAL_BULAN_LALU.AVG_BULAN_LALU).toFixed(2)}</td>
-                                  <td>${parseFloat(data.RESULT_PRE[i].TOTAL_BULAN_LALU.AVG_BULAN_LALU / data.AVG_BEBAN_BULAN_LALU * 100).toFixed(2)}</td>
-                                  <td>${data.RESULT_PRE[i].TOTAL.AVG}</td>
-                                  <td>${formatNumber(parseFloat(data.RESULT_PRE[i].TOTAL.TOTAL_BEBAN).toFixed(2))}</td>
-                                  <td>${parseFloat(data.RESULT_PRE[i].TOTAL.TOTAL_BEBAN / data.TOTAL_BEBAN * 100).toFixed(2)}</td>`;
+          //? =============== TOTAL DISTRIBUSI PRE & RO ================?//
+            let totalPreRo = /*html*/`<div class="row">
+                                        <div class="col-md-12">
+                                          <div class="small-box bg-aqua">
+                                            <div class="inner">
+                                              <h3>${formatNumber(parseFloat(data.TOTAL_BEBAN + data.TOTAL_BEBAN_RO).toFixed(2))}</h3>
 
-              // for (var property=i in object) {
-              //   listBeban +=  /*html*/`<td class="bordered">${(object[property])}</td>`;
-              // }
-            
-          //   // for (property in object) {
-          //   //   listFlow += /*html*/`<td>${object[property]}</td>`;
-                                    
-          //   // } 
-          //   // tableContent += /*html*/`<tr class="trData">${listData+btnEdit}</tr>`;
+                                              <strong><p>TOTAL DISTRIBUSI PRE & RO</p></strong>
+                                            </div>
+                                            <div class="icon">
+                                              <i class="fa fa-files-o"></i>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>`;
+          //? =============== END TOTAL DISTRIBUSI PRE & RO ================?//
+
+          //!============= LOOPING FLOWMETER PRE ==============!//
+          //? ============ BOX TOTAL PRE =============?//
+            let totalPre = /*html*/`<div class="row">
+                                      <div class="col-md-4">
+                                        <div class="small-box bg-yellow">
+                                          <div class="inner">
+                                            <h3>${formatNumber(parseFloat(data.AVG_BEBAN_BULAN_LALU).toFixed(2))}</h3>
+
+                                            <strong><p>AVG Bulan Lalu(M³/Day)</p></strong>
+                                          </div>
+                                          <div class="icon">
+                                            <i class="fa fa-reply-all"></i>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="col-md-4">
+                                        <div class="small-box bg-green">
+                                          <div class="inner">
+                                            <h3>${formatNumber(parseFloat(data.AVG_BEBAN).toFixed(2))}</h3>
+
+                                            <strong><p>AVG (M³/Day)</p></strong>
+                                          </div>
+                                          <div class="icon">
+                                            <i class="fa fa-tasks"></i>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="col-md-4">
+                                        <div class="small-box bg-aqua">
+                                          <div class="inner">
+                                            <h3>${formatNumber(parseFloat(data.TOTAL_BEBAN).toFixed(2))}</h3>
+
+                                            <strong><p>TOTAL (M³/Bln)</p></strong>
+                                          </div>
+                                          <div class="icon">
+                                            <i class="fa fa-file-text-o"></i>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>`;
+          //? ============ END BOX TOTAL PRE =============?//
+
+          for (let i = 0; i < data.RESULT_PRE.length; i++) { 
+            if(data.RESULT_PRE[i].KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA != "")
+            {
+              var detailFlow = /*html*/` <button KPE_AIR_FLOWMETER_ID="${data.RESULT_PRE[i].KPE_AIR_FLOWMETER_ID}" id="detailFlow" class="btn btn-xs btn-info"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i></button>`;
+            } else {
+              detailFlow = '';
+            }
+            listFlowPre = /*html*/`<td>${data.RESULT_PRE[i].NO}</td>
+                                    <td>${data.RESULT_PRE[i].KPE_AIR_FLOWMETER_NAMA} ${detailFlow}</td>
+                                    <td>${parseFloat(data.RESULT_PRE[i].TOTAL_BULAN_LALU.AVG_BULAN_LALU).toFixed(2)}</td>
+                                    <td>${parseFloat(data.RESULT_PRE[i].TOTAL_BULAN_LALU.AVG_BULAN_LALU / data.AVG_BEBAN_BULAN_LALU * 100).toFixed(2)}</td>
+                                    <td>${data.RESULT_PRE[i].TOTAL.AVG}</td>
+                                    <td>${formatNumber(parseFloat(data.RESULT_PRE[i].TOTAL.TOTAL_BEBAN).toFixed(2))}</td>
+                                    <td>${parseFloat(data.RESULT_PRE[i].TOTAL.TOTAL_BEBAN / data.TOTAL_BEBAN * 100).toFixed(2)}</td>`;
+
             tableContentPre += /*html*/`<tr>${listFlowPre}</tr>`;
             
           }
+          //!============= END LOOPING FLOWMETER PRE ==============!//
 
           //!============= LOOPING FLOWMETER RO ==============!//
-          for (var i = 0; i < data.RESULT_RO.length; i++) { 
-            var object = data.RESULT_RO[i].BEBAN;
-            
-            // console.log(data.RESULT_RO+'==='+object);
-            listFlowRo = /*html*/`<td>${data.RESULT_RO[i].NO}</td>
-                                <td class="text-center"><button type="button" class="btn btn-sm btn-primary editBebanRO"  NO="${data.RESULT_RO[i].NO}" KPE_AIR_FLOWMETER_NAMA="${data.RESULT_RO[i].KPE_AIR_FLOWMETER_NAMA}" KPE_AIR_FLOWMETER_ID="${data.RESULT_RO[i].KPE_AIR_FLOWMETER_ID}" BEBAN_AVRG="${data.RESULT_RO[i].TOTAL_RO.AVG}" TOTAL_BEBAN="${formatNumber(parseFloat(data.RESULT_RO[i].TOTAL_RO.TOTAL_BEBAN).toFixed(2))}" TOTAL_BEBAN_HASIL_RUMUS="${parseFloat(data.RESULT_RO[i].TOTAL_RO.TOTAL_BEBAN / data.TOTAL_BEBAN_RO * 100).toFixed(2)}" AVG_BULAN_LALU="${parseFloat(data.RESULT_RO[i].TOTAL_BULAN_LALU_RO.AVG_BULAN_LALU).toFixed(2)}" AVG_BULAN_LALU_HASIL_RUMUS="${parseFloat(data.RESULT_RO[i].TOTAL_BULAN_LALU_RO.AVG_BULAN_LALU / data.AVG_BEBAN_BULAN_LALU_RO * 100).toFixed(2)}" KPE_AIR_FLOWMETER_BEBAN_DOMESTIK_A="${data.RESULT_RO[i].BEBAN_BULANAN_RO.KPE_AIR_FLOWMETER_BEBAN_DOMESTIK_A}" KPE_AIR_FLOWMETER_BEBAN_DOMESTIK_B="${data.RESULT_RO[i].BEBAN_BULANAN_RO.KPE_AIR_FLOWMETER_BEBAN_DOMESTIK_B}" KPE_AIR_FLOWMETER_BEBAN_PRODUK_A="${data.RESULT_RO[i].BEBAN_BULANAN_RO.KPE_AIR_FLOWMETER_BEBAN_PRODUK_A}" KPE_AIR_FLOWMETER_BEBAN_PRODUK_B="${data.RESULT_RO[i].BEBAN_BULANAN_RO.KPE_AIR_FLOWMETER_BEBAN_PRODUK_B}" KPE_AIR_FLOWMETER_BEBAN_PROSES_A="${data.RESULT_RO[i].BEBAN_BULANAN_RO.KPE_AIR_FLOWMETER_BEBAN_PROSES_A}" KPE_AIR_FLOWMETER_BEBAN_PROSES_B="${data.RESULT_RO[i].BEBAN_BULANAN_RO.KPE_AIR_FLOWMETER_BEBAN_PROSES_B}"><i class="fa fa-edit"></i></button></td>
-                                <td>${data.RESULT_RO[i].KPE_AIR_FLOWMETER_NAMA}</td>
-                                <td>${parseFloat(data.RESULT_RO[i].TOTAL_BULAN_LALU_RO.AVG_BULAN_LALU).toFixed(2)}</td>
-                                <td>${parseFloat(data.RESULT_RO[i].TOTAL_BULAN_LALU_RO.AVG_BULAN_LALU / data.AVG_BEBAN_BULAN_LALU_RO * 100).toFixed(2)}</td>
-                                <td>${data.RESULT_RO[i].TOTAL_RO.AVG}</td>
-                                <td>${formatNumber(parseFloat(data.RESULT_RO[i].TOTAL_RO.TOTAL_BEBAN).toFixed(2))}</td>
-                                <td>${parseFloat(data.RESULT_RO[i].TOTAL_RO.TOTAL_BEBAN / data.TOTAL_BEBAN_RO * 100).toFixed(2)}</td>`;
+          //? ============ BOX TOTAL RO =============?//
+          let totalRo = /*html*/`<div class="row">
+                                      <div class="col-md-4">
+                                        <div class="small-box bg-yellow">
+                                          <div class="inner">
+                                            <h3>${formatNumber(parseFloat(data.AVG_BEBAN_BULAN_LALU_RO).toFixed(2))}</h3>
 
-              // for (var property=i in object) {
-              //   listBeban +=  /*html*/`<td class="bordered">${(object[property])}</td>`;
-              // }
-            
-          //   // for (property in object) {
-          //   //   listFlow += /*html*/`<td>${object[property]}</td>`;
-                                    
-          //   // } 
-          //   // tableContent += /*html*/`<tr class="trData">${listData+btnEdit}</tr>`;
+                                            <strong><p>AVG Bulan Lalu(M³/Day)</p></strong>
+                                          </div>
+                                          <div class="icon">
+                                            <i class="fa fa-reply-all"></i>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="col-md-4">
+                                        <div class="small-box bg-green">
+                                          <div class="inner">
+                                            <h3>${formatNumber(parseFloat(data.AVG_BEBAN_RO).toFixed(2))}</h3>
+
+                                            <strong><p>AVG (M³/Day)</p></strong>
+                                          </div>
+                                          <div class="icon">
+                                            <i class="fa fa-tasks"></i>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="col-md-4">
+                                        <div class="small-box bg-aqua">
+                                          <div class="inner">
+                                            <h3>${formatNumber(parseFloat(data.TOTAL_BEBAN_RO).toFixed(2))}</h3>
+
+                                            <strong><p>TOTAL (M³/Bln)</p></strong>
+                                          </div>
+                                          <div class="icon">
+                                            <i class="fa fa-file-text-o"></i>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>`;
+          //? ============ END BOX TOTAL RO =============?//
+
+          for (let j = 0; j < data.RESULT_RO.length; j++) { 
+            if(data.RESULT_RO[j].KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA != "")
+            {
+              var detailFlowRO = /*html*/` <button KPE_AIR_FLOWMETER_ID="${data.RESULT_RO[j].KPE_AIR_FLOWMETER_ID}" id="detailFlow" class="btn btn-xs btn-info"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i></button>`;
+            } else {
+              detailFlowRO = '';
+            }
+            listFlowRo = /*html*/`<td>${data.RESULT_RO[j].NO}</td>
+                                <td>${data.RESULT_RO[j].KPE_AIR_FLOWMETER_NAMA} ${detailFlowRO}</td>
+                                <td>${parseFloat(data.RESULT_RO[j].TOTAL_BULAN_LALU_RO.AVG_BULAN_LALU).toFixed(2)}</td>
+                                <td>${parseFloat(data.RESULT_RO[j].TOTAL_BULAN_LALU_RO.AVG_BULAN_LALU / data.AVG_BEBAN_BULAN_LALU_RO * 100).toFixed(2)}</td>
+                                <td>${data.RESULT_RO[j].TOTAL_RO.AVG}</td>
+                                <td>${formatNumber(parseFloat(data.RESULT_RO[j].TOTAL_RO.TOTAL_BEBAN).toFixed(2))}</td>
+                                <td>${parseFloat(data.RESULT_RO[j].TOTAL_RO.TOTAL_BEBAN / data.TOTAL_BEBAN_RO * 100).toFixed(2)}</td>`;
+
             tableContentRo += /*html*/`<tr>${listFlowRo}</tr>`;
             
           }
+          //!============= END LOOPING FLOWMETER RO ==============!//
                                   
           $('tbody#zone_data_pre').append(tableContentPre);
+          $('div#totalPre').append(totalPre);
           $('tbody#zone_data_ro').append(tableContentRo);
+          $('div#totalRo').append(totalRo);
+          $('div.TOTAL_DISTRIBUSI_PRE_RO').append(totalPreRo);
           
         } else if (data.respon.pesan == "gagal") {
-          // alert(data.respon.text_msg);
           $("tbody#zone_data_pre").html("<tr><td colspan='7'><div class='alert alert-danger' role='alert'><span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span> " + data.respon.text_msg + "</div></td></tr>");
         }
       }, //end success
@@ -843,14 +987,7 @@
     let html = '';
 
       html += '<td>'+$(this).attr('NO')+'</td>';
-      html += '<td class="text-center"><button type="button" class="btn btn-sm btn-danger cancelEditPRE" NO="'+$(this).attr('NO')+'" KPE_AIR_FLOWMETER_NAMA="'+$(this).attr('KPE_AIR_FLOWMETER_NAMA')+'" KPE_AIR_FLOWMETER_ID="'+$(this).attr('KPE_AIR_FLOWMETER_ID')+'" BEBAN_AVRG="'+$(this).attr('BEBAN_AVRG')+'" TOTAL_BEBAN="'+$(this).attr('TOTAL_BEBAN')+'" TOTAL_BEBAN_HASIL_RUMUS="'+$(this).attr('TOTAL_BEBAN_HASIL_RUMUS')+'" AVG_BULAN_LALU="'+$(this).attr('AVG_BULAN_LALU')+'" AVG_BULAN_LALU_HASIL_RUMUS="'+$(this).attr('AVG_BULAN_LALU_HASIL_RUMUS')+'" KPE_AIR_FLOWMETER_BEBAN_DOMESTIK_A="'+$(this).attr('KPE_AIR_FLOWMETER_BEBAN_DOMESTIK_A')+'" KPE_AIR_FLOWMETER_BEBAN_DOMESTIK_B="'+$(this).attr('KPE_AIR_FLOWMETER_BEBAN_DOMESTIK_B')+'" KPE_AIR_FLOWMETER_BEBAN_PRODUK_A="'+$(this).attr('KPE_AIR_FLOWMETER_BEBAN_PRODUK_A')+'" KPE_AIR_FLOWMETER_BEBAN_PRODUK_B="'+$(this).attr('KPE_AIR_FLOWMETER_BEBAN_PRODUK_B')+'" KPE_AIR_FLOWMETER_BEBAN_PROSES_A="'+$(this).attr('KPE_AIR_FLOWMETER_BEBAN_PROSES_A')+'" KPE_AIR_FLOWMETER_BEBAN_PROSES_B="'+$(this).attr('KPE_AIR_FLOWMETER_BEBAN_PROSES_B')+'"><i class="fa fa-undo" aria-hidden="true"></i></button>&nbsp;<button type="button" class="btn btn-sm btn-warning simpanBebanPRE" BEBAN_AVRG="'+$(this).attr('BEBAN_AVRG')+'" KPE_AIR_FLOWMETER_NAMA="'+$(this).attr('KPE_AIR_FLOWMETER_NAMA')+'" KPE_AIR_FLOWMETER_ID="'+$(this).attr('KPE_AIR_FLOWMETER_ID')+'"><i class="fa fa-save"></i></button></td>';
       html += '<td>'+$(this).attr('KPE_AIR_FLOWMETER_NAMA')+'</td>';
-      // html += '<td>'+$(this).attr('KPE_AIR_FLOWMETER_BEBAN_DOMESTIK_A')+'</td>';
-      // html += '<td>'+$(this).attr('KPE_AIR_FLOWMETER_BEBAN_DOMESTIK_B')+'</td>';
-      // html += '<td><input class="form-control" id="KPE_AIR_FLOWMETER_BEBAN_PRODUK_A" name="KPE_AIR_FLOWMETER_BEBAN_PRODUK_A" required type="text" pattern="[0-9]+" title="please enter number only" value="'+$(this).attr('KPE_AIR_FLOWMETER_BEBAN_PRODUK_A')+'"></td>';
-      // html += '<td>'+$(this).attr('KPE_AIR_FLOWMETER_BEBAN_PRODUK_B')+'</td>';
-      // html += '<td><input class="form-control" id="KPE_AIR_FLOWMETER_BEBAN_PROSES_A" name="KPE_AIR_FLOWMETER_BEBAN_PROSES_A" required type="text" pattern="[0-9]+" title="please enter number only" value="'+$(this).attr('KPE_AIR_FLOWMETER_BEBAN_PROSES_A')+'"></td>';
-      // html += '<td>'+$(this).attr('KPE_AIR_FLOWMETER_BEBAN_PROSES_B')+'</td>';
       html += '<td>'+$(this).attr('AVG_BULAN_LALU')+'</td>';
       html += '<td>'+$(this).attr('AVG_BULAN_LALU_HASIL_RUMUS')+'</td>';
       html += '<td>'+$(this).attr('BEBAN_AVRG')+'</td>';
@@ -865,14 +1002,7 @@
     let html = '';
 
       html += '<td>'+$(this).attr('NO')+'</td>';
-      html += '<td class="text-center"><button type="button" class="btn btn-sm btn-primary editBebanPRE" NO="'+$(this).attr('NO')+'" KPE_AIR_FLOWMETER_NAMA="'+$(this).attr('KPE_AIR_FLOWMETER_NAMA')+'" KPE_AIR_FLOWMETER_ID="'+$(this).attr('KPE_AIR_FLOWMETER_ID')+'" BEBAN_AVRG="'+$(this).attr('BEBAN_AVRG')+'" TOTAL_BEBAN="'+$(this).attr('TOTAL_BEBAN')+'" TOTAL_BEBAN_HASIL_RUMUS="'+$(this).attr('TOTAL_BEBAN_HASIL_RUMUS')+'" AVG_BULAN_LALU="'+$(this).attr('AVG_BULAN_LALU')+'" AVG_BULAN_LALU_HASIL_RUMUS="'+$(this).attr('AVG_BULAN_LALU_HASIL_RUMUS')+'" KPE_AIR_FLOWMETER_BEBAN_DOMESTIK_A="'+$(this).attr('KPE_AIR_FLOWMETER_BEBAN_DOMESTIK_A')+'" KPE_AIR_FLOWMETER_BEBAN_DOMESTIK_B="'+$(this).attr('KPE_AIR_FLOWMETER_BEBAN_DOMESTIK_B')+'" KPE_AIR_FLOWMETER_BEBAN_PRODUK_A="'+$(this).attr('KPE_AIR_FLOWMETER_BEBAN_PRODUK_A')+'" KPE_AIR_FLOWMETER_BEBAN_PRODUK_B="'+$(this).attr('KPE_AIR_FLOWMETER_BEBAN_PRODUK_B')+'" KPE_AIR_FLOWMETER_BEBAN_PROSES_A="'+$(this).attr('KPE_AIR_FLOWMETER_BEBAN_PROSES_A')+'" KPE_AIR_FLOWMETER_BEBAN_PROSES_B="'+$(this).attr('KPE_AIR_FLOWMETER_BEBAN_PROSES_B')+'"><i class="fa fa-edit" aria-hidden="true"></i></button></td>';
       html += '<td>'+$(this).attr('KPE_AIR_FLOWMETER_NAMA')+'</td>';
-      // html += '<td>'+$(this).attr('KPE_AIR_FLOWMETER_BEBAN_DOMESTIK_A')+'</td>';
-      // html += '<td>'+$(this).attr('KPE_AIR_FLOWMETER_BEBAN_DOMESTIK_B')+'</td>';
-      // html += '<td>'+$(this).attr('KPE_AIR_FLOWMETER_BEBAN_PRODUK_A')+'</td>';
-      // html += '<td>'+$(this).attr('KPE_AIR_FLOWMETER_BEBAN_PRODUK_B')+'</td>';
-      // html += '<td>'+$(this).attr('KPE_AIR_FLOWMETER_BEBAN_PROSES_A')+'</td>';
-      // html += '<td>'+$(this).attr('KPE_AIR_FLOWMETER_BEBAN_PROSES_B')+'</td>';
       html += '<td>'+$(this).attr('AVG_BULAN_LALU')+'</td>';
       html += '<td>'+$(this).attr('AVG_BULAN_LALU_HASIL_RUMUS')+'</td>';
       html += '<td>'+$(this).attr('BEBAN_AVRG')+'</td>';
@@ -920,13 +1050,6 @@
             
             if(data.respon.pesan=="sukses")
             {
-              // Swal.fire({
-              //   timer: 1000,
-              //   timerProgressBar: true,
-              //   title: 'Berhasil!',
-              //   text: ''+data.respon.text_msg+'',
-              //   icon: 'success',
-              // })
               listBebanHarian('1');
             }else if(data.respon.pesan=="gagal")
             {
@@ -950,4 +1073,45 @@
   //? =============================================================== ?//
   //? ================== CODE DISTRIBUSI RO ========================= ?//
   //? =============================================================== ?//
+
+
+  //? =============================================================== ?//
+  //? =============== CODE FLOWMETER DEPARTEMEN ===================== ?//
+  //? =============================================================== ?//
+  //TODO ================== LIST FLOWMETER DEPARTEMEN ======================== TODO//
+  $(document).on('click', '#detailFlow', function(){
+    let KPE_AIR_FLOWMETER_ID=$(this).attr('KPE_AIR_FLOWMETER_ID');
+    $.ajax({
+      type:'POST',
+      url:refseeAPI,
+      dataType:'json',
+      data:'aplikasi=<?php echo $d0;?>&ref=list_beban_harian_dept&KPE_AIR_FLOWMETER_ID='+KPE_AIR_FLOWMETER_ID,
+      success:function(data)
+      { 
+        if(data.respon.pesan=="sukses")
+        { 
+          $('#modalDetailFlow').modal('show');
+          $('#detailBeban').empty();
+          for (let i = 0; i < data.result.length; i++) {
+            $('#detailBeban').append(/*html*/`<tr>
+                                                <td>${data.result[i].NO}</td>
+                                                <td>${data.result[i].KPE_AIR_FLOWMETER_DEPARTEMEN_FLOW_NAMA}</td>
+                                                <td class="text-right">${parseFloat(data.result[i].C_DEPT_BULAN_LALU.AVG_LALU).toFixed(2)}</td>
+                                                <td class="text-right">${parseFloat(data.result[i].C_DEPT_BULAN_LALU.AVG_LALU / data.AVG_BEBAN_BULAN_LALU * 100).toFixed(2)}</td>
+                                                <td class="text-right">${data.result[i].C_DEPT.AVG}</td>
+                                                <td class="text-right">${data.result[i].C_DEPT.TOTAL_BEBAN_DEPT}</td>
+                                                <td class="text-right">${parseFloat(data.result[i].C_DEPT.TOTAL_BEBAN_DEPT / data.BEBAN_HARIAN * 100).toFixed(2)}</td>
+                                              </tr>`);
+          }
+        }else if(data.respon.pesan=="gagal")
+        {
+          console.log('error beban dept');
+        }
+      },
+      error:function(x,e){
+        error_handler_json(x,e,'=> list_beban_harian_dept()');
+      }//end error
+    });
+  });
+
 </script>

@@ -26,6 +26,9 @@ switch($ref){
 			case 'list_beban_harian':
 				require_once("ajax/air/beban_harian/list_beban_harian.php");
 			break;
+			case 'list_beban_harian_dept':
+				require_once("ajax/air/beban_harian/list_beban_harian_dept.php");
+			break;
 			case 'simpan_beban_pre':
 				require_once("ajax/air/beban_harian/simpan_beban_pre.php");
 			break;
@@ -107,6 +110,9 @@ switch($ref){
 			//KWH SOLAR BATUBARA
 			case 'ksb_list':
 				require_once("ajax/dailyreport/ksb_list.php");
+			break;
+			case 'list_dly_report_pre':
+				require_once("ajax/dailyreport/list_dly_report_pre.php");
 			break;
 			
 

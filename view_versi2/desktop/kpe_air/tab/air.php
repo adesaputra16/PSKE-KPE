@@ -329,11 +329,6 @@ tr.trData:hover{
                 ?>
               </select>
             </div>
-            <!-- <div class="form-group" style="display:none;">
-              <label for="KPE_AIR_FLOWMETER_DEPARTEMEN_ID">Departemen</label>
-              <select id="KPE_AIR_FLOWMETER_DEPARTEMEN_ID" name="KPE_AIR_FLOWMETER_DEPARTEMEN_ID" class="form-control" >
-              </select>
-            </div> -->
             <div class="form-group KPE_AIR_FLOWMETER_CATATAN_ANGKA">
               <label for="KPE_AIR_FLOWMETER_CATATAN_ANGKA">Catatan Angka</label>
               <input type="number" class="form-control" id="KPE_AIR_FLOWMETER_CATATAN_ANGKA" name="KPE_AIR_FLOWMETER_CATATAN_ANGKA" autocomplete="off" placeholder="123.456" step="any" required>

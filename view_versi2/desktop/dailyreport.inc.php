@@ -40,6 +40,18 @@ require_once('menu_sidebar.php');
             //array('title'=>"more title",'link'=>"#"),
           ),
         ));
+      }else if($d2=="air")
+      {
+
+        $adminLTE->breadcrumb(array(
+          'title'=>"Laporan Harian Air Pre-Treatment dan RO",
+          'breadcrumb'=>array(
+            array('title'=>"<a href='?show=kpe'>KPE</a>",'link'=>"?show=kpe"),
+            array('title'=>"<a href='?show=kpe/dailyreport/pre_ro'>Air Pre & RO</a>",'link'=>"?show=kpe/dailyreport/pre_ro"),
+            array('title'=>"Air Pre & RO",'link'=>"?show=kpe/dailyreport/pre_ro/"),
+            //array('title'=>"more title",'link'=>"#"),
+          ),
+        ));
       }
 	  }
 		
@@ -62,6 +74,9 @@ require_once('menu_sidebar.php');
         switch (strtoupper($d2)) {
           case 'KSB':
             require_once("dailyreport/ksb.php");
+          break;
+          case 'AIR':
+            require_once("dailyreport/air.php");
           break;
           default:
             //require_once("beranda.php");

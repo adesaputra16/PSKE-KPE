@@ -25,7 +25,7 @@ if (empty($params['case']))
 					$data_master = array(
 						'KPE_AIR_FLOWMETER_KALIBRASI_INDEX' => waktu_decimal(Date("Y-m-d H:i:s")),
 						'KPE_AIR_FLOWMETER_KALIBRASI_ID' => waktu_decimal(Date("Y-m-d H:i:s")),
-						'KPE_AIR_FLOWMETER_ID' => $input['KPE_AIR_FLOWMETER_KALIBRASI_ID'],
+						'KPE_AIR_FLOWMETER_ID' => $input['KPE_AIR_FLOWMETER_ID'],
 						'KPE_AIR_FLOWMETER_NAMA' => base64_decode($input['KPE_AIR_FLOWMETER_NAMA']),
 						'KPE_AIR_FLOWMETER_KALIBRASI_REAL' => $input['KPE_AIR_FLOWMETER_KALIBRASI_REAL'],
 						'KPE_AIR_FLOWMETER_KALIBRASI_SELISIH' => $input['KPE_AIR_FLOWMETER_KALIBRASI_SELISIH'],

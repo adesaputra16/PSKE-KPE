@@ -123,7 +123,8 @@ CLASS KPE_MODULES extends USER_PRIVILEGES
 
 		switch (strtolower($params['case']))
 			{
-				// Case Catatan
+				
+		//! Case Catatan
 		case 'nonlogin_simpan_catatan':
 			require_once ("kpe_air/catatan/Simpan_catatan.php");
 		break;
@@ -145,14 +146,19 @@ CLASS KPE_MODULES extends USER_PRIVILEGES
 		case 'nonlogin_cetak_catatan':
 			require_once ("kpe_air/catatan/Cetak_catatan.php");
 		break;
-		// Case Beban Harian
+
+		//! Case Beban Harian
 		case 'nonlogin_list_beban_harian':
 			require_once ("kpe_air/beban_harian/List_beban_harian.php");
+		break;
+		case 'nonlogin_list_beban_harian_dept':
+			require_once ("kpe_air/beban_harian/List_beban_harian_dept.php");
 		break;
 		case 'nonlogin_simpan_beban_pre':
 			require_once ("kpe_air/beban_harian/Simpan_beban_pre.php");
 		break;
-		// Case Per Dept
+
+		//! Case Per Dept
 		case 'nonlogin_list_per_dept':
 			require_once ("kpe_air/per_dept/List_per_dept.php");
 		break;
@@ -165,7 +171,8 @@ CLASS KPE_MODULES extends USER_PRIVILEGES
 		case 'nonlogin_tampil_angka_pakai_rumus_per_dept':
 			require_once ("kpe_air/per_dept/Tampil_angka_pakai_rumus_per_dept.php");
 		break;
-		// Case Flowmeter
+
+		//! Case Flowmeter
 		case 'nonlogin_simpan_flowmeter':
 			require_once ("kpe_flowmeter/Simpan_flowmeter.php");
 		break;
@@ -184,7 +191,8 @@ CLASS KPE_MODULES extends USER_PRIVILEGES
 		case 'nonlogin_cari_air':
 			require_once ("kpe_flowmeter/Cari_air.php");
 		break;
-		// Case Sub Flowmeter
+
+		//! Case Sub Flowmeter
 		case 'nonlogin_simpan_sub_flowmeter':
 			require_once ("kpe_sub_flowmeter/Simpan_sub_flowmeter.php");
 		break;
@@ -197,7 +205,8 @@ CLASS KPE_MODULES extends USER_PRIVILEGES
 		case 'nonlogin_ambil_sub_flowmeter':
 			require_once ("kpe_sub_flowmeter/Ambil_sub_flowmeter.php");
 		break;
-		//Case Konfigurasi
+
+		//!Case Konfigurasi
 		case 'nonlogin_simpan_flowmeter_departemen':
 			require_once ("konfigurasi/Simpan_flowmeter_departemen.php");
 		break;
@@ -226,9 +235,12 @@ CLASS KPE_MODULES extends USER_PRIVILEGES
 			require_once ("konfigurasi/Hapus_angka_flowmeter_kalibrasi.php");
 		break;
 
-		//DAILY REPORT 
+		//!DAILY REPORT 
 		case 'nonlogin_ksb_list':
 			require_once ("dailyreport/ksb_list.php");
+		break;
+		case 'nonlogin_list_dly_report_pre':
+			require_once ("dailyreport/List_dly_report_pre.php");
 		break;
 				
 			// ---------------------end case-----------------------------//

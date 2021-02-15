@@ -390,8 +390,8 @@
     y=(x>9)?'0.'+x:'0.0'+x;
     return y;
   }
-  //======================== SCRIPT FLOWMETER DEPARTEMEN =============================//
-  /*===== Function list flowmeter departemen =====*/
+  //?======================== SCRIPT FLOWMETER DEPARTEMEN =============================//
+  //!===== Function list flowmeter departemen =====//
   function listFlowDept() {
     $.ajax({
       type: 'POST',
@@ -793,7 +793,7 @@
   {
     let fDataFlowKal=$("#fDataFlowKal").serialize(); 
     let dataFlowKal = "&KPE_AIR_FLOWMETER_NAMA="+btoa($("#KPE_AIR_FLOWMETER_ID_KALIBRASI").children("option:selected").text())+"&"+fDataFlowKal
-    // alert(dataFlowKal);
+    // alert(fDataFlowKal);
     // return;
     $.ajax({
       type:'POST',

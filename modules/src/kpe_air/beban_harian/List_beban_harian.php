@@ -31,7 +31,7 @@ $input = $params['input_option'];
 //? =============================================================== ?//
 //? =============QUERY FLOWMETER DISTRIBUSI PRE==================== ?//
 //? =============================================================== ?//
-$sql_a = "SELECT KPE_AIR_FLOWMETER_ID,KPE_AIR_FLOWMETER_NAMA FROM KPE_AIR_FLOWMETER
+$sql_a = "SELECT KPE_AIR_FLOWMETER_ID,KPE_AIR_FLOWMETER_NAMA,KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA FROM KPE_AIR_FLOWMETER
           WHERE RECORD_STATUS='A' AND KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE='PRE' AND RECORD_STATUS='A' ORDER BY KPE_AIR_FLOWMETER_NAMA";
 
 $this->MYSQL = new MYSQL();
@@ -62,20 +62,20 @@ $lastDates =date("t", strtotime($tahun.'-'.$bulan.'-01'));
 $lastDatesBulanLalu =date("t", strtotime($tahun_lalu.'-'.$bulan_lalu.'-01'));
 
 foreach ($result_ab as $r ) {
-  $this->MYSQL=new MYSQL();
-  $this->MYSQL->database=$this->CONFIG->mysql_koneksi()->db_nama;
-  $sql_flow = "SELECT ".$filter_bln."
-                        FROM KPE_AIR_FLOWMETER_CATATAN
-                        WHERE RECORD_STATUS='A' AND KPE_AIR_FLOWMETER_ID='".$r['KPE_AIR_FLOWMETER_ID']."'";
-  $this->MYSQL->queri = $sql_flow;
-  $result_BEBAN=$this->MYSQL->data()[0]; 
+  // $this->MYSQL=new MYSQL();
+  // $this->MYSQL->database=$this->CONFIG->mysql_koneksi()->db_nama;
+  // $sql_flow = "SELECT ".$filter_bln."
+  //                       FROM KPE_AIR_FLOWMETER_CATATAN
+  //                       WHERE RECORD_STATUS='A' AND KPE_AIR_FLOWMETER_ID='".$r['KPE_AIR_FLOWMETER_ID']."'";
+  // $this->MYSQL->queri = $sql_flow;
+  // $result_BEBAN=$this->MYSQL->data()[0]; 
 
-  if(count($result_BEBAN)>=1)
-  {
-    $r['BEBAN']=$result_BEBAN;
-  } else {
-    $r['BEBAN']=array();
-  }
+  // if(count($result_BEBAN)>=1)
+  // {
+  //   $r['BEBAN']=$result_BEBAN;
+  // } else {
+  //   $r['BEBAN']=array();
+  // }
 
   $this->MYSQL=new MYSQL();
   $this->MYSQL->database=$this->CONFIG->mysql_koneksi()->db_nama;
@@ -182,9 +182,9 @@ $BEBAN_HARIAN_BULAN_LALU = array_sum($result_beban_BULAN_LALU);
 $AVG_BEBAN_BULAN_LALU = array_sum($result_beban_BULAN_LALU)/$lastDatesBulanLalu;
 
 //? =============================================================== ?//
-//? =============QUERY FLOWMETER DISTRIBUSI RO==================== ?//
+//? ============= QUERY FLOWMETER DISTRIBUSI RO =================== ?//
 //? =============================================================== ?//
-$sql_ro = "SELECT KPE_AIR_FLOWMETER_ID,KPE_AIR_FLOWMETER_NAMA FROM KPE_AIR_FLOWMETER
+$sql_ro = "SELECT KPE_AIR_FLOWMETER_ID,KPE_AIR_FLOWMETER_NAMA,KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA FROM KPE_AIR_FLOWMETER
           WHERE RECORD_STATUS='A' AND KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE='RO' AND RECORD_STATUS='A' ORDER BY KPE_AIR_FLOWMETER_NAMA";
 
 $this->MYSQL = new MYSQL();
@@ -193,12 +193,6 @@ $this->MYSQL->queri = $sql_ro. " LIMIT " . $posisi . "," . $batas;
 $result_fro = $this->MYSQL->data();
 
 $no = $posisi + 1;
-
-// if($input['TAHUN_FILTER']==""){
-//   $periodeTahunSekarang=Date("Y");
-// }else{
-//   $periodeTahunSekarang=$input['TAHUN_FILTER'];
-// }
 foreach ($result_fro as $r ) {
   $this->MYSQL=new MYSQL();
   $this->MYSQL->database=$this->CONFIG->mysql_koneksi()->db_nama;
@@ -267,15 +261,24 @@ foreach ($result_fro as $r ) {
   $no++;
 }
 
-for($iy = $begin; $iy <= $end; $iy->modify('+1 day'))
+$tanggalAwalsro=$tahun."-".$bulan."-01";
+
+$tanggalterakhirro =date("Y-m-t", strtotime($tahun.'-'.$bulan));
+$tanggalAkhirsro=Date('Y-m-d',strtotime($tanggalterakhirro));
+$tanggalterakhirnyaro = date("d",strtotime($tanggalterakhirro));
+
+$beginro = new DateTime($tanggalAwalsro);
+$endro   = new DateTime($tanggalAkhirsro);
+$no=1 + $posisi;
+for($iyro = $beginro; $iyro <= $endro; $iyro->modify('+1 day'))
 {
-  $tglLaporan=$iy->format("Y-m-j");
+  $tglLaporanro=$iyro->format("Y-m-j");
 
   $this->MYSQL=new MYSQL();
   $this->MYSQL->database=$this->CONFIG->mysql_koneksi()->db_nama;
-  $sql_bro = "SELECT SUM(C.KPE_AIR_FLOWMETER_CATATAN_BEBAN) AS TOTAL_BEBAN
+  $sql_bro = "SELECT SUM(C.KPE_AIR_FLOWMETER_CATATAN_BEBAN) AS TOTAL_BEBAN_RO
                         FROM KPE_AIR_FLOWMETER_CATATAN AS C LEFT JOIN KPE_AIR_FLOWMETER AS F ON C.KPE_AIR_FLOWMETER_ID=F.KPE_AIR_FLOWMETER_ID
-                        WHERE C.KPE_AIR_FLOWMETER_CATATAN_TANGGAL='".$tglLaporan."' AND C.RECORD_STATUS='A' AND F.RECORD_STATUS='A' AND F.KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE='RO' ORDER BY C.KPE_AIR_FLOWMETER_NAMA";
+                        WHERE C.KPE_AIR_FLOWMETER_CATATAN_TANGGAL='".$tglLaporanro."' AND C.RECORD_STATUS='A' AND F.RECORD_STATUS='A' AND F.KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE='RO' ORDER BY C.KPE_AIR_FLOWMETER_NAMA";
   $this->MYSQL->queri = $sql_bro;
   $result_BEBAN_RO=$this->MYSQL->data()[0]; 
     
