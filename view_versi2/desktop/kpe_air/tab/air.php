@@ -153,9 +153,10 @@ tr.trData:hover{
 
 
 <div class="box-body">
-  <button type="button" class="btn btn-sm btn-success modalCatatan"><i class="fa fa-plus-square" aria-hidden="true"></i> Tambah Catatan</button>
+  <button type="button" class="btn btn-success modalCatatan"><i class="fa fa-plus-square" aria-hidden="true"></i> Tambah Catatan</button>
   <div class="pull-right">
-    <a type="button" id="cetakPdf" class="btn btn-sm btn-warning"><i class="fa fa-print" aria-hidden="true"></i> Cetak</a> 
+    <a type="button" id="rekapCatatan" class="btn btn-default"><strong><i class="fa fa-save" aria-hidden="true"></i> Rekap Catatan</strong></a> 
+    <a type="button" id="cetakPdf" class="btn btn-warning"><i class="fa fa-print" aria-hidden="true"></i> Cetak</a>
   </div>
   <br><br>
   
@@ -469,6 +470,8 @@ tr.trData:hover{
       $('select#TAHUN_FILTER2').removeAttr("required");
       $('div#divtahunfilter2').attr("style", "display:none");
       $('select#TAHUN_FILTER2').val("");
+
+      $('#rekapCatatan').removeAttr('style');
       
     } else if (JENIS_LAPORAN == "Mingguan")
     {	
@@ -495,6 +498,8 @@ tr.trData:hover{
       $('select#TAHUN_FILTER2').removeAttr("required");
       $('div#divtahunfilter2').attr("style", "display:none");
       $('select#TAHUN_FILTER2').val("");
+
+      $('#rekapCatatan').attr("style", "display:none");
     
     }else if (JENIS_LAPORAN == "Bulanan")
     {	
@@ -521,6 +526,8 @@ tr.trData:hover{
       $('select#TAHUN_FILTER2').attr("required");
       $('div#divtahunfilter2').attr("style", "display:block");
       $('select#TAHUN_FILTER2').val("");
+
+      $('#rekapCatatan').attr("style", "display:none");
     
     }else if (JENIS_LAPORAN == "Tahunan")
     {
@@ -548,6 +555,8 @@ tr.trData:hover{
       $('select#TAHUN_FILTER2').removeAttr("required");
       $('div#divtahunfilter2').attr("style", "display:none");
       $('select#TAHUN_FILTER2').val("");
+
+      $('#rekapCatatan').attr("style", "display:none");
     
     }else{
       $('input#DATA_eDATE').attr("readonly","readonly");}
@@ -757,7 +766,7 @@ tr.trData:hover{
             cssStyle: 'light-theme',
             currentPage: curPage,
           });
-              var tableContent = "";  
+              var tableContent = "";
               for (var j = 0; j < data.result.length; j++) 
               {
                 // console.log(data.result[j].FLOWMETER);
@@ -808,6 +817,7 @@ tr.trData:hover{
                   const object = data.result[j].FLOWMETER[i];
                   var listData = '';
                   var property;
+                 
                   if (JENIS_LAPORAN == "Harian") 
                   {
                     var listData =  /*html*/`<td class="bordered fixed"> ${data.result[j].FLOWMETER[i].KPE_AIR_FLOWMETER_NAMA} </td>
@@ -878,7 +888,6 @@ tr.trData:hover{
                 }
               }
               $("tbody#zone_data").append(tableContent);//append list catatan
-            
 
         } else if (data.respon.pesan == "gagal") {
           // alert(data.respon.text_msg);
@@ -1204,8 +1213,67 @@ tr.trData:hover{
     window.open('?show=kpe/pdf/cetak_pemakaian_air/'+DATA_sDATE+'/'+DATA_eDATE+'/'+BULAN_FILTER+'/'+TAHUN_FILTER2+'/'+TAHUN_FILTER+'', '_blank');
   })
 
-  $("#btnKalibrasi").click(function () {
-    $(".rumusCatatan").removeAttr("style")
+  $("#rekapCatatan").click(function () {
+    Swal.fire({
+        title: 'Apakah anda yakin?',
+        text: "Pastikan semua flowmeter sudah terisi sebelum merekapnya!",
+        icon: 'warning',
+        showCancelButton: true,
+        cancelButtonText: 'Tidak!',
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, yakin!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        if ($('#KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE').val() == '') {
+          Swal.fire({
+            title: 'Gagal!',
+            text: 'Silahkan pilih distribusi type terlebih dahulu sebelum rekap catatan',
+            icon: 'error'
+          })
+        } else {
+          let now = new Date($('#DATA_sDATE').val());
+          let start = new Date(now.getFullYear(), 0, 0);
+          let diff = (now - start) + ((start.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000);
+          let oneDay = 1000 * 60 * 60 * 24;
+          let day = Math.floor(diff / oneDay);
+          if ($('#KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE').val() == 'PRE') {
+            var rekapUsed = 'simpan_rekap_used_pre';
+          } else {
+            rekapUsed = 'simpan_rekap_used_ro';
+          }
+          // return
+          $.ajax({
+            type:'POST',
+            url:refseeAPI,
+            dataType:'json',
+            data:'aplikasi=<?php echo $d0;?>&ref='+rekapUsed+'&KPE_AIR_FLOWMETER_REKAP_USED_PRE_TANGGAL='+$('#DATA_sDATE').val()+'&KPE_AIR_FLOWMETER_REKAP_USED_PRE_CODDING='+day,
+            success:function(data)
+            { 
+              if(data.respon.pesan=="sukses")
+              {
+                Swal.fire({
+                  title: 'Berhasil!',
+                  text: 'Data berhasil direkap.',
+                  icon: 'success',
+                })
+              }else if(data.respon.pesan=="gagal")
+              {
+                Swal.fire({
+                  title: 'Gagal!',
+                  text: ''+data.respon.text_msg+'',
+                  icon: 'error'
+                })
+              }
+            },
+            error:function(x,e){
+              // error_handler_json(x,e,'=> hapus_catatan()');
+              alert('error')
+            }//end error
+          });
+        }
+      }
+    })
   })
 
 </script>

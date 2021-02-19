@@ -107,6 +107,33 @@ switch($ref){
 				require_once("ajax/konfigurasi/hapus_angka_flowmeter_kalibrasi.php");
 			break;
 
+			// Operasional PRE
+			case 'simpan_operasional_pre':
+				require_once("ajax/operasional_pre/simpan_operasional_pre.php");
+			break;
+			case 'list_operasional_pre':
+				require_once("ajax/operasional_pre/list_operasional_pre.php");
+			break;
+			case 'hapus_operasional_pre':
+				require_once("ajax/operasional_pre/hapus_operasional_pre.php");
+			break;
+
+			// Rekap Used PRE
+			case 'simpan_rekap_used_pre':
+				require_once("ajax/rekap_used_pre/simpan_rekap_used_pre.php");
+			break;
+			case 'hapus_rekap_used_pre':
+				require_once("ajax/rekap_used_pre/hapus_rekap_used_pre.php");
+			break;
+
+			// Rekap Used RO
+			case 'simpan_rekap_used_ro':
+				require_once("ajax/rekap_used_ro/simpan_rekap_used_ro.php");
+			break;
+			case 'hapus_rekap_used_ro':
+				require_once("ajax/rekap_used_ro/hapus_rekap_used_ro.php");
+			break;
+
 			//KWH SOLAR BATUBARA
 			case 'ksb_list':
 				require_once("ajax/dailyreport/ksb_list.php");

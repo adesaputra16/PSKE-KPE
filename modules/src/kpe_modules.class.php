@@ -235,6 +235,22 @@ CLASS KPE_MODULES extends USER_PRIVILEGES
 			require_once ("konfigurasi/Hapus_angka_flowmeter_kalibrasi.php");
 		break;
 
+		//!OPERASIONAL PRE
+		case 'nonlogin_simpan_operasional_pre':
+			require_once ("operasional_pre/Simpan_operasional_pre.php");
+		break;
+		case 'nonlogin_list_operasional_pre':
+			require_once ("operasional_pre/List_operasional_pre.php");
+		break;
+		case 'nonlogin_hapus_operasional_pre':
+			require_once ("operasional_pre/Hapus_operasional_pre.php");
+		break;
+
+		//!REKAP USED PRE
+		case 'nonlogin_simpan_rekap_used_pre':
+			require_once ("rekap_used/Simpan_rekap_used_pre.php");
+		break;
+
 		//!DAILY REPORT 
 		case 'nonlogin_ksb_list':
 			require_once ("dailyreport/ksb_list.php");

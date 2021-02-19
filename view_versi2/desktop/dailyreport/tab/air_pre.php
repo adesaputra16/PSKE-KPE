@@ -335,37 +335,11 @@
                 <th>(m3) Water</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>Otto</td>
-                <td>@mdo</td>
-              </tr>
-              <tr>
-                <td>Thornton</td>
-                <td>@fat</td>
-              </tr>
-              <tr>
-                <td>Larry the Bird</td>
-                <td>@twitter</td>
-              </tr>
-              <tr>
-                <td>Otto</td>
-                <td>@mdo</td>
-              </tr>
-              <tr>
-                <td>Thornton</td>
-                <td>@fat</td>
-              </tr>
-              <tr>
-                <td>Larry the Bird</td>
-                <td>@twitter</td>
-              </tr>
+            <tbody id="stock">
+              
             </tbody>
-            <tfoot>
-              <tr>
-                <th>Total</th>
-                <th>2,173.58</th>
-              </tr>
+            <tfoot id="stock">
+              
             </tfoot>
           </table>
         </div>
@@ -383,29 +357,11 @@
                 <th>Accumulatif</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-              </tr>
-              <tr>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-              </tr>
-              <tr>
-                <td>Ujang</td>
-                <td>Larry the Bird</td>
-                <td>@twitter</td>
-              </tr>
+            <tbody id="pwp">
+              
             </tbody>
-            <tfoot>
-              <tr>
-                <th>Total</th>
-                <th>1,152.35</th>
-                <th>233,561.16</th>
-              </tr>
+            <tfoot id="pwp">
+              
             </tfoot>
           </table>
         </div>
@@ -427,25 +383,7 @@
             </thead>
             <tbody>
               <tr>
-                <th>1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                <td>@mdo</td>
-              </tr>
-              <tr>
-                <th>2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-                <td>@fat</td>
-              </tr>
-              <tr>
-                <th>3</th>
-                <td>Larry the Bird</td>
-                <td>@twitter</td>
-                <td>@twitter</td>
-                <td>@twitter</td>
+                <td colspan="5">ON PROGRESS</td>
               </tr>
             </tbody>
           </table>
@@ -465,33 +403,11 @@
                 <th>Accumulatif (hour)</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <th>1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-              </tr>
-              <tr>
-                <th>2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-              </tr>
-              <tr>
-                <th>3</th>
-                <td>Larry the Bird</td>
-                <td>@twitter</td>
-                <td>@twitter</td>
-              </tr>
+            <tbody id="operation">
+              
             </tbody>
-            <tfoot>
-              <tr>
-                <th>Total</th>
-                <th>37.26</th>
-                <th>125</th>
-                <th>1685.35</th>
-              </tr>
+            <tfoot id="operation">
+              
             </tfoot>
           </table>
         </div>
@@ -501,32 +417,12 @@
           <table class="table table-bordered table-hover">
             <thead>
               <tr>
-                <th colspan="2"></th>
-                <th>Accumulatif</th>
+                <th colspan="3"></th>
+                <th class="text-center">Accumulatif</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <th>1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                <td>@mdo</td>
-              </tr>
-              <tr>
-                <th>2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-                <td>@fat</td>
-              </tr>
-              <tr>
-                <th>3</th>
-                <td>Larry the Bird</td>
-                <td>Larry the Bird</td>
-                <td>@twitter</td>
-                <td>@twitter</td>
-              </tr>
+            <tbody id="accumulatif">
+              
             </tbody>
           </table>
         </div>
@@ -579,6 +475,7 @@
     $('#TAHUN_FILTER').val(<?= Date('Y') ?>);
     filterHariSetahun();
     listDlyPre();
+    // listStockPre();
   });	
 
   function tambahKosong(x){
@@ -642,7 +539,7 @@
       date= targetDate.getFullYear()+"/"+(tambahKosong(targetDate.getMonth()+1)) +"/"+tambahKosong(targetDate.getDate());
     }
     $('#TANGGAL_FILTER').val(date)
-    let now = new Date();
+    let now = new Date(date);
     let start = new Date(now.getFullYear(), 0, 0);
     let diff = (now - start) + ((start.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000);
     let oneDay = 1000 * 60 * 60 * 24;
@@ -705,12 +602,12 @@
 
           $('#totalPWU').append(/*html*/`<tr>
                                             <th>Total</th>
-                                            <th>${formatNumber(parseFloat(data.TOTAL_USAGE).toFixed(2))}</th>
+                                            <th id="TOTAL_USAGE" TOTAL_USAGE="${formatNumber(parseFloat(data.TOTAL_USAGE).toFixed(2))}">${formatNumber(parseFloat(data.TOTAL_USAGE).toFixed(2))}</th>
                                             <th>${formatNumber(arrPersen.reduce((a, b) => a + b, 0).toFixed(2))}</th>
-                                            <th>${formatNumber(arrAcc.reduce((a, b) => a + b, 0).toFixed(2))}</th>
+                                            <th id="TOTAL_ACC" TOTAL_ACC="${formatNumber(arrAcc.reduce((a, b) => a + b, 0).toFixed(2))}">${formatNumber(arrAcc.reduce((a, b) => a + b, 0).toFixed(2))}</th>
                                             <th>${formatNumber(arrAccPersen.reduce((a, b) => a + b, 0).toFixed(2))}</th>
                                           </tr>`);
-          
+          listStockPre();
         }else if(data.respon.pesan=="gagal")
         {
           console.log('gagal');
@@ -723,8 +620,164 @@
     });
   }
 
+  //?=========== FUNCTION LIST DATA ===========?//
+  function listStockPre() {
+    $('#zone_data').empty();
+    $('tbody#stock').empty();
+    $('tfoot#stock').empty();
+    $('tbody#pwp').empty();
+    $('tfoot#pwp').empty();
+    $('tbody#operation').empty();
+    $('tfoot#operation').empty();
+    $('tbody#accumulatif').empty();
+    $.ajax({
+      type:'POST',
+      url:refseeAPI,
+      dataType:'json',
+      data:'aplikasi=<?php echo $d0;?>&ref=list_operasional_pre&BULAN_FILTER='+$("select#BULAN_FILTER").val()+'&TAHUN_FILTER='+$("select#TAHUN_FILTER").val()+'&TANGGAL_FILTER='+$("#TANGGAL_FILTER").val(),
+      success:function(data)
+      { 
+        console.log(data.result);
+        if(data.respon.pesan=="sukses")
+        {
+          $('tbody#stock').append(/*html*/`<tr>
+                                              <td>Equalisasi</td>
+                                              <td class="bordered">${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_STOCK_BAK_EQUALISASI}</td>
+                                            </tr>
+                                            <tr>
+                                              <td>Employe Mess Basin</td>
+                                              <td class="bordered">${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_EMPLOYE_MESS_BASIN}</td>
+                                            </tr>
+                                            <tr>
+                                              <td>Tower</td>
+                                              <td class="bordered">${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_TOWER}</td>
+                                            </tr>
+                                            <tr>
+                                              <td>Aerasi Basin</td>
+                                              <td class="bordered">${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_AERASI_BASIN}</td>
+                                            </tr>
+                                            <tr>
+                                              <td>Filtered Water Basin</td>
+                                              <td class="bordered">${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_FILTERED_WATER_BASIN}</td>
+                                            </tr>
+                                            <tr>
+                                              <td>Bak BSF 1 & 2</td>
+                                              <td class="bordered">${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_BAK_BSF_1_2}</td>
+                                            </tr>
+                                            <tr>
+                                              <td>Bak BSF 3 & 4</td>
+                                              <td class="bordered">${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_BAK_BSF_3_4}</td>
+                                            </tr>`);
+          $('tfoot#stock').append(/*html*/`<tr>
+                                              <th>Total</th>
+                                              <th class="bordered">${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_AKUMULASI_STOCK}</th>
+                                            </tr>`);
+
+          $('tbody#pwp').append(/*html*/`<tr>
+                                           <td>Raw Water</td> 
+                                           <td>${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_PROSES_RW}</td>
+                                           <td>${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_AKUMULASI_PROSES_RW}</td>
+                                        </tr>
+                                        <tr>
+                                           <td>Clarifier 1</td> 
+                                           <td>${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_PROSES_CC_1_2_REAL/4}</td>
+                                           <td>${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_AKUM_PROSES_CC_1_2_LAPORAN/2}</td>
+                                        </tr>
+                                        <tr>
+                                           <td>Clarifier 2</td> 
+                                           <td>${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_PROSES_CC_1_2_REAL/2}</td>
+                                           <td>${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_AKUM_PROSES_CC_1_2_LAPORAN/2}</td>
+                                        </tr>
+                                        <tr>
+                                           <td>Clarifier 3</td> 
+                                           <td>${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_PROSES_CC_3_4_REAL/2}</td>
+                                           <td>${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_AKUM_PROSES_CC_3_4_LAPORAN/2}</td>
+                                        </tr>
+                                        <tr>
+                                           <td>Clarifier 4</td> 
+                                           <td>${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_PROSES_CC_3_4_REAL/2}</td>
+                                           <td>${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_AKUM_PROSES_CC_3_4_LAPORAN/2}</td>
+                                        </tr>`);
+          $('tfoot#pwp').append(/*html*/`<tr>
+                                            <th>Total</th>
+                                            <th class="bordered">${(parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_PROSES_RW)+parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_PROSES_CC_1_2_REAL/4)+parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_PROSES_CC_1_2_REAL/2)+parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_PROSES_CC_3_4_REAL/2)+parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_PROSES_CC_3_4_REAL/2)).toFixed(2)}</th>
+                                            <th class="bordered">${(parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_AKUMULASI_PROSES_RW) + parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_AKUM_PROSES_CC_1_2_LAPORAN/2) + parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_AKUM_PROSES_CC_1_2_LAPORAN/2) + parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_AKUM_PROSES_CC_3_4_LAPORAN/2) + parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_AKUM_PROSES_CC_3_4_LAPORAN/2)).toFixed(2)}</th>
+                                          </tr>`);
+
+          $('tbody#operation').append(/*html*/`<tr>
+                                                  <td>Clarifier 1</td> 
+                                                  <td>${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CC_1_2}</td>
+                                                  <td>${30}</td>
+                                                  <td>${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CC_1_3/2}</td>
+                                                </tr>
+                                                <tr>
+                                                  <td>Clarifier 2</td> 
+                                                  <td>${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CC_1_2_RUMUS}</td>
+                                                  <td>${30}</td>
+                                                  <td>${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CC_1_3/2}</td>
+                                                </tr>
+                                                <tr>
+                                                  <td>Clarifier 3</td> 
+                                                  <td>${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CC_3_4}</td>
+                                                  <td>${30}</td>
+                                                  <td>${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CC_3_6/2}</td>
+                                                </tr>
+                                                <tr>
+                                                  <td>Clarifier 4</td> 
+                                                  <td>${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CC_3_4_RUMUS}</td>
+                                                  <td>${30}</td>
+                                                  <td>${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CC_3_6/2}</td>
+                                                </tr>`);
+          $('tfoot#operation').append(/*html*/`<tr>
+                                                <th>Total</th>
+                                                <th class="bordered">${(parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CC_1_2)+parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CC_1_2_RUMUS)+parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CC_3_4)+parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CC_3_4_RUMUS)).toFixed(2)}</th>
+                                                <th class="bordered">${120}</th>
+                                                <th class="bordered">${(parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CC_1_3/2) + parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CC_1_3/2) + parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CC_3_6/2) + parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CC_3_6/2)).toFixed(2)}</th>
+                                              </tr>`);
+          let TOTAL_USAGE = $('th#TOTAL_USAGE').attr('TOTAL_USAGE');
+          let TOTAL_ACC = $('th#TOTAL_ACC').attr('TOTAL_ACC');
+          $('tbody#accumulatif').append(/*html*/`<tr>
+                                                    <td colspan="2">Accept</td> 
+                                                    <td>${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_PROSES_RW}</td>
+                                                    <td>${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_AKUMULASI_PROSES_RW}</td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td colspan="2">Usage</td> 
+                                                    <td>${TOTAL_USAGE}</td>
+                                                    <td>${TOTAL_ACC}</td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td colspan="2">Stock</td> 
+                                                    <td colspan="2" class="text-left">${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_AKUMULASI_STOCK}</td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td colspan="2">Decrease</td> 
+                                                    <td>${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_SUSUT_PRE_DISTRIBUSI}</td>
+                                                    <td>${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_SUSUT}</td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td colspan="2">Efficiency</td> 
+                                                    <td colspan="2" class="text-left">${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_EFFESIENSI}</td>
+                                                  </tr>`);
+          
+        }else if(data.respon.pesan=="gagal")
+        {
+          $('tbody#stock').html(/*html*/`<tr><td colspan="2"><div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>${data.respon.text_msg}</div></td></tr>`);
+          $('tbody#pwp').html(/*html*/`<tr><td colspan="3"><div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>${data.respon.text_msg}</div></td></tr>`);
+          $('tbody#operation').html(/*html*/`<tr><td colspan="4"><div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>${data.respon.text_msg}</div></td></tr>`);
+          $('tbody#accumulatif').html(/*html*/`<tr><td colspan="4"><div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>${data.respon.text_msg}</div></td></tr>`);
+        }
+      },
+      error:function(x,e){
+        error_handler_json(x,e,'=> list_operasional_pre()');
+      }//end error
+    });
+  }
+  //?=========== END FUNCTION LIST DATA ===========?//
+
   $('button#btnFilter').on('click',function () {
     listDlyPre();
+    listStockPre();
   })
   
 </script>

@@ -36,6 +36,12 @@ require_once('menu_sidebar.php');
           case 'KONFIGURASI':
             require_once("konfigurasi/konfigurasi.php");
             break;
+          case 'OPERASIONAL_PRE':
+            require_once("operasional/operasional_pre.php");
+            break;
+          case 'OPERASIONAL_RO':
+            require_once("operasional/operasional_ro.php");
+            break;
             //----------------- END CASE
           default:
             require_once("kpe_air/catatan.php");
