@@ -20,7 +20,7 @@
           <li class="active" id="kimia" role="tab">
             <a href="?show=kpe/air/operasional_pre/kimia">Kimia</a>
           </li>
-          <li class="active" id="rekap_used" role="tab">
+          <li class="active" id="rekap" role="tab">
             <a href="?show=kpe/air/operasional_pre/rekap">Rekap Used</a>
           </li>
 				</ul>

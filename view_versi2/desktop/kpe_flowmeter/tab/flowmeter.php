@@ -68,6 +68,10 @@ tr.trData:hover{
   font-size: 1.3rem !important; 
 }
 
+a.disabled {
+  pointer-events: none;
+  cursor: default;
+}
 </style>
 
 <div class="box-body">
@@ -474,6 +478,11 @@ function tampil(curPage)
             } else {
               KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA += JSON.parse(data.result[i].KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA);
             }
+            if (data.result[i].KPE_AIR_FLOWMETER_STATUS == "PERMANEN" ) {
+              var disable = 'disabled';
+            }  else {
+              disable = '';
+            }
             $("tbody#zone_data").append("<tr class='bordered trData'>" + "<td  class='bordered'>" + data.result[i].NO + ".</td>" +
             "<td class='bordered text-center'>"+
               "<div class='btn-group'>"+
@@ -485,7 +494,7 @@ function tampil(curPage)
                 "</button>"+
                 "<ul class='dropdown-menu'>"+
                   "<li><a class='edit' style='color:rgb(0, 48, 73);' KPE_AIR_FLOWMETER_ID='" + data.result[i].KPE_AIR_FLOWMETER_ID + "' KPE_AIR_FLOWMETER_NAMA='" + data.result[i].KPE_AIR_FLOWMETER_NAMA + "' KPE_AIR_FLOWMETER_DISTRIBUSI='" + data.result[i].KPE_AIR_FLOWMETER_DISTRIBUSI + "' KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE='" + data.result[i].KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE + "' KPE_AIR_FLOWMETER_SUB_ID='" + data.result[i].KPE_AIR_FLOWMETER_SUB_ID + "' KPE_AIR_FLOWMETER_LOKASI='" + data.result[i].KPE_AIR_FLOWMETER_LOKASI + "' KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA='" + KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA +"'><i class='fa fa-edit'></i>Edit</a></li>"+
-                  "<li><a class='hapus' style='color:brown;' KPE_AIR_FLOWMETER_ID='" + data.result[i].KPE_AIR_FLOWMETER_ID + "'><i class='fa fa-trash'></i>Hapus</a></li>"+
+                  "<li><a class='hapus "+disable+"' style='color:brown;' KPE_AIR_FLOWMETER_ID='" + data.result[i].KPE_AIR_FLOWMETER_ID + "'><i class='fa fa-trash'></i>Hapus</a></li>"+
                 "</ul>"+
               "</div>"+
             "</td>"+

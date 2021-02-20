@@ -36,7 +36,7 @@ if (empty($input['KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE']) or $input['KPE_AIR_FLOWME
 }
 else
 {
-  $filter_c = "AND AF.KPE_AIR_FLOWMETER_DISTRIBUSI LIKE '%".$input['KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE']."%'";
+  $filter_c = "AND AF.KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE='".$input['KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE']."'";
 }
 
 if (empty($input['subFlowmeter']) or $input['subFlowmeter'] == "" )
@@ -71,7 +71,7 @@ foreach($result_a as $r)
 if (empty($result_a))
     {
     $this->callback['respon']['pesan'] = "gagal";
-    $this->callback['respon']['text_msg'] = "Data tidak ada.";
+    $this->callback['respon']['text_msg'] = $sql_a;//"Data tidak ada.";
     $this->callback['filter'] = $params;
     $this->callback['result'] = $result;
     }

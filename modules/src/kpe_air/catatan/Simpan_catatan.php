@@ -45,7 +45,23 @@ if (empty($params['case']))
 				$KPE_AIR_FLOWMETER_CATATAN_BEBAN = round($KPE_AIR_FLOWMETER_CATATAN_PAKAI-($KPE_AIR_FLOWMETER_CATATAN_PAKAI*$KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_PERSEN/100),2);
 			}
 		} else { //Flowmeter tidak di kalibrasi
-			$KPE_AIR_FLOWMETER_CATATAN_BEBAN = $KPE_AIR_FLOWMETER_CATATAN_PAKAI;
+			if ($input['KPE_AIR_FLOWMETER_ID'] == "20210109152131751632") {
+				$sql_prd = "SELECT KPE_AIR_FLOWMETER_CATATAN_BEBAN FROM KPE_AIR_FLOWMETER_CATATAN WHERE KPE_AIR_FLOWMETER_ID='20210109152213278549' AND RECORD_STATUS='A' AND KPE_AIR_FLOWMETER_CATATAN_TANGGAL='".$input['KPE_AIR_FLOWMETER_CATATAN_TANGGAL']."'";
+				$this->MYSQL = new MYSQL();
+				$this->MYSQL->database = $this->CONFIG->mysql_koneksi()->db_nama;
+				$this->MYSQL->queri = $sql_prd;
+				$result_prd = $this->MYSQL->data()[0];
+				$KPE_AIR_FLOWMETER_CATATAN_BEBAN = $KPE_AIR_FLOWMETER_CATATAN_PAKAI-$result_prd['KPE_AIR_FLOWMETER_CATATAN_BEBAN'];
+			} elseif ($input['KPE_AIR_FLOWMETER_ID'] == "20210109164532364198") {
+				$sql_cch = "SELECT KPE_AIR_FLOWMETER_CATATAN_BEBAN FROM KPE_AIR_FLOWMETER_CATATAN WHERE KPE_AIR_FLOWMETER_ID='20210109144530481281' AND RECORD_STATUS='A' AND KPE_AIR_FLOWMETER_CATATAN_TANGGAL='".$input['KPE_AIR_FLOWMETER_CATATAN_TANGGAL']."'";
+				$this->MYSQL = new MYSQL();
+				$this->MYSQL->database = $this->CONFIG->mysql_koneksi()->db_nama;
+				$this->MYSQL->queri = $sql_cch;
+				$result_cch = $this->MYSQL->data()[0];
+				$KPE_AIR_FLOWMETER_CATATAN_BEBAN = $KPE_AIR_FLOWMETER_CATATAN_PAKAI-$result_cch['KPE_AIR_FLOWMETER_CATATAN_BEBAN'];
+			} else {
+				$KPE_AIR_FLOWMETER_CATATAN_BEBAN = $KPE_AIR_FLOWMETER_CATATAN_PAKAI;
+			}
 		}
 
 		/*===================== Mencari hasil Beban jika flowmeter digunakan beberapa departemen ===================*/

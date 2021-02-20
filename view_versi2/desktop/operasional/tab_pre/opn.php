@@ -382,7 +382,7 @@
     }).then((result) => {
       if (result.isConfirmed) {
         $('#modalTambahData').modal('show');
-        $('form#fData')[0].reset();
+        // $('form#fData')[0].reset();
         $('#KPE_AIR_FLOWMETER_OPERASIONAL_PRE_ID').val('');
       }
     })
@@ -394,7 +394,7 @@
     let date = new Date($("#KPE_AIR_FLOWMETER_OPERASIONAL_PRE_TANGGAL").val());
     let dateSebelumnya = new Date((new Date(date)).valueOf() - 1000*60*60*24);
     let KPE_AIR_OPERASIONAL_PRE_TANGGAL_SEBELUMNYA = dateSebelumnya.getFullYear() + '/' + tambahKosong(dateSebelumnya.getMonth()+1) + '/' + tambahKosong(dateSebelumnya.getDate());
-    // console.log(fData);
+    // console.log(KPE_AIR_OPERASIONAL_PRE_TANGGAL_SEBELUMNYA);
     // alert(fData);
     // return
     $.ajax({

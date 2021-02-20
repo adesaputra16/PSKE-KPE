@@ -122,8 +122,8 @@ switch($ref){
 			case 'simpan_rekap_used_pre':
 				require_once("ajax/rekap_used_pre/simpan_rekap_used_pre.php");
 			break;
-			case 'hapus_rekap_used_pre':
-				require_once("ajax/rekap_used_pre/hapus_rekap_used_pre.php");
+			case 'list_rekap_used_pre':
+				require_once("ajax/rekap_used_pre/list_rekap_used_pre.php");
 			break;
 
 			// Rekap Used RO

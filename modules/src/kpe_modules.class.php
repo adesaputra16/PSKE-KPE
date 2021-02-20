@@ -250,6 +250,9 @@ CLASS KPE_MODULES extends USER_PRIVILEGES
 		case 'nonlogin_simpan_rekap_used_pre':
 			require_once ("rekap_used/Simpan_rekap_used_pre.php");
 		break;
+		case 'nonlogin_list_rekap_used_pre':
+			require_once ("rekap_used/List_rekap_used_pre.php");
+		break;
 
 		//!DAILY REPORT 
 		case 'nonlogin_ksb_list':
