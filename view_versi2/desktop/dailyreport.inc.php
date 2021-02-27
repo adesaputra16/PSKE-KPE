@@ -42,16 +42,37 @@ require_once('menu_sidebar.php');
         ));
       }else if($d2=="air")
       {
-
-        $adminLTE->breadcrumb(array(
-          'title'=>"Laporan Harian Air Pre-Treatment dan RO",
-          'breadcrumb'=>array(
-            array('title'=>"<a href='?show=kpe'>KPE</a>",'link'=>"?show=kpe"),
-            array('title'=>"<a href='?show=kpe/dailyreport/pre_ro'>Air Pre & RO</a>",'link'=>"?show=kpe/dailyreport/pre_ro"),
-            array('title'=>"Air Pre & RO",'link'=>"?show=kpe/dailyreport/pre_ro/"),
-            //array('title'=>"more title",'link'=>"#"),
-          ),
-        ));
+        if ($d3=="") {
+          $adminLTE->breadcrumb(array(
+            'title'=>"Laporan Harian Air Pre-Treatment",
+            'breadcrumb'=>array(
+              array('title'=>"<a href='?show=kpe'>KPE</a>",'link'=>"?show=kpe"),
+              array('title'=>"<a href='?show=kpe/dailyreport/air'>Air Pre & RO</a>",'link'=>"?show=kpe/dailyreport/air/pre"),
+              array('title'=>"Air Pre",'link'=>"?show=kpe/dailyreport/air/pre/"),
+              //array('title'=>"more title",'link'=>"#"),
+            ),
+          ));
+        } else if ($d3=="pre") {
+          $adminLTE->breadcrumb(array(
+            'title'=>"Laporan Harian Air Pre-Treatment",
+            'breadcrumb'=>array(
+              array('title'=>"<a href='?show=kpe'>KPE</a>",'link'=>"?show=kpe"),
+              array('title'=>"<a href='?show=kpe/dailyreport/air/pre'>Air Pre & RO</a>",'link'=>"?show=kpe/dailyreport/air/pre"),
+              array('title'=>"Air Pre",'link'=>"?show=kpe/dailyreport/air/pre"),
+              //array('title'=>"more title",'link'=>"#"),
+            ),
+          ));
+        } else if ($d3=="ro") {
+          $adminLTE->breadcrumb(array(
+            'title'=>"Laporan Harian Air RO",
+            'breadcrumb'=>array(
+              array('title'=>"<a href='?show=kpe'>KPE</a>",'link'=>"?show=kpe"),
+              array('title'=>"<a href='?show=kpe/dailyreport/air/ro'>Air Pre & RO</a>",'link'=>"?show=kpe/dailyreport/air/ro"),
+              array('title'=>"Air RO",'link'=>"?show=kpe/dailyreport/air/ro"),
+              //array('title'=>"more title",'link'=>"#"),
+            ),
+          ));
+        }
       }
 	  }
 		
@@ -73,10 +94,10 @@ require_once('menu_sidebar.php');
         <?php
         switch (strtoupper($d2)) {
           case 'KSB':
-            require_once("dailyreport/ksb.php");
+            require_once("air/dailyreport/ksb.php");
           break;
           case 'AIR':
-            require_once("dailyreport/air.php");
+            require_once("air/dailyreport/air.php");
           break;
           default:
             //require_once("beranda.php");

@@ -126,140 +126,190 @@ CLASS KPE_MODULES extends USER_PRIVILEGES
 				
 		//! Case Catatan
 		case 'nonlogin_simpan_catatan':
-			require_once ("kpe_air/catatan/Simpan_catatan.php");
+			require_once ("air/kpe_air/catatan/Simpan_catatan.php");
 		break;
 		case 'nonlogin_tampil_catatan':
-			require_once ("kpe_air/catatan/Tampil_catatan.php");
+			require_once ("air/kpe_air/catatan/Tampil_catatan.php");
 		break;
 		case 'nonlogin_ubah_catatan':
-			require_once ("kpe_air/catatan/Ubah_catatan.php");
+			require_once ("air/kpe_air/catatan/Ubah_catatan.php");
 		break;
 		case 'nonlogin_hapus_catatan':
-			require_once ("kpe_air/catatan/Hapus_catatan.php");
+			require_once ("air/kpe_air/catatan/Hapus_catatan.php");
 		break;
 		case 'nonlogin_list_catatan_departemen':
-			require_once ("kpe_air/catatan/List_catatan_departemen.php");
+			require_once ("air/kpe_air/catatan/List_catatan_departemen.php");
 		break;
 		case 'nonlogin_list_catatan_sebelumnya':
-			require_once ("kpe_air/catatan/List_catatan_sebelumnya.php");
+			require_once ("air/kpe_air/catatan/List_catatan_sebelumnya.php");
 		break;
 		case 'nonlogin_cetak_catatan':
-			require_once ("kpe_air/catatan/Cetak_catatan.php");
+			require_once ("air/kpe_air/catatan/Cetak_catatan.php");
 		break;
 
 		//! Case Beban Harian
 		case 'nonlogin_list_beban_harian':
-			require_once ("kpe_air/beban_harian/List_beban_harian.php");
+			require_once ("air/kpe_air/beban_harian/List_beban_harian.php");
 		break;
 		case 'nonlogin_list_beban_harian_dept':
-			require_once ("kpe_air/beban_harian/List_beban_harian_dept.php");
+			require_once ("air/kpe_air/beban_harian/List_beban_harian_dept.php");
 		break;
 		case 'nonlogin_simpan_beban_pre':
-			require_once ("kpe_air/beban_harian/Simpan_beban_pre.php");
+			require_once ("air/kpe_air/beban_harian/Simpan_beban_pre.php");
 		break;
 
 		//! Case Per Dept
 		case 'nonlogin_list_per_dept':
-			require_once ("kpe_air/per_dept/List_per_dept.php");
+			require_once ("air/kpe_air/per_dept/List_per_dept.php");
 		break;
 		case 'nonlogin_list_rumus_per_dept':
-			require_once ("kpe_air/per_dept/List_rumus_per_dept.php");
+			require_once ("air/kpe_air/per_dept/List_rumus_per_dept.php");
 		break;
 		case 'nonlogin_simpan_rumus_per_dept':
-			require_once ("kpe_air/per_dept/Simpan_rumus_per_dept.php");
+			require_once ("air/kpe_air/per_dept/Simpan_rumus_per_dept.php");
 		break;
 		case 'nonlogin_tampil_angka_pakai_rumus_per_dept':
-			require_once ("kpe_air/per_dept/Tampil_angka_pakai_rumus_per_dept.php");
+			require_once ("air/kpe_air/per_dept/Tampil_angka_pakai_rumus_per_dept.php");
 		break;
 
 		//! Case Flowmeter
 		case 'nonlogin_simpan_flowmeter':
-			require_once ("kpe_flowmeter/Simpan_flowmeter.php");
+			require_once ("air/kpe_flowmeter/Simpan_flowmeter.php");
 		break;
 		case 'nonlogin_tampil_flowmeter':
-			require_once ("kpe_flowmeter/Tampil_flowmeter.php");
+			require_once ("air/kpe_flowmeter/Tampil_flowmeter.php");
 		break;
 		case 'nonlogin_ubah_flowmeter':
-			require_once ("kpe_flowmeter/Ubah_flowmeter.php");
+			require_once ("air/kpe_flowmeter/Ubah_flowmeter.php");
 		break;
 		case 'nonlogin_hapus_flowmeter':
-			require_once ("kpe_flowmeter/Hapus_flowmeter.php");
+			require_once ("air/kpe_flowmeter/Hapus_flowmeter.php");
 		break;
 		case 'nonlogin_ambil_daftar_flowmeter':
-			require_once ("kpe_flowmeter/Ambil_daftar_flowmeter.php");
+			require_once ("air/kpe_flowmeter/Ambil_daftar_flowmeter.php");
 		break;
 		case 'nonlogin_cari_air':
-			require_once ("kpe_flowmeter/Cari_air.php");
+			require_once ("air/kpe_flowmeter/Cari_air.php");
 		break;
 
 		//! Case Sub Flowmeter
 		case 'nonlogin_simpan_sub_flowmeter':
-			require_once ("kpe_sub_flowmeter/Simpan_sub_flowmeter.php");
+			require_once ("air/kpe_sub_flowmeter/Simpan_sub_flowmeter.php");
 		break;
 		case 'nonlogin_tampil_sub_flowmeter':
-			require_once ("kpe_sub_flowmeter/Tampil_sub_flowmeter.php");
+			require_once ("air/kpe_sub_flowmeter/Tampil_sub_flowmeter.php");
 		break;
 		case 'nonlogin_hapus_sub_flowmeter':
-			require_once ("kpe_sub_flowmeter/Hapus_sub_flowmeter.php");
+			require_once ("air/kpe_sub_flowmeter/Hapus_sub_flowmeter.php");
 		break;
 		case 'nonlogin_ambil_sub_flowmeter':
-			require_once ("kpe_sub_flowmeter/Ambil_sub_flowmeter.php");
+			require_once ("air/kpe_sub_flowmeter/Ambil_sub_flowmeter.php");
 		break;
 
 		//!Case Konfigurasi
 		case 'nonlogin_simpan_flowmeter_departemen':
-			require_once ("konfigurasi/Simpan_flowmeter_departemen.php");
+			require_once ("air/konfigurasi/Simpan_flowmeter_departemen.php");
 		break;
 		case 'nonlogin_list_flowmeter_departemen':
-			require_once ("konfigurasi/List_flowmeter_departemen.php");
+			require_once ("air/konfigurasi/List_flowmeter_departemen.php");
 		break;
 		case 'nonlogin_hapus_flowmeter_departemen':
-			require_once ("konfigurasi/Hapus_flowmeter_departemen.php");
+			require_once ("air/konfigurasi/Hapus_flowmeter_departemen.php");
 		break;
 		case 'nonlogin_list_personil_departemen':
-			require_once ("konfigurasi/List_personil_departemen.php");
+			require_once ("air/konfigurasi/List_personil_departemen.php");
 		break;
 		case 'nonlogin_list_departemen':
-			require_once ("konfigurasi/List_departemen.php");
+			require_once ("air/konfigurasi/List_departemen.php");
 		break;
 		case 'nonlogin_simpan_flow_dept':
-			require_once ("konfigurasi/Simpan_flow_dept.php");
+			require_once ("air/konfigurasi/Simpan_flow_dept.php");
 		break;
 		case 'nonlogin_simpan_angka_flowmeter_kalibrasi':
-			require_once ("konfigurasi/Simpan_angka_flowmeter_kalibrasi.php");
+			require_once ("air/konfigurasi/Simpan_angka_flowmeter_kalibrasi.php");
 		break;
 		case 'nonlogin_list_angka_flowmeter_kalibrasi':
-			require_once ("konfigurasi/List_angka_flowmeter_kalibrasi.php");
+			require_once ("air/konfigurasi/List_angka_flowmeter_kalibrasi.php");
 		break;
 		case 'nonlogin_hapus_angka_flowmeter_kalibrasi':
-			require_once ("konfigurasi/Hapus_angka_flowmeter_kalibrasi.php");
+			require_once ("air/konfigurasi/Hapus_angka_flowmeter_kalibrasi.php");
 		break;
 
 		//!OPERASIONAL PRE
 		case 'nonlogin_simpan_operasional_pre':
-			require_once ("operasional_pre/Simpan_operasional_pre.php");
+			require_once ("air/operasional_pre/Simpan_operasional_pre.php");
 		break;
 		case 'nonlogin_list_operasional_pre':
-			require_once ("operasional_pre/List_operasional_pre.php");
+			require_once ("air/operasional_pre/List_operasional_pre.php");
 		break;
 		case 'nonlogin_hapus_operasional_pre':
-			require_once ("operasional_pre/Hapus_operasional_pre.php");
+			require_once ("air/operasional_pre/Hapus_operasional_pre.php");
+		break;
+
+		//!OPERASIONAL RO
+		case 'nonlogin_simpan_operasional_ro':
+			require_once ("air/operasional_ro/Simpan_operasional_ro.php");
+		break;
+		case 'nonlogin_list_operasional_ro':
+			require_once ("air/operasional_ro/List_operasional_ro.php");
+		break;
+		case 'nonlogin_hapus_operasional_ro':
+			require_once ("air/operasional_ro/Hapus_operasional_ro.php");
 		break;
 
 		//!REKAP USED PRE
 		case 'nonlogin_simpan_rekap_used_pre':
-			require_once ("rekap_used/Simpan_rekap_used_pre.php");
+			require_once ("air/rekap_used_pre/Simpan_rekap_used_pre.php");
 		break;
 		case 'nonlogin_list_rekap_used_pre':
-			require_once ("rekap_used/List_rekap_used_pre.php");
+			require_once ("air/rekap_used_pre/List_rekap_used_pre.php");
+		break;
+		case 'nonlogin_hapus_rekap_used_pre':
+			require_once ("air/rekap_used_pre/Hapus_rekap_used_pre.php");
+		break;
+
+		//!REKAP USED RO
+		case 'nonlogin_simpan_rekap_used_ro':
+			require_once ("air/rekap_used_ro/Simpan_rekap_used_ro.php");
+		break;
+		case 'nonlogin_list_rekap_used_ro':
+			require_once ("air/rekap_used_ro/List_rekap_used_ro.php");
+		break;
+		case 'nonlogin_hapus_rekap_used_ro':
+			require_once ("air/rekap_used_ro/Hapus_rekap_used_ro.php");
+		break;
+
+		//!KIMIA PRE
+		case 'nonlogin_simpan_kimia_pre':
+			require_once ("air/kimia_pre/Simpan_kimia_pre.php");
+		break;
+		case 'nonlogin_list_kimia_pre':
+			require_once ("air/kimia_pre/List_kimia_pre.php");
+		break;
+		case 'nonlogin_hapus_kimia_pre':
+			require_once ("air/kimia_pre/Hapus_kimia_pre.php");
+		break;
+
+		//!KIMIA RO
+		case 'nonlogin_simpan_kimia_ro':
+			require_once ("air/kimia_ro/Simpan_kimia_ro.php");
+		break;
+		case 'nonlogin_list_kimia_ro':
+			require_once ("air/kimia_ro/List_kimia_ro.php");
+		break;
+		case 'nonlogin_hapus_kimia_ro':
+			require_once ("air/kimia_ro/Hapus_kimia_ro.php");
 		break;
 
 		//!DAILY REPORT 
 		case 'nonlogin_ksb_list':
-			require_once ("dailyreport/ksb_list.php");
+			require_once ("air/dailyreport/ksb_list.php");
 		break;
 		case 'nonlogin_list_dly_report_pre':
-			require_once ("dailyreport/List_dly_report_pre.php");
+			require_once ("air/dailyreport/List_dly_report_pre.php");
+		break;
+		case 'nonlogin_list_dly_report_ro':
+			require_once ("air/dailyreport/List_dly_report_ro.php");
 		break;
 				
 			// ---------------------end case-----------------------------//
