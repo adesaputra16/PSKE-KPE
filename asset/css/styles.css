@@ -1,296 +1,195 @@
-/* beranda */
-.clientes .content-title {
-  background: #9fc943;
-}
-.concorrentes .content-title {
-  background: #ff454a;
-}
+ /*
+ *  Usage:
+ *
+ *    <div class="sk-cube-grid">
+ *      <div class="sk-cube sk-cube1"></div>
+ *      <div class="sk-cube sk-cube2"></div>
+ *      <div class="sk-cube sk-cube3"></div>
+ *      <div class="sk-cube sk-cube4"></div>
+ *      <div class="sk-cube sk-cube5"></div>
+ *      <div class="sk-cube sk-cube6"></div>
+ *      <div class="sk-cube sk-cube7"></div>
+ *      <div class="sk-cube sk-cube8"></div>
+ *      <div class="sk-cube sk-cube9"></div>
+ *    </div>
+ *
+ */
+.sk-cube-grid {
+  width: 40px;
+  height: 40px;
+  margin: 40px auto;
+  /*
+   * Spinner positions
+   * 1 2 3
+   * 4 5 6
+   * 7 8 9
+   */ }
+  .sk-cube-grid .sk-cube {
+    width: 33%;
+    height: 33%;
+    background-color: #E42F4F;
+    float: left;
+    -webkit-animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
+            animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out; }
+  .sk-cube-grid .sk-cube1 {
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s; }
+  .sk-cube-grid .sk-cube2 {
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s; }
+  .sk-cube-grid .sk-cube3 {
+    -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s; }
+  .sk-cube-grid .sk-cube4 {
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s; }
+  .sk-cube-grid .sk-cube5 {
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s; }
+  .sk-cube-grid .sk-cube6 {
+    -webkit-animation-delay: 0.3s;
+            animation-delay: 0.3s; }
+  .sk-cube-grid .sk-cube7 {
+    -webkit-animation-delay: 0.0s;
+            animation-delay: 0.0s; }
+  .sk-cube-grid .sk-cube8 {
+    -webkit-animation-delay: 0.1s;
+            animation-delay: 0.1s; }
+  .sk-cube-grid .sk-cube9 {
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s; }
 
-.approve .content-title {
-  background: #dcca05;
-}
+@-webkit-keyframes sk-cubeGridScaleDelay {
+  0%, 70%, 100% {
+    -webkit-transform: scale3D(1, 1, 1);
+            transform: scale3D(1, 1, 1); }
+  35% {
+    -webkit-transform: scale3D(0, 0, 1);
+            transform: scale3D(0, 0, 1); } }
 
-.concorrentes .content-title img,
-.clientes .content-title img,
-.approve .content-title img {
-  display: inline-block;
-  padding: 0px 5px;
-  margin-top: -5px;
-}
-.clientes .content-title span {
-  color: #fff;
-  margin: 0;
-  padding: 10px 0px;
-  font-size: 18px;
-  font-weight: 100;
-  display: inline-block;
-  font-family: "Arial", sans-serif;
-  letter-spacing: 0.5px;
-}
-.approve .content-title span {
-  color: #fff;
-  margin: 0;
-  padding: 10px 0px;
-  font-size: 18px;
-  font-weight: 100;
-  display: inline-block;
-  font-family: "Arial", sans-serif;
-  letter-spacing: 0.5px;
-}
-.concorrentes .content-title span {
-  color: #fff;
-  margin: 0;
-  padding: 10px 0px;
-  font-size: 18px;
-  font-weight: 100;
-  display: inline-block;
-  font-family: "Arial", sans-serif;
-  letter-spacing: 0.5px;
-}
-.concorrentes,
-.clientes,
-.approve {
-  padding: 0;
-  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
-}
-.concorrentes {
-  margin-left: 0px;
-}
-.concorrentes .concorrentes-content .line,
-.clientes .clientes-content .line,
-.approve .clientes-content .line {
-  height: 5px;
-}
-.concorrentes .concorrentes-content .line-1 {
-  height: 5px;
-  width: 70%;
-  background: #ff454a;
-  float: left;
-}
-.clientes .clientes-content .line-1 {
-  height: 5px;
-  width: 70%;
-  background: #9fc943;
-  float: left;
-}
-.approve .clientes-content .line-1 {
-  height: 5px;
-  width: 70%;
-  background: #dcca05;
-  float: left;
-}
-.concorrentes .concorrentes-content .line-2,
-.clientes .clientes-content .line-2,
-.approve .clientes-content .line-2 {
-  height: 5px;
-  width: 30%;
-  background: #2b3b48;
-  float: right;
-}
-.concorrentes .concorrentes-content .number,
-.clientes .clientes-content .number,
-.approve .clientes-content .number {
-  color: #6d767b;
-  font-family: "Georgia", sans-serif;
-  font-size: 18px;
+@keyframes sk-cubeGridScaleDelay {
+  0%, 70%, 100% {
+    -webkit-transform: scale3D(1, 1, 1);
+            transform: scale3D(1, 1, 1); }
+  35% {
+    -webkit-transform: scale3D(0, 0, 1);
+            transform: scale3D(0, 0, 1); } }
+
+ 
+ 
+ 
+ 
+ 
+  /*
+ *  Usage:
+ *
+ *    <div class="sk-wave">
+ *      <div class="sk-rect sk-rect1"></div>
+ *      <div class="sk-rect sk-rect2"></div>
+ *      <div class="sk-rect sk-rect3"></div>
+ *      <div class="sk-rect sk-rect4"></div>
+ *      <div class="sk-rect sk-rect5"></div>
+ *    </div>
+ *
+ */
+.sk-wave {
+  margin: 20px auto;
+  width: 50px;
+  height: 20px;
   text-align: center;
-  padding: 5px 0px;
-}
-.concorrentes .concorrentes-content .number span {
-  color: #ff454a;
-  font-size: 72px;
-}
-.clientes .clientes-content .number span {
-  color: #9dc93e;
-  font-size: 72px;
-}
-.approve .clientes-content .number span {
-  color: #dcca05;
-  font-size: 72px;
-}
-.concorrentes .concorrentes-content .analysis,
-.clientes .clientes-content .analysis,
-.approve .clientes-content .analysis {
-  padding: 15px 15px 10px;
-  display: inline-block;
-  width: 100%;
-}
-.concorrentes .concorrentes-content .analysis .quote,
-.clientes .clientes-content .analysis .quote,
-.approve .clientes-content .analysis .quote {
-  color: #444444;
-  float: left;
-}
-.concorrentes .concorrentes-content .analysis .see-more,
-.clientes .clientes-content .analysis .see-more,
-.approve .clientes-content .analysis .see-more {
-  width: 25%;
-  color: #444444;
-  float: right;
-}
-.concorrentes .concorrentes-content .analysis .see-more span,
-.clientes .clientes-content .analysis .see-more span,
-.approve .clientes-content .analysis .see-more span {
-  padding: 0px 3px;
-  top: 2px;
+  font-size: 10px; }
+  .sk-wave .sk-rect {
+    background-color: #F4284C;
+    height: 100%;
+    width: 6px;
+    display: inline-block;
+    -webkit-animation: sk-waveStretchDelay 1.2s infinite ease-in-out;
+            animation: sk-waveStretchDelay 1.2s infinite ease-in-out; }
+  .sk-wave .sk-rect1 {
+    -webkit-animation-delay: -1.2s;
+            animation-delay: -1.2s; }
+  .sk-wave .sk-rect2 {
+    -webkit-animation-delay: -1.1s;
+            animation-delay: -1.1s; }
+  .sk-wave .sk-rect3 {
+    -webkit-animation-delay: -1s;
+            animation-delay: -1s; }
+  .sk-wave .sk-rect4 {
+    -webkit-animation-delay: -0.9s;
+            animation-delay: -0.9s; }
+  .sk-wave .sk-rect5 {
+    -webkit-animation-delay: -0.8s;
+            animation-delay: -0.8s; }
+
+@-webkit-keyframes sk-waveStretchDelay {
+  0%, 40%, 100% {
+    -webkit-transform: scaleY(0.4);
+            transform: scaleY(0.4); }
+  20% {
+    -webkit-transform: scaleY(1);
+            transform: scaleY(1); } }
+
+@keyframes sk-waveStretchDelay {
+  0%, 40%, 100% {
+    -webkit-transform: scaleY(0.4);
+            transform: scaleY(0.4); }
+  20% {
+    -webkit-transform: scaleY(1);
+            transform: scaleY(1); } }
+
+
+.datepicker.dropdown-menu {
+  z-index:10000000 !important;
 }
 
-/**** SURAT CUTI **/
-.PKBSurat .ttd-surat-cuti td {
-  text-transform: uppercase;
-}
-.PKBSurat .data-personal div {
-  margin-top: 15px;
-}
-.PKBSurat .ttd-surat-cuti .propertis td {
-  padding-left: 10px;
-}
-.PKBSurat .text-value:hover {
-  color: #6a7367;
-  background: #14598f;
+.swal2-container {
+  z-index: 10000000 !important;
 }
 
-/****** Modal Form untuk Surat Izin/Cuti************/
-.PKBFormForm .modal-dialog {
-  width: 80%;
+.swal2-popup {
+  font-size: 1.3rem !important; 
 }
 
-.PKBFormForm .modal-dialog .modal-content {
-}
-.PKBFormForm .modal-dialog .modal-content .ModalHeader {
-}
-
-.PKBFormForm .modal-dialog .modal-content .modal-body {
-  margin: 20px;
-}
-
-.PKBFormForm .modal-dialog .modal-content .modal-body table td {
-  border-color: #686666;
-}
-.PKBFormForm .modal-dialog .modal-content .modal-body table td .hr-dotted {
-  border: none;
-  border-top: 1px dotted #767474;
-  color: #fff;
-  background-color: #fff;
-  height: 1px;
+.animasi-table {
+  position: relative;
+  -webkit-animation-name: animatebottom;
+  -webkit-animation-duration: 2s;
+  animation-name: animatebottom;
+  animation-duration: 2s;
 }
 
-/****** Modal Form untuk Surat Izin/Cuti************/
-.PKBForm .modal-dialog {
-  width: 80%;
+@-webkit-keyframes animatebottom {
+  from { bottom:-100px; opacity:0 } 
+  to { bottom:0px; opacity:1 }
 }
 
-.PKBForm .modal-dialog .modal-content {
-}
-.PKBForm .modal-dialog .modal-content .ModalHeader {
-}
-
-.PKBForm .modal-dialog .modal-content .modal-body {
-  margin: 20px;
+@keyframes animatebottom { 
+  from{bottom:-100px; opacity:0 } 
+  to{bottom:0; opacity:1 }
 }
 
-.PKBForm .modal-dialog .modal-content .modal-body table td {
-  border-color: #686666;
-}
-.PKBForm .modal-dialog .modal-content .modal-body table td .hr-dotted {
-  border: none;
-  border-top: 1px dotted #767474;
-  color: #fff;
-  background-color: #fff;
-  height: 1px;
+.animasi-tbody {
+  position: relative;
+  -webkit-animation-name: animatetbody;
+  -webkit-animation-duration: 1.5s;
+  animation-name: animatetbody;
+  animation-duration: 1.5s;
 }
 
-/*CCD MODAL */
-
-.CCDForm .modal-dialog {
-  width: 80%;
+@-webkit-keyframes animatetbody {
+  from {opacity:0 } 
+  to {opacity:1 }
 }
 
-.CCDForm .modal-dialog .modal-content {
-}
-.CCDForm .modal-dialog .modal-content .ModalHeader {
-}
-
-.CCDForm .modal-dialog .modal-content .modal-body {
-  margin: 20px;
+@keyframes animatetbody { 
+  from{opacity:0 } 
+  to{opacity:1 }
 }
 
-.CCDForm .modal-dialog .modal-content .modal-body table td {
-  border-color: #686666;
-}
-.CCDForm .modal-dialog .modal-content .modal-body table td .hr-dotted {
-  border: none;
-  border-top: 1px dotted #767474;
-  color: #fff;
-  background-color: #fff;
-  height: 1px;
-}
-/*END CCD MODAL */
-
-.datepicker {
-  z-index: 100000 !important;
-}
-.table-form {
-  width: 100%;
-}
-.tdjudul {
-  padding-top: 0;
-  padding-bottom: 0;
-}
-.notop-border {
-  border-top: 0;
-}
-.nobottom-border {
-  border-bottom: 0;
-}
-.tdpadding-jd {
-  padding-right: 6px;
-}
-.input-noborder {
-  border: none;
-  background: transparent;
-  width: auto;
-}
-.td-hrd {
-  background-color: #bfbfbf;
+#divTable {
+  display: none;
 }
 
-.textareanote {
-  width: 100%;
-  box-sizing: border-box;
-  /*direction:rtl;*/
-  display: block;
-  max-width: 100%;
-  border-radius: 3px;
-  border: 1px solid #f7e98d;
-  font: 13px Tahoma, cursive;
-  transition: box-shadow 0.5s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  font-smoothing: subpixel-antialiased;
-  background: linear-gradient(#f9efaf, #f7e98d);
-  background: -o-linear-gradient(#f9efaf, #f7e98d);
-  background: -ms-linear-gradient(#f9efaf, #f7e98d);
-  background: -moz-linear-gradient(#f9efaf, #f7e98d);
-  background: -webkit-linear-gradient(#f9efaf, #f7e98d);
-}
-.fontcomment {
-  color: #f9bf55;
-}
-.judul_wo {
-  font-size: 20px;
-}
-.tdjudul_list {
-  font-weight: bold;
-}
-.noborder {
-  border: none;
-}
-.wo_red {
-  background-color: #ff2d00;
-}
-.wo_yellow {
-  background-color: #fff100;
-}
-.wo_green {
-  background-color: #008000;
+.tbodyId {
+  display: none;
 }

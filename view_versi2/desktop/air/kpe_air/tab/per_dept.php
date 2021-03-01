@@ -16,31 +16,8 @@
 ?>
 
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-<link rel="stylesheet" href="aplikasi/<?= $_SESSION['aplikasi']; ?>/asset/plugins/sweet-alert/sweetalert2.min.css">
 
 <style>
-@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
-.loader {
-  border: 7px solid #f3f3f3;
-  border-radius: 50%;
-  border-top: 7px solid #3498db;
-  border-bottom: 7px solid #3498db;
-  width: 60px;
-  height: 60px;
-  -webkit-animation: spin 2s linear infinite;
-  animation: spin 2s linear infinite;
-}
-
-@-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
 .Content
 {
   height:600px;
@@ -196,124 +173,6 @@ tr.drum2{
   background:rgba(205, 243, 234, 0.5) !important;
 }
 
-.swal2-container {
-  z-index: 100005;
-}
-
-.swal2-popup {
-  font-size: 1.3rem !important; 
-}
-
-.circular{
-  height: 100px;
-  width: 100px;
-  position: relative;
-}
-.circular .inner, .circular .outer, .circular .circle{
-  position: absolute;
-  z-index: 6;
-  height: 100%;
-  width: 100%;
-  border-radius: 100%;
-  box-shadow: inset 0 1px 0 rgba(0,0,0,0.2);
-}
-.circular .inner{
-  top: 50%;
-  left: 50%;
-  height: 80px;
-  width: 80px;
-  margin: -40px 0 0 -40px;
-  background-color: #dde6f0;
-  border-radius: 100%;
-  box-shadow: 0 1px 0 rgba(0,0,0,0.2);
-}
-.circular .circle{
-  z-index: 1;
-  box-shadow: none;
-}
-.circular .numb{
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 10;
-  font-size: 18px;
-  font-weight: 500;
-  color: #4158d0;
-  font-family: 'Poppins', sans-serif;
-}
-.circular .bar{
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  background: #fff;
-  -webkit-border-radius: 100%;
-  clip: rect(0px, 100px, 100px, 50px);
-}
-.circle .bar .progress{
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  -webkit-border-radius: 100%;
-  clip: rect(0px, 50px, 100px, 0px);
-}
-.circle .bar .progress, .dot span{
-  background: #4158d0;
-}
-.circle .left .progress{
-  z-index: 1;
-  animation: left 2s linear both;
-}
-@keyframes left {
-  100%{
-    transform: rotate(180deg);
-  }
-}
-.circle .right{
-  z-index: 3;
-  transform: rotate(180deg);
-}
-.circle .right .progress{
-  animation: right 2s linear both;
-  animation-delay: 2s;
-}
-@keyframes right {
-  100%{
-    transform: rotate(180deg);
-  }
-}
-.circle .dot{
-  z-index: 2;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 50%;
-  height: 10px;
-  margin-top: -5px;
-  animation: dot 4s linear both;
-  transform-origin: 0% 50%;
-}
-.circle .dot span {
-  position: absolute;
-  right: 0;
-  width: 10px;
-  height: 10px;
-  border-radius: 100%;
-}
-@keyframes dot{
-  0% {
-    transform: rotate(-90deg);
-  }
-  50% {
-    transform: rotate(90deg);
-    z-index: 4;
-  }
-  100% {
-    transform: rotate(270deg);
-    z-index: 4;
-  }
-}
-
 </style>
 
 
@@ -394,7 +253,7 @@ tr.drum2{
               <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
               </div>
-              <input type="text" class="form-control pull-right" id="dateRange" name="dateRange" autocomplete="off">
+              <input type="text" class="form-control pull-right" id="dateRange" name="dateRange" autocomplete="off" value="">
             </div>
           </div>
         </div>
@@ -417,7 +276,6 @@ tr.drum2{
           <!-- <label>&nbsp;</label> -->
           <div class="input-group custom-search-form">
               <button type="button" class="btn btn-primary" id="btn-reload"><strong><i class="fa fa-refresh" aria-hidden="true"></i> Refresh</strong></button></button>&nbsp;
-              <!-- <button type="button" class="btn btn-default" id="btnFlowKalibrasi"><strong><i class="fa fa-undo" aria-hidden="true"></i> Flowmeter Kalibrasi</strong></button></button> -->
           </div>
         </div>
       </div>
@@ -429,8 +287,15 @@ tr.drum2{
   <div class="box">
     <div class="row">
       <div class="col-md-12">
+        <div class="sk-wave text-center" id="loader">
+          <div class="sk-rect sk-rect1"></div>
+          <div class="sk-rect sk-rect2"></div>
+          <div class="sk-rect sk-rect3"></div>
+          <div class="sk-rect sk-rect4"></div>
+          <div class="sk-rect sk-rect5"></div>
+        </div>
         <!-- <div class="Content"> -->
-          <div class="table-responsive Content">
+          <div class="table-responsive Content animasi-table" id="divTable">
             <table class="table table-hover table-bordered table-sticky" id="sum_table">
               <thead>
                   <tr id="nFlowmeter">
@@ -452,36 +317,7 @@ tr.drum2{
 
                   </tr>
               </thead>
-              <tbody id="zone_data">
-                <!-- <tr>
-                  <td class="backloader" colspan="20">
-                    <center>
-                      <div class="loader"></div>
-                    </center>
-                  </td>
-                </tr> -->
-                <center id="preloader">
-                  <br><br>
-                  <div class="circular">
-                    <div class="inner"></div>
-                      <div class="outer"></div>
-                        <div class="numb">0%</div>
-                      <div class="circle">
-                        <div class="dot">
-                          <span></span>
-                        </div>
-                      <div class="bar left">
-                        <div class="progress">
-                      </div>
-                      </div>
-                        <div class="bar right">
-                          <div class="progress">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <br><br>
-                </center>
+              <tbody id="zone_data" class="animasi-tbody tbodyId">
               </tbody>
               <tfoot class="total" id="zone_total">
               </tfoot>
@@ -530,104 +366,6 @@ tr.drum2{
 </div>
 <!-- //?==== End Modal ==== -->
 
-
-<!-- Modal Flow Kalibrasi-->
-<div class="modal fade" id="modalRumusFlowKalibrasi" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index:100000;">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
-        <h4 class="modal-title" id="judulFlowKal"></h4>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-md-12" id="formTambahFlowKal">
-            <form action="javascript:simpanRumusFlowKal();" class="fDataFlowKal" id="fDataFlowKal" name="fDataFlowKal" >
-              <div class="form-group">
-                <label for="KPE_AIR_FLOWMETER_KALIBRASI">Flowmeter</label>
-                <select id="KPE_AIR_FLOWMETER_KALIBRASI" name="KPE_AIR_FLOWMETER_KALIBRASI" class="form-control selectpicker" data-live-search="true" required>
-                <option value="">--Pilih--</option>
-                <?php 
-                  foreach ($respon_flow['result'] as $rf) {
-                    echo "<option value='$rf[KPE_AIR_FLOWMETER_ID]'>$rf[KPE_AIR_FLOWMETER_NAMA]</option>"; 
-                  }
-                ?>
-                </select>
-
-                <input type="hidden" class="form-control" id="KPE_AIR_FLOWMETER_KALIBRASI_ID" name="KPE_AIR_FLOWMETER_KALIBRASI_ID" value="">
-
-              </div>
-              <div class="form-group">
-                <label for="KPE_AIR_FLOWMETER_KALIBRASI_TANGGAL">Tanggal</label>
-                <input type="text" class="form-control datepicker KPE_AIR_FLOWMETER_KALIBRASI_TANGGAL" id="KPE_AIR_FLOWMETER_KALIBRASI_TANGGAL" name="KPE_AIR_FLOWMETER_KALIBRASI_TANGGAL" placeholder="<?= Date("Y/m/d"); ?>" autocomplete="off" required>
-              </div>
-              <div class="form-group">
-                <label for="KPE_AIR_FLOWMETER_KALIBRASI_REAL">Real</label>
-                <input type="number" class="form-control" id="KPE_AIR_FLOWMETER_KALIBRASI_REAL" name="KPE_AIR_FLOWMETER_KALIBRASI_REAL" autocomplete="off" placeholder="ANGKA_REAL" step="any">
-              </div>
-              <div class="form-group">
-                <label for="KPE_AIR_FLOWMETER_KALIBRASI_SELISIH">Selisih Std</label>
-                <input type="number" class="form-control" id="KPE_AIR_FLOWMETER_KALIBRASI_SELISIH" name="KPE_AIR_FLOWMETER_KALIBRASI_SELISIH" autocomplete="off" placeholder="ANGKA_SELISIH" step="any">
-              </div>
-              <div class="form-group">
-                <label for="KPE_AIR_FLOWMETER_KALIBRASI_PERSEN">Persen(%)</label>
-                <input type="number" class="form-control" id="KPE_AIR_FLOWMETER_KALIBRASI_PERSEN" name="KPE_AIR_FLOWMETER_KALIBRASI_PERSEN" autocomplete="off" placeholder="PERSEN(%)" step="any">
-              </div>
-              <div class="modal-footer" id="divFlowKal">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-                <button id="simpanFlowKal" type="submit" class="btn btn-success">Simpan</button>
-              </div>
-            </form>
-            <div class="modal-footer" id="divFlowKals">
-              <button id="tambahFlowKal" type="button" class="btn btn-success"><i class="fa fa-plus"></i> Baru</button>
-              <button id="editFlowKal" type="button" class="btn btn-success" onclick="list_flowmeter_kalibrasi();"><i class="fa fa-edit"></i> Edit</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- Modal Edit Rumus -->
-<div class="modal fade" id="modalEditFlowKalibrasi" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index:100004;">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
-        <h4 class="modal-title" id="">Edit Rumus Flowmeter yang Dikalibrasi</h4>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="table-responsive">
-              <table class="table table-hover table-bordered">
-                <thead>
-                  <tr class="bordered">
-                    <th class="bordered text-center" width="30">NO</th>
-                    <th class="bordered text-center">Flowmeter</th>
-                    <th class="bordered text-center">Tanggal</th>
-                    <th class="bordered text-center">#</th>
-                  </tr>
-                </thead>
-                <tbody id="ZONE_DATA_EDIT_FLOW_KAL">
-                  <tr>
-                    <td class="backloader" colspan="4">
-                      <center>
-                        <div class="loader"></div>
-                      </center>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- End Modal -->
-
 <!-- Modal Angka Pakai-->
 <div class="modal fade" id="modalPerDept" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index:100000;">
   <div class="modal-dialog">
@@ -674,59 +412,17 @@ tr.drum2{
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-<script src="aplikasi/<?= $_SESSION['aplikasi']; ?>/asset/plugins/sweet-alert/sweetalert2.min.js"></script>
 <script>
-
   $(function(){
     $('.information').popover();
-    // listPerDept('1');
-    // list_rumus('1');
     $('input[name="dateRange"]').daterangepicker();
     $(".selectpicker").selectpicker();
+    loader();
   });
-  
-  const numb = document.querySelector(".numb");
-  let counter = 0;
-  const timeValue = setInterval(()=>{
-    if(counter == 100){
-      $('#preloader').remove();
-      clearInterval(timeValue);
-      listPerDept('1');
-      list_rumus('1');
-    }else{
-      counter+=1;
-      numb.textContent = counter + "%";
-    }
-  }, 40);
 
-  $(function(){
-    $('input#DATA_eDATE').attr("readonly","readonly");
-    $("input#DATA_sDATE").datepicker().on('changeDate', function(ev)
-    {  
-      var TANGGAL_AWAL=$("input#DATA_sDATE").val();   
-      // alert(TANGGAL_AWAL);          
-      //MENENTUKAN TANGGAL AKHIRNYA SEMINGGU DARI TANGGAL AWAL
-      var myDate = new Date(TANGGAL_AWAL);
-      myDate.setDate(myDate.getDate() + 6);
-      
-      var month = '' + (myDate.getMonth() + 1),day = '' + myDate.getDate(),year = myDate.getFullYear();
-      if (month.length < 2) 
-        month = '0' + month;
-      if (day.length < 2) 
-        day = '0' + day;
-      var TANGGAL_AKHIR=year+"/"+month+"/"+day;
-      //END MENETUKAN TANGGAL AKHIRNYA
-      // alert(TANGGAL_AKHIR);
-      var JENIS_LAPORAN=$('select#JENIS_LAPORAN').val();
-      if (JENIS_LAPORAN == "Harian") 
-      {
-        $('input#DATA_eDATE').val('');
-      } else {
-        $("input#DATA_eDATE").val(TANGGAL_AKHIR);
-      }
-      $('.datepicker').datepicker('hide');
-      });
-  });	
+  function loader() {
+    let listDept = setTimeout(listPerDept, 1000);
+  }
 
   function jenisAkumulasi(){
     var JENIS_LAPORAN=$('select#JENIS_LAPORAN').val(); 
@@ -842,26 +538,14 @@ tr.drum2{
     //search();
   }
 
-  function formatDate(date) {
-    var d = new Date(date),
-        month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
-        year = d.getFullYear();
-
-    if (month.length < 2) month = '0' + month;
-    if (day.length < 2) day = '0' + day;
-
-    return [year, month, day].join('-');
-  }
-
-  function list_rumus(curPage)
+  function list_rumus()
   {
   var url = window.location.href;
   var pageA = url.split("#");
-  if (pageA[1] == undefined) {} else {
+  if (pageA[1] == undefined) {var curPage = '1'} else {
     var pageB = pageA[1].split("page-");
     if (pageB[1] == '') {
-      var curPage = curPage;
+      var curPage = '1';
     } else {
       var curPage = pageB[1];
     }
@@ -963,14 +647,18 @@ tr.drum2{
   });
   }
 
-  function listPerDept(curPage)
+  function listPerDept()
   {
+    list_rumus();
+    $("#loader").fadeOut();
+    $('#divTable').attr('style','display:block;');
+
     var url = window.location.href;
     var pageA = url.split("#");
-    if (pageA[1] == undefined) {} else {
+    if (pageA[1] == undefined) {var curPage = '1'} else {
       var pageB = pageA[1].split("page-");
       if (pageB[1] == '') {
-        var curPage = curPage;
+        var curPage = '1';
       } else {
         var curPage = pageB[1];
       }
@@ -983,6 +671,7 @@ tr.drum2{
     let dateRangeS = formatDate(fromDate[0]);
     // let dateRangeS = formatDate((new Date(fromDate[0])).valueOf() - 1000*60*60*24);
     let dateRangeE = formatDate(fromDate[1]);
+    // console.log(dateRangeS);
     // return
     $.ajax({
       type: 'POST',
@@ -1002,8 +691,7 @@ tr.drum2{
             cssStyle: 'light-theme',
             currentPage: curPage,
           });
-
-          // console.log(data.result);
+              // console.log(data.tes);
               var listData ="";
               for (var i = 0; i < data.result.length; i++) 
               {
@@ -1115,7 +803,9 @@ tr.drum2{
             if ($('#JENIS_LAPORAN').val() != "Custom") {
               $("tfoot#zone_total").append(listTotal+haverage+hdrum+hliter+hdrum2);
             }
-          
+
+            $('tbody.tbodyId').removeClass('tbodyId');
+            // $('a.sidebar-toggle').click();
         } else if (data.respon.pesan == "gagal") {
           // alert(data.respon.text_msg);
           // console.log(data.respon.text_msg);
@@ -1130,14 +820,6 @@ tr.drum2{
   }
 
   var months = {'01':'Januari', '02':'Februari', '03':'Maret', '04':'April', '05':'Mei', '06':'Juni', '07':'Juli', '08':'Agustus', '09':'September', '10':'Oktober', '11': 'November', '12':'Desember'};
-
-  $(function() {
-  $('a.sidebar-toggle').click()
-  });
-
-  function formatNumber(num) {
-    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
-  }
 
   function notNumber(pakai,angka) {
     if (isNaN(pakai)) {
@@ -1219,12 +901,12 @@ tr.drum2{
       {
         $("#modalPerDept").modal('hide');
         // console.log(data.respon.text_msg1);
-        listPerDept('1');
+        listPerDept();
         
       }else if(data.respon.pesan=="gagal")
       {
         alert(data.respon.text_msg);
-        listPerDept('1');
+        listPerDept();
       }
     },
     error:function(x,e){
@@ -1252,12 +934,12 @@ tr.drum2{
       {
         $("#modalRumusFlowKalibrasi").modal('hide');
         // alert(data.respon.text_msg);
-        listPerDept('1');
+        listPerDept();
         
       }else if(data.respon.pesan=="gagal")
       {
         alert(data.respon.text_msg);
-        listPerDept('1');
+        listPerDept();
       }
     },
     error:function(x,e){
@@ -1267,20 +949,14 @@ tr.drum2{
   }
 
   $('#btn-reload').click(function(){
-    // $('tfoot#zone_total').empty();
-    listPerDept('1');
-    list_rumus('1');
+    preLoader();
   })
 
   $(window).on('hashchange', function(e) {
-  listPerDept('1');
-  list_rumus('1');
-  // $('tfoot#zone_total').empty();
+    preLoader();
   });
   $("input#REC_PER_HALAMAN").on('change', function() {
-  listPerDept('1');
-  list_rumus('1');
-  // $('tfoot#zone_total').empty();
+    preLoader();
   });
 
   function addRumus (tanggal){
@@ -1315,73 +991,7 @@ tr.drum2{
     $('div#inputFormRow').attr("style", "display:none");
   }
 
-  $('#btnFlowKalibrasi').on('click', function(){
-    $(".selectpicker").selectpicker("val","");
-    $("#judulFlowKal").empty();
-    $("#judulFlowKal").append('<h4 class="modal-title" id="judulFlowKal">Rumus Flowmeter yang Dikalibrasi</h4>');
-    $("#modalRumusFlowKalibrasi").modal('show');
-    $('#fDataFlowKal').attr("style", "display:none");
-    $('#divFlowKals').removeAttr("style");
-  })
-
-  $('#tambahFlowKal').on('click', function(){
-    $("#judulFlowKal").empty();
-    $("#judulFlowKal").append('<h4 class="modal-title" id="judulFlowKal">Tambah Rumus Flowmeter yang Dikalibrasi</h4>');
-    $('#divFlowKals').attr("style", "display:none");
-    $('#fDataFlowKal').removeAttr("style");
-    $('select#KPE_AIR_FLOWMETER_KALIBRASI').val('');
-    $('input#KPE_AIR_FLOWMETER_KALIBRASI_ID').val('');
-    $('input#KPE_AIR_FLOWMETER_KALIBRASI_TANGGAL').val('');
-    $('input#KPE_AIR_FLOWMETER_KALIBRASI_REAL').val('');
-    $('input#KPE_AIR_FLOWMETER_KALIBRASI_SELISIH').val('');
-    $('input#KPE_AIR_FLOWMETER_KALIBRASI_PERSEN').val('');
-    $('select#KPE_AIR_FLOWMETER_KALIBRASI').removeAttr("disabled");
-  })
-
-  $('#editFlowKal').on('click', function(){
-    $("#modalEditFlowKalibrasi").modal('show');
-  })
-
-  $('tbody').on('click', 'a#pilihFlowKal', function(){
-    $("#judulFlowKal").empty();
-    $("#judulFlowKal").append('<h4 class="modal-title" id="judulFlowKal">Edit Rumus Flowmeter yang Dikalibrasi</h4>');
-    var KPE_AIR_FLOWMETER_ID = $(this).attr('KPE_AIR_FLOWMETER_ID');
-    var KPE_AIR_FLOWMETER_KALIBRASI_ID = $(this).attr('KPE_AIR_FLOWMETER_KALIBRASI_ID');
-    var KPE_AIR_FLOWMETER_KALIBRASI_PERSEN = $(this).attr('KPE_AIR_FLOWMETER_KALIBRASI_PERSEN');
-    var KPE_AIR_FLOWMETER_KALIBRASI_REAL = $(this).attr('KPE_AIR_FLOWMETER_KALIBRASI_REAL');
-    var KPE_AIR_FLOWMETER_KALIBRASI_SELISIH = $(this).attr('KPE_AIR_FLOWMETER_KALIBRASI_SELISIH');
-    var KPE_AIR_FLOWMETER_KALIBRASI_TANGGAL = $(this).attr('KPE_AIR_FLOWMETER_KALIBRASI_TANGGAL');
-    var KPE_AIR_FLOWMETER_NAMA = $(this).attr('KPE_AIR_FLOWMETER_NAMA');
-    $("#modalEditFlowKalibrasi").modal('hide');
-    $('#fDataFlowKal').removeAttr("style");
-    $('#divFlowKals').attr("style", "display:none");
-    $('select#KPE_AIR_FLOWMETER_KALIBRASI').selectpicker("val",KPE_AIR_FLOWMETER_ID);
-    $('input#KPE_AIR_FLOWMETER_KALIBRASI_ID').val(KPE_AIR_FLOWMETER_KALIBRASI_ID);
-    var d = new Date(KPE_AIR_FLOWMETER_KALIBRASI_TANGGAL);
-    var t = d.getFullYear();
-    var b = tambahNol(d.getMonth()+1);
-    var h = tambahNol(d.getDate());
-    $('input#KPE_AIR_FLOWMETER_KALIBRASI_TANGGAL').val(t+"/"+b+"/"+h);
-    $('input#KPE_AIR_FLOWMETER_KALIBRASI_REAL').val(KPE_AIR_FLOWMETER_KALIBRASI_REAL);
-    $('input#KPE_AIR_FLOWMETER_KALIBRASI_SELISIH').val(KPE_AIR_FLOWMETER_KALIBRASI_SELISIH);
-    $('input#KPE_AIR_FLOWMETER_KALIBRASI_PERSEN').val(KPE_AIR_FLOWMETER_KALIBRASI_PERSEN);
-    // $("select#KPE_AIR_FLOWMETER_KALIBRASI").children("option:selected").text(KPE_AIR_FLOWMETER_NAMA);
-    // $('select#KPE_AIR_FLOWMETER_KALIBRASI').attr("disabled","disabled");
-    // $('option:not(:selected)').attr('disabled', true);
-  });
-
-  function tambahNol(x){
-    y=(x>9)?x:'0'+x;
-    return y;
-  }
-
-  // add row
-  var max_fields      = 1000;
-  var x = 1;
-
   $("button#add_rumus").click(function () {
-    if(x < max_fields){
-      x++;
       $('#newRow').append(/*html*/`<div id="inputFormRow" class="form-group"><label>+/- Pakai</label><div class="input-group">
                                     <input type="number" class="form-control" id="KPE_AIR_FLOWMETER_CATATAN_PAKAI_RUMUS" name="KPE_AIR_FLOWMETER_CATATAN_PAKAI_RUMUS[]" autocomplete="off" placeholder="123.456" step="any">
                                       <span class="input-group-btn">
@@ -1390,7 +1000,6 @@ tr.drum2{
                                       </button>
                                       </span>
                                     </div></div>`);
-    }
   });
 
   // remove row
@@ -1417,95 +1026,6 @@ tr.drum2{
     })
     
   });
-
-  function list_flowmeter_kalibrasi() 
-  {
-    var KPE_AIR_FLOWMETER_NAMA = $("#KPE_AIR_FLOWMETER_KALIBRASI").children("option:selected").text();
-    var KPE_AIR_FLOWMETER_ID = $("#KPE_AIR_FLOWMETER_KALIBRASI").val();
-    var KPE_AIR_FLOWMETER_KALIBRASI_TANGGAL = $("#KPE_AIR_FLOWMETER_KALIBRASI_TANGGAL").val();
-    // alert(KPE_AIR_FLOWMETER_KALIBRASI_TANGGAL)
-    // return;
-    $.ajax({
-      type:'POST',
-      url:refseeAPI,
-      dataType:'json',
-      data:'aplikasi=<?php echo $d0;?>&ref=list_angka_flowmeter_kalibrasi&KPE_AIR_FLOWMETER_NAMA='+KPE_AIR_FLOWMETER_NAMA+'&KPE_AIR_FLOWMETER_ID='+KPE_AIR_FLOWMETER_ID+'&KPE_AIR_FLOWMETER_KALIBRASI_TANGGAL='+KPE_AIR_FLOWMETER_KALIBRASI_TANGGAL,
-      success:function(data)
-      { 
-        // console.log(data.result);
-        var listFlow = '';
-        $('tbody#ZONE_DATA_EDIT_FLOW_KAL').empty();
-        for (var i = 0; i < data.result.length; i++) {
-          $('tbody#ZONE_DATA_EDIT_FLOW_KAL').append(/*html*/`<tr class="bordered trData">
-                                                              <td class="bordered">${data.result[i].NO}</td>
-                                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_NAMA}</td>
-                                                              <td class="bordered text-center">${data.result[i].KPE_AIR_FLOWMETER_KALIBRASI_TANGGAL}</td>
-                                                              <td class="bordered text-center">
-                                                                <a id="pilihFlowKal" type="button" class="btn btn-xs btn-info" KPE_AIR_FLOWMETER_ID="${data.result[i].KPE_AIR_FLOWMETER_ID}" KPE_AIR_FLOWMETER_KALIBRASI_ID="${data.result[i].KPE_AIR_FLOWMETER_KALIBRASI_ID}" KPE_AIR_FLOWMETER_KALIBRASI_PERSEN="${data.result[i].KPE_AIR_FLOWMETER_KALIBRASI_PERSEN}" KPE_AIR_FLOWMETER_KALIBRASI_REAL="${data.result[i].KPE_AIR_FLOWMETER_KALIBRASI_REAL}" KPE_AIR_FLOWMETER_KALIBRASI_SELISIH="${data.result[i].KPE_AIR_FLOWMETER_KALIBRASI_SELISIH}" KPE_AIR_FLOWMETER_KALIBRASI_TANGGAL="${data.result[i].KPE_AIR_FLOWMETER_KALIBRASI_TANGGAL}" KPE_AIR_FLOWMETER_NAMA="${data.result[i].KPE_AIR_FLOWMETER_NAMA}">Pilih</a>
-                                                                <a id="hapusFlowKal" type="button" class="btn btn-xs btn-danger" KPE_AIR_FLOWMETER_KALIBRASI_ID="${data.result[i].KPE_AIR_FLOWMETER_KALIBRASI_ID}">Hapus</a>
-                                                              </td>
-                                                             </tr>`);    
-        }
-      },
-      error:function(x,e){
-        alert('error');
-      }//end error
-    });
-  }
-
-  $('tbody').on('click', 'a#hapusFlowKal', function(){
-    var KPE_AIR_FLOWMETER_KALIBRASI_ID = $(this).attr('KPE_AIR_FLOWMETER_KALIBRASI_ID');
-  // alert(KPE_AIR_FLOWMETER_KALIBRASI_ID);
-    Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        $.ajax({
-          type:'POST',
-          url:refseeAPI,
-          dataType:'json',
-          data:'aplikasi=<?php echo $d0;?>&ref=hapus_angka_flowmeter_kalibrasi&KPE_AIR_FLOWMETER_KALIBRASI_ID='+KPE_AIR_FLOWMETER_KALIBRASI_ID,
-          success:function(data)
-          { 
-            $('tfoot#zone_total').empty();
-            if(data.respon.pesan=="sukses")
-            {
-              Swal.fire({
-                timer: 1000,
-                timerProgressBar: true,
-                title: 'Deleted!',
-                text: 'Your file has been deleted.',
-                icon: 'success',
-              })
-              $("#modalEditFlowKalibrasi").modal('hide');
-              listPerDept('1');
-              
-            }else if(data.respon.pesan=="gagal")
-            {
-              Swal.fire({
-                timer: 1000,
-                timerProgressBar: true,
-                title: 'Cant Deleted!',
-                text: 'Your file cant be deleted.',
-                icon: 'error'
-              })
-              listPerDept('1');
-            }
-          },
-          error:function(x,e){
-            // error_handler_json(x,e,'=> hapus_catatan()');
-            alert('error')
-          }//end error
-        });
-      }
-    })
-  })
 
   $('tbody').on('click','a#catatanNote' ,function(){
     $('div#note').empty();

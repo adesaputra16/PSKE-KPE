@@ -1,30 +1,4 @@
-<link rel="stylesheet" href="aplikasi/<?= $_SESSION['aplikasi']; ?>/asset/plugins/sweet-alert/sweetalert2.min.css">
 <style>
-  .loader {
-    border: 7px solid #f3f3f3;
-    border-radius: 50%;
-    border-top: 7px solid #3498db;
-    border-bottom: 7px solid #3498db;
-    width: 60px;
-    height: 60px;
-    -webkit-animation: spin 2s linear infinite;
-    animation: spin 2s linear infinite;
-  }
-
-  @-webkit-keyframes spin {
-    0% { -webkit-transform: rotate(0deg); }
-    100% { -webkit-transform: rotate(360deg); }
-  }
-
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-
-  /* table {
-    font-size:12px;
-    
-  } */
 
   .dropright {
     position: relative;
@@ -59,14 +33,6 @@
 
   table.table-bodered, .bordered{
     border:1px solid #ccc !important;
-  }
-
-  .swal2-container {
-    z-index: 100005;
-  }
-
-  .swal2-popup {
-    font-size: 1.3rem !important; 
   }
 </style>
 <div class="box-body">
@@ -139,7 +105,14 @@
   <!-- /.End Pencarian -->
   <div class="box">
     <div class="row">
-      <div class="col-md-12">
+      <div class="sk-wave text-center" id="loader">
+        <div class="sk-rect sk-rect1"></div>
+        <div class="sk-rect sk-rect2"></div>
+        <div class="sk-rect sk-rect3"></div>
+        <div class="sk-rect sk-rect4"></div>
+        <div class="sk-rect sk-rect5"></div>
+      </div>
+      <div class="col-md-12 animasi-table" id="divTable">
         <div class="table-responsive">
           <table class="table table-hover">
             <thead>
@@ -332,10 +305,13 @@
   </div>
 </div>
 
-<script src="aplikasi/<?= $_SESSION['aplikasi']; ?>/asset/plugins/sweet-alert/sweetalert2.min.js"></script>
 <script>
+
+  function loader() {
+    let myLoader = setTimeout(listOperasionalPre, 2000);
+  }
+
   $(function() {
-    $('a.sidebar-toggle').click();
     $("input#KPE_AIR_FLOWMETER_OPERASIONAL_PRE_TANGGAL").datepicker().on('changeDate', function(ev)
     {
       let now = new Date($("input#KPE_AIR_FLOWMETER_OPERASIONAL_PRE_TANGGAL").val());
@@ -343,31 +319,15 @@
       let diff = (now - start) + ((start.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000);
       let oneDay = 1000 * 60 * 60 * 24;
       let day = Math.floor(diff / oneDay);
-      $('input#KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CODDING').val(depanKosong(day));
+      $('input#KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CODDING').val(codding(day));
       $('.datepicker').datepicker('hide');
     });
-    listOperasionalPre();
+    loader();
   });
 
   $('#btn-reload').on('click',function () {
-    listOperasionalPre();
+    preLoader();
   })
-
-  function depanKosong(x){
-    if (x<10) {
-      y = '00'+x;
-    } else if(x<100){
-      y = '0'+x;
-    } else {
-      y = x;
-    }
-    return y;
-  }
-
-  function tambahKosong(x){
-    y = (x>9) ? x : '0'+x;
-    return y;
-  }
 
   $('button#btnTambahData').on('click', function() {
     Swal.fire({
@@ -393,7 +353,7 @@
     let fData = $('#fData').serialize();
     let date = new Date($("#KPE_AIR_FLOWMETER_OPERASIONAL_PRE_TANGGAL").val());
     let dateSebelumnya = new Date((new Date(date)).valueOf() - 1000*60*60*24);
-    let KPE_AIR_OPERASIONAL_PRE_TANGGAL_SEBELUMNYA = dateSebelumnya.getFullYear() + '/' + tambahKosong(dateSebelumnya.getMonth()+1) + '/' + tambahKosong(dateSebelumnya.getDate());
+    let KPE_AIR_OPERASIONAL_PRE_TANGGAL_SEBELUMNYA = dateSebelumnya.getFullYear() + '/' + satuNolDiDepan(dateSebelumnya.getMonth()+1) + '/' + satuNolDiDepan(dateSebelumnya.getDate());
     // console.log(KPE_AIR_OPERASIONAL_PRE_TANGGAL_SEBELUMNYA);
     // alert(fData);
     // return
@@ -435,6 +395,8 @@
 
   //?=========== FUNCTION LIST DATA ===========?//
   function listOperasionalPre() {
+    $("#loader").fadeOut();
+    $('#divTable').attr('style','display:block;');
     $('#zone_data').empty();
     $.ajax({
       type:'POST',
@@ -556,7 +518,7 @@
         let year = date.getFullYear();
         $('#KPE_AIR_FLOWMETER_OPERASIONAL_PRE_ID').val(KPE_AIR_FLOWMETER_OPERASIONAL_PRE_ID);
         $('#KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CODDING').val(KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CODDING);
-        $('#KPE_AIR_FLOWMETER_OPERASIONAL_PRE_TANGGAL').val(year+'/'+tambahKosong(month)+'/'+tambahKosong(day));
+        $('#KPE_AIR_FLOWMETER_OPERASIONAL_PRE_TANGGAL').val(year+'/'+satuNolDiDepan(month)+'/'+satuNolDiDepan(day));
         $('#KPE_AIR_FLOWMETER_OPERASIONAL_PRE_FLOW_CC_1_2').val(KPE_AIR_FLOWMETER_OPERASIONAL_PRE_FLOW_CC_1_2);
         $('#KPE_AIR_FLOWMETER_OPERASIONAL_PRE_FLOW_RW_PENGKONDISIAN').val(KPE_AIR_FLOWMETER_OPERASIONAL_PRE_FLOW_RW_PENGKONDISIAN);
         $('#KPE_AIR_FLOWMETER_OPERASIONAL_PRE_FLOW_CC_3_4').val(KPE_AIR_FLOWMETER_OPERASIONAL_PRE_FLOW_CC_3_4);

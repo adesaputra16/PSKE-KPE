@@ -2,7 +2,7 @@
 //---AJAX ---//
 $ref=anti_injection($_POST['ref']);
 switch($ref){
-			// Case Catatan
+			//! Case Catatan
 			case 'simpan_catatan':
 				require_once("ajax/air/air/catatan/simpan_catatan.php");
 			break;
@@ -21,8 +21,11 @@ switch($ref){
 			case 'list_catatan_sebelumnya':
 				require_once("ajax/air/air/catatan/list_catatan_sebelumnya.php");
 			break;
+			case 'simpan_catatan_multiple':
+				require_once("ajax/air/air/catatan/simpan_catatan_multiple.php");
+			break;
 
-			// Case Beban Harian
+			//! Case Beban Harian
 			case 'list_beban_harian':
 				require_once("ajax/air/air/beban_harian/list_beban_harian.php");
 			break;
@@ -33,7 +36,7 @@ switch($ref){
 				require_once("ajax/air/air/beban_harian/simpan_beban_pre.php");
 			break;
 
-			// Case Per Dept
+			//! Case Per Dept
 			case 'list_per_dept':
 				require_once("ajax/air/air/per_dept/list_per_dept.php");
 			break;
@@ -47,7 +50,7 @@ switch($ref){
 				require_once("ajax/air/air/per_dept/tampil_angka_pakai_rumus_per_dept.php");
 			break;
 
-			// Case Flowmeter
+			//! Case Flowmeter
 			case 'simpan_flowmeter':
 				require_once("ajax/air/flowmeter/simpan_flowmeter.php");
 			break;
@@ -61,7 +64,7 @@ switch($ref){
 				require_once("ajax/air/flowmeter/ambil_daftar_flowmeter.php");
 			break;
 
-			//Case Sub Flowmeter
+			//!Case Sub Flowmeter
 			case 'simpan_sub_flowmeter':
 				require_once("ajax/air/sub_flowmeter/simpan_sub_flowmeter.php");
 			break;
@@ -75,7 +78,7 @@ switch($ref){
 				require_once("ajax/air/sub_flowmeter/ambil_sub_flowmeter.php");
 			break;
 
-			//Case Konfigurasi
+			//!Case Konfigurasi
 			case 'list_catatan_departemen':
 				require_once("ajax/air/konfigurasi/list_catatan_departemen.php");
 			break;

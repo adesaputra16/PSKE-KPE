@@ -12,30 +12,7 @@
   // exit();
 ?>
 
-<link rel="stylesheet" href="aplikasi/<?= $_SESSION['aplikasi']; ?>/asset/plugins/sweet-alert/sweetalert2.min.css">
 <style> 
- @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
-
-  .loader {
-    border: 7px solid #f3f3f3;
-    border-radius: 50%;
-    border-top: 7px solid #3498db;
-    border-bottom: 7px solid #3498db;
-    width: 60px;
-    height: 60px;
-    -webkit-animation: spin 2s linear infinite;
-    animation: spin 2s linear infinite;
-  }
-
-  @-webkit-keyframes spin {
-    0% { -webkit-transform: rotate(0deg); }
-    100% { -webkit-transform: rotate(360deg); }
-  }
-
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
 
   table, th, td{
     border:1px solid #ccc !important;
@@ -61,124 +38,6 @@
 
   table, .table-bodered{
     border-collapse: separate;
-  }
-
-  .swal2-container {
-    z-index: 100005;
-  }
-
-  .swal2-popup {
-    font-size: 1.3rem !important; 
-  }
-
-  .circular{
-    height: 100px;
-    width: 100px;
-    position: relative;
-  }
-  .circular .inner, .circular .outer, .circular .circle{
-    position: absolute;
-    z-index: 6;
-    height: 100%;
-    width: 100%;
-    border-radius: 100%;
-    box-shadow: inset 0 1px 0 rgba(0,0,0,0.2);
-  }
-  .circular .inner{
-    top: 50%;
-    left: 50%;
-    height: 80px;
-    width: 80px;
-    margin: -40px 0 0 -40px;
-    background-color: #dde6f0;
-    border-radius: 100%;
-    box-shadow: 0 1px 0 rgba(0,0,0,0.2);
-  }
-  .circular .circle{
-    z-index: 1;
-    box-shadow: none;
-  }
-  .circular .numb{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 10;
-    font-size: 18px;
-    font-weight: 500;
-    color: #4158d0;
-    font-family: 'Poppins', sans-serif;
-  }
-  .circular .bar{
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    background: #fff;
-    -webkit-border-radius: 100%;
-    clip: rect(0px, 100px, 100px, 50px);
-  }
-  .circle .bar .progress{
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    -webkit-border-radius: 100%;
-    clip: rect(0px, 50px, 100px, 0px);
-  }
-  .circle .bar .progress, .dot span{
-    background: #4158d0;
-  }
-  .circle .left .progress{
-    z-index: 1;
-    animation: left 2s linear both;
-  }
-  @keyframes left {
-    100%{
-      transform: rotate(180deg);
-    }
-  }
-  .circle .right{
-    z-index: 3;
-    transform: rotate(180deg);
-  }
-  .circle .right .progress{
-    animation: right 2s linear both;
-    animation-delay: 2s;
-  }
-  @keyframes right {
-    100%{
-      transform: rotate(180deg);
-    }
-  }
-  .circle .dot{
-    z-index: 2;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 50%;
-    height: 10px;
-    margin-top: -5px;
-    animation: dot 4s linear both;
-    transform-origin: 0% 50%;
-  }
-  .circle .dot span {
-    position: absolute;
-    right: 0;
-    width: 10px;
-    height: 10px;
-    border-radius: 100%;
-  }
-  @keyframes dot{
-    0% {
-      transform: rotate(-90deg);
-    }
-    50% {
-      transform: rotate(90deg);
-      z-index: 4;
-    }
-    100% {
-      transform: rotate(270deg);
-      z-index: 4;
-    }
   }
 </style>
 
@@ -250,7 +109,16 @@
     </div>
   </div>
   <!-- /.End Pencarian -->
+<section>
+  <div class="sk-wave text-center" id="loader">
+    <div class="sk-rect sk-rect1"></div>
+    <div class="sk-rect sk-rect2"></div>
+    <div class="sk-rect sk-rect3"></div>
+    <div class="sk-rect sk-rect4"></div>
+    <div class="sk-rect sk-rect5"></div>
+  </div>
 
+  <div class="animasi-table" id="divTable">
   <!-- //? TOTAL DISTRIBUSI PRE & RO -->
     <div class="TOTAL_DISTRIBUSI_PRE_RO"></div>
   <!-- //? END TOTAL DISTRIBUSI PRE & RO -->
@@ -382,34 +250,6 @@
                     </tr>
                 </thead>
                 <tbody id="zone_data_pre">
-                  <!-- <tr> 
-                    <td class="backloader" colspan="30">
-                      <center>
-                        <div class="loader"></div>
-                      </center>
-                    </td>
-                  </tr> -->
-                  <center id="preloader">
-                    <div class="circular">
-                      <div class="inner"></div>
-                        <div class="outer"></div>
-                          <div class="numb">0%</div>
-                        <div class="circle">
-                          <div class="dot">
-                            <span></span>
-                          </div>
-                        <div class="bar left">
-                          <div class="progress">
-                        </div>
-                        </div>
-                          <div class="bar right">
-                            <div class="progress">
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <br><br>
-                  </center>
                 </tbody>
                 <tfoot id="zone_total">
                 </tfoot>
@@ -507,7 +347,8 @@
     </div>
   </div>
   <!-- end list data Reject -->
-
+  </div>
+</section>
   <!-- List data PRE dan RO -->
   <div class="row">
     <!-- Total PRE -->
@@ -744,55 +585,37 @@
   </div>
 </div>
 
-<script src="aplikasi/<?= $_SESSION['aplikasi']; ?>/asset/plugins/sweet-alert/sweetalert2.min.js"></script>
-
 <script>
 
-  const numb = document.querySelector(".numb");
-  let counter = 0;
-  const timeValue = setInterval(()=>{
-    if(counter == 100){
-      clearInterval(timeValue);
-      listBebanHarian('1');
-      tHead();
-      $('#preloader').remove();
-    }else{
-      counter+=1;
-      numb.textContent = counter + "%";
-    }
-  }, 40);
+  function loader() {
+    let myVar = setTimeout(listBebanHarian, 2500);
+  }
 
   $(function() {
-    $('a.sidebar-toggle').click()
+    loader();
     $('[data-toggle="popover"]').popover();
   });
 
-  function formatNumber(num) {
-    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
-  }
-
   $('#btn-reload').on('click',function () {
-    listBebanHarian('1');
+    preLoader();
   })
-
-  function tambahKosong(x){
-    y=(x>9)?x:'0'+x;
-    return y;
-  }
 
   //? =============================================================== ?//
   //? ================== CODE DISTRIBUSI PRE ======================== ?//
   //? =============================================================== ?//
 
   //TODO ================== LIST BEBAN HARIAN ======================== TODO//
-  function listBebanHarian(curPage)
+  function listBebanHarian()
   {
+    $("#loader").fadeOut();
+    $('#divTable').attr('style','display:block;');
+
     var url = window.location.href;
     var pageA = url.split("#");
-    if (pageA[1] == undefined) {} else {
+    if (pageA[1] == undefined) {var curPage = '1'} else {
       var pageB = pageA[1].split("page-");
       if (pageB[1] == '') {
-        var curPage = curPage;
+        var curPage = '1';
       } else {
         var curPage = pageB[1];
       }
@@ -808,9 +631,13 @@
         
         if (data.respon.pesan == "sukses") 
         {
+          tHead();
           $("tbody#zone_data_pre").empty();
           $("tbody#zone_data_ro").empty();
           $("tbody#zone_data_pre").empty();
+          $('div.TOTAL_DISTRIBUSI_PRE_RO').empty();
+          $('div#totalPre').empty();
+          $('div#totalRo').empty();
           $('#tujuan-light-pagination').pagination({
             pages: data.result_option.jml_halaman,
             cssStyle: 'light-theme',
@@ -963,11 +790,11 @@
           }
           //!============= END LOOPING FLOWMETER RO ==============!//
                                   
+          $('div.TOTAL_DISTRIBUSI_PRE_RO').append(totalPreRo);
           $('tbody#zone_data_pre').append(tableContentPre);
           $('div#totalPre').append(totalPre);
           $('tbody#zone_data_ro').append(tableContentRo);
           $('div#totalRo').append(totalRo);
-          $('div.TOTAL_DISTRIBUSI_PRE_RO').append(totalPreRo);
           
         } else if (data.respon.pesan == "gagal") {
           $("tbody#zone_data_pre").html("<tr><td colspan='7'><div class='alert alert-danger' role='alert'><span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span> " + data.respon.text_msg + "</div></td></tr>");
@@ -1017,7 +844,7 @@
   $(document).on('click', '.simpanBebanPRE', function(){
     let date = new Date();
     if ($('#BULAN_FILTER').val() == "" && $('#TAHUN_FILTER').val() == "") {
-      var PERIODE = date.getFullYear()+'-'+tambahKosong(date.getMonth()+1);
+      var PERIODE = date.getFullYear()+'-'+satuNolDiDepan(date.getMonth()+1);
     } else {  
       PERIODE = $('#BULAN_FILTER').val()+'-'+$('#TAHUN_FILTER').val();
     }
@@ -1050,7 +877,7 @@
             
             if(data.respon.pesan=="sukses")
             {
-              listBebanHarian('1');
+              listBebanHarian();
             }else if(data.respon.pesan=="gagal")
             {
               Swal.fire({
@@ -1058,7 +885,7 @@
                 text: ''+data.respon.text_msg+'',
                 icon: 'error'
               })
-              listBebanHarian('1');
+              listBebanHarian();
             }
           },
           error:function(x,e){
@@ -1085,7 +912,7 @@
       type:'POST',
       url:refseeAPI,
       dataType:'json',
-      data:'aplikasi=<?php echo $d0;?>&ref=list_beban_harian_dept&KPE_AIR_FLOWMETER_ID='+KPE_AIR_FLOWMETER_ID,
+      data:'aplikasi=<?php echo $d0;?>&ref=list_beban_harian_dept&BULAN_FILTER='+$("select#BULAN_FILTER").val()+'&TAHUN_FILTER='+$("select#TAHUN_FILTER").val()+'&KPE_AIR_FLOWMETER_ID='+KPE_AIR_FLOWMETER_ID,
       success:function(data)
       { 
         if(data.respon.pesan=="sukses")
@@ -1099,7 +926,7 @@
                                                 <td class="text-right">${parseFloat(data.result[i].C_DEPT_BULAN_LALU.AVG_LALU).toFixed(2)}</td>
                                                 <td class="text-right">${parseFloat(data.result[i].C_DEPT_BULAN_LALU.AVG_LALU / data.AVG_BEBAN_BULAN_LALU * 100).toFixed(2)}</td>
                                                 <td class="text-right">${data.result[i].C_DEPT.AVG}</td>
-                                                <td class="text-right">${data.result[i].C_DEPT.TOTAL_BEBAN_DEPT}</td>
+                                                <td class="text-right">${parseFloat(data.result[i].C_DEPT.TOTAL_BEBAN_DEPT).toFixed(2)}</td>
                                                 <td class="text-right">${parseFloat(data.result[i].C_DEPT.TOTAL_BEBAN_DEPT / data.BEBAN_HARIAN * 100).toFixed(2)}</td>
                                               </tr>`);
           }

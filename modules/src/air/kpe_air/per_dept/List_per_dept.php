@@ -44,15 +44,20 @@ $tanggalterakhir = date("Y-m-t", strtotime($periodeTahunSekarang.'-'.$periodeBul
 $tanggalAkhirs= Date('Y-m-d',strtotime($tanggalterakhir));
 $tanggalterakhirnya = date("d",strtotime($tanggalterakhir));
 
+$date_now = Date("Y-m-d");
 
-
-if ($input['dateRangeS'] == "NaN-NaN-NaN" || $input['dateRangeSE'] == "NaN-NaN-NaN" || $input['BULAN_FILTER'] == "") {
+if ($input['dateRangeS'] == $date_now || $input['dateRangeE'] == $date_now ) {
   $begin = new DateTime($tanggalAwals);
   $end   = new DateTime($tanggalAkhirs);
 } 
 else {
-  $begin = new DateTime($input['dateRangeS']);
-  $end   = new DateTime($input['dateRangeE']);
+  if ($input['BULAN_FILTER'] == "") {
+    $begin = new DateTime($input['dateRangeS']);
+    $end   = new DateTime($input['dateRangeE']);
+  } else {
+    $begin = new DateTime($tanggalAwals);
+    $end   = new DateTime($tanggalAkhirs);
+  }
 }
 $no=0;
 for($iy = $begin; $iy <= $end; $iy->modify('+1 day'))
@@ -173,7 +178,7 @@ if (empty($result_FLOWMETER))
     $this->callback['respon']['text_msg'] = "Data Ada ".print_r($result_FLOWMETER,true);
     $this->callback['filter'] = $params;
     $this->callback['result'] = $result_FLOWMETER;
-    $this->callback['HASIL_PAKAI'] = $begin;
+    $this->callback['tes'] = $date_now;
     $this->callback['MULTI'] = $end;
     $this->callback['CATATAN'] = $SUM_CATATAN;
     $this->callback['AVERAGE'] = $AVRG;

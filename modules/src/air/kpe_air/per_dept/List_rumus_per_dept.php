@@ -41,7 +41,7 @@ if($input['BULAN_FILTER']==""){
   $periodeBulanSekarang=$input['BULAN_FILTER'];
 }
 
-if ($input['dateRangeS'] == "NaN-NaN-NaN" || $input['dateRangeSE'] == "NaN-NaN-NaN") {
+if ($input['dateRangeS'] == "NaN-NaN-NaN" || $input['dateRangeSE'] == "NaN-NaN-NaN" || $input['BULAN_FILTER'] == "") {
   $tanggalAwals=$periodeTahunSekarang."-".$periodeBulanSekarang."-01";
   $tanggalterakhir = Date('Y-m-d',strtotime($tanggalAwals.'-1 day'));
 

@@ -15,30 +15,8 @@
 //exit();
 ?>
 
-<link rel="stylesheet" href="aplikasi/<?= $_SESSION['aplikasi']; ?>/asset/plugins/sweet-alert/sweetalert2.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <style>
-  .loader {
-    border: 7px solid #f3f3f3;
-    border-radius: 50%;
-    border-top: 7px solid #3498db;
-    border-bottom: 7px solid #3498db;
-    width: 60px;
-    height: 60px;
-    -webkit-animation: spin 2s linear infinite;
-    animation: spin 2s linear infinite;
-  }
-
-  @-webkit-keyframes spin {
-    0% { -webkit-transform: rotate(0deg); }
-    100% { -webkit-transform: rotate(360deg); }
-  }
-
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-
   .Content {
     height:600px;
     overflow:auto;
@@ -101,14 +79,6 @@
 
   table.table-bodered, .bordered{
     border:1px solid #ccc !important;
-  }
-
-  .swal2-container {
-    z-index: 11000000;
-  }
-
-  .swal2-popup {
-    font-size: 1.3rem !important; 
   }
 
   .daterangepicker.dropdown-menu {
@@ -221,7 +191,14 @@
   <!-- /.End Pencarian -->
   <div class="box">
     <div class="row">
-      <div class="col-md-12">
+      <div class="sk-wave text-center" id="loader">
+        <div class="sk-rect sk-rect1"></div>
+        <div class="sk-rect sk-rect2"></div>
+        <div class="sk-rect sk-rect3"></div>
+        <div class="sk-rect sk-rect4"></div>
+        <div class="sk-rect sk-rect5"></div>
+      </div>
+      <div class="col-md-12 animasi-table" id="divTable">
         <div class="table-responsive Content">
           <table class="table table-hover table-sticky">
             <thead>
@@ -251,33 +228,23 @@
   </div>
 </div>
 
-<script src="aplikasi/<?= $_SESSION['aplikasi']; ?>/asset/plugins/sweet-alert/sweetalert2.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
 <script>
+  function loader() {
+    let myLoader = setTimeout(listRekap, 2000);
+  }
+
   $(function() {
-    $('a.sidebar-toggle').click();
     $('input[name="dateRange"]').daterangepicker();
     $('.selectpicker').selectpicker();
     $('#dateRange').val('');
-    listRekap();
+    loader();
   })
 
-  function formatDate(date) {
-    let d = new Date(date),
-        month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
-        year = d.getFullYear();
-
-    if (month.length < 2) month = '0' + month;
-    if (day.length < 2) day = '0' + day;
-
-    return [year, month, day].join('-');
-  }
-
   $('#btn-reload').click(function(){
-    listRekap();
+    preLoader();
   })
 
   //?======== AKUMULASI ===========?//
@@ -398,6 +365,8 @@
 
   //? =========== LIST REKAP ===============?//
   function listRekap() {
+    $("#loader").fadeOut();
+    $('#divTable').attr('style','display:block;');
     $('#multiSearchFlowmeter').val($('#multiSearchFilter').val());
     let multiFilter = $('#multiSearchFlowmeter').val();
 

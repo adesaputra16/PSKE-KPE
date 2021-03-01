@@ -36,10 +36,10 @@ foreach($result_a as $r)
   $this->MYSQL=new MYSQL();
   $this->MYSQL->database=$this->CONFIG->mysql_koneksi()->db_nama;
   $sql_c = "SELECT KPE_AIR_FLOWMETER_CATATAN_ID,KPE_AIR_FLOWMETER_CATATAN_ANGKA,KPE_AIR_FLOWMETER_CATATAN_BEBAN,KPE_AIR_FLOWMETER_CATATAN_TANGGAL,KPE_AIR_FLOWMETER_CATATAN_PAKAI_RUMUS,
-                        KPE_AIR_FLOWMETER_NAMA,KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_REAL,KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_SELISIH,
-                        KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_PERSEN,KPE_AIR_FLOWMETER_CATATAN_KALIBRASI
-                        FROM KPE_AIR_FLOWMETER_CATATAN
-                        WHERE RECORD_STATUS='A' AND KPE_AIR_FLOWMETER_ID='".$r['KPE_AIR_FLOWMETER_ID']."' AND KPE_AIR_FLOWMETER_CATATAN_TANGGAL='".$input['KPE_AIR_FLOWMETER_CATATAN_TANGGAL']."'";
+                    KPE_AIR_FLOWMETER_NAMA,KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_REAL,KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_SELISIH,
+                    KPE_AIR_FLOWMETER_CATATAN_KALIBRASI_PERSEN,KPE_AIR_FLOWMETER_CATATAN_KALIBRASI
+                    FROM KPE_AIR_FLOWMETER_CATATAN
+                    WHERE RECORD_STATUS='A' AND KPE_AIR_FLOWMETER_ID='".$r['KPE_AIR_FLOWMETER_ID']."' AND KPE_AIR_FLOWMETER_CATATAN_TANGGAL='".$input['KPE_AIR_FLOWMETER_CATATAN_TANGGAL']."'";
   $this->MYSQL->queri = $sql_c;                      
   $result_c=$this->MYSQL->data()[0]; 
 
@@ -84,7 +84,7 @@ if (empty($result_a))
     $this->callback['respon']['text_msg'] = "OK..";
     $this->callback['filter'] = $params;
     $this->callback['result'] = $result;
-    // $this->callback['tes'] = $sql_d;
+    $this->callback['tes'] = $sql_c;
 
     }
 

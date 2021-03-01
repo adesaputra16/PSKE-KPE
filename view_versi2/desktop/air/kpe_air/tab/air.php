@@ -28,7 +28,6 @@
 //exit();
 ?>
 
-<link rel="stylesheet" href="aplikasi/<?= $_SESSION['aplikasi']; ?>/asset/plugins/sweet-alert/sweetalert2.min.css">
 <style>
 .loader {
   border: 7px solid #f3f3f3;
@@ -140,21 +139,13 @@ table.table-bodered, .bordered{
 tr.trData:hover{
   background:rgba(250, 240, 202,0.5) !important;
 }
-
-.swal2-container {
-  z-index: 100005;
-}
-
-.swal2-popup {
-  font-size: 1.3rem !important; 
-}
-
 </style>
 
 
 <div class="box-body">
   <button type="button" class="btn btn-success modalCatatan"><i class="fa fa-plus-square" aria-hidden="true"></i> Tambah Catatan</button>
   <div class="pull-right">
+    <a type="button" id="tes" class="btn btn-danger"><strong><i class="fa fa-paper-plane-o" aria-hidden="true"></i> Multiple Add</strong></a> 
     <a type="button" id="rekapCatatan" class="btn btn-default"><strong><i class="fa fa-save" aria-hidden="true"></i> Rekap Catatan</strong></a> 
     <a type="button" id="cetakPdf" class="btn btn-warning"><i class="fa fa-print" aria-hidden="true"></i> Cetak</a>
   </div>
@@ -239,7 +230,7 @@ tr.trData:hover{
         <div class="col-md-4">
           <div class="form-group">
             <label for="KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE">Distribusi Type :</label>
-            <select id="KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE" name="KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE" class="form-control" onchange="tampil('1');">
+            <select id="KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE" name="KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE" class="form-control" onchange="tampil();">
               <option value="">--Pilih--</option>
               <option value="PRE">PRE</option>
               <option value="RO">RO</option>
@@ -262,7 +253,14 @@ tr.trData:hover{
   <div class="box">
     <div class="row">
       <div class="col-md-12">
-        <div class="table-responsive Content">
+        <div class="sk-wave text-center" id="loader">
+          <div class="sk-rect sk-rect1"></div>
+          <div class="sk-rect sk-rect2"></div>
+          <div class="sk-rect sk-rect3"></div>
+          <div class="sk-rect sk-rect4"></div>
+          <div class="sk-rect sk-rect5"></div>
+        </div>
+        <div class="table-responsive Content animasi-table" id="divTable">
           <table class="table table-hover table-bordered table-sticky">
             <thead>
                 <tr>
@@ -278,13 +276,13 @@ tr.trData:hover{
                 </tr>
             </thead>
             <tbody id="zone_data">
-              <tr> 
+              <!-- <tr> 
                 <td class="backloader" colspan="20">
                   <center>
                     <div class="loader"></div>
                   </center>
                 </td>
-              </tr>
+              </tr> -->
             </tbody>
           </table>
         </div>
@@ -307,8 +305,42 @@ tr.trData:hover{
   </div>
 </div>
 
+<!-- //?======= Modal tes -->
+<div class="modal fade" id="modalTes" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index:10000;">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+        <h4 class="modal-title"><i class="fa fa-plus" aria-hidden="true"></i> Generate</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <form action="https://isea.sambu.co.id/?show=kpe/air/pemakaian" method='post'>
+              <div class="form-group">
+                <label for="JUMLAH">Jumlah</label>
+                <input type="number" class="form-control" id="JUMLAH" name="JUMLAH" autocomplete="off" placeholder="10" step="any" required min='1' max='100'>
+                <small class="help-block">Masukkan jumlah catatan flowmeter yang ingin di input</small>
+              </div>
+              <div class="form-group">
+                <label for="TANGGAL">Tanggal</label>
+                <input type="text" class="form-control datepicker TANGGAL" id="TANGGAL" name="TANGGAL" placeholder="<?= Date("Y/m/d"); ?>" autocomplete="off" required>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                <button type="submit" class="btn btn-success" id="">Simpan</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- //?======= end -->
+
 <!-- Modal -->
-<div class="modal fade" id="modalCatatan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index:100000;">
+<div class="modal fade" id="modalCatatan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index:10000;">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
@@ -397,12 +429,15 @@ tr.trData:hover{
   </div>
 </div>
 
-<script src="aplikasi/<?= $_SESSION['aplikasi']; ?>/asset/plugins/sweet-alert/sweetalert2.min.js"></script>
 <script>
   var months = {'01':'January', '02':'Februari', '03':'Maret', '04':'April', '05':'Mei', '06':'Juni', '07':'Juli', '08':'Agustus', '09':'September', '10':'Oktober', '11': 'November', '12':'Desember'};
 
+  function loader() {
+    let myVar = setTimeout(tampil, 1000);
+  }
+
   $(function(){
-    $('a.sidebar-toggle').click()
+    loader();
     $('[data-toggle="popover"]').popover();
     $(".selectpicker").selectpicker();
     $("input#KPE_AIR_FLOWMETER_CATATAN_TANGGAL").datepicker().on('changeDate', function(ev)
@@ -410,40 +445,13 @@ tr.trData:hover{
       listFlowDept();
       $('.datepicker').datepicker('hide');
     });
-    tampil('1');
+    $("input#TANGGAL").datepicker().on('changeDate', function(ev)
+    { 
+      $('.datepicker').datepicker('hide');
+    });
+    tampil();
     $('tr#colTgl').append(/*html*/`<th class="bordered" style="top:35px;">${format_tanggal($('input#DATA_sDATE').val())}</th>`)
   });	
-
-  /*===== Filter perminggu (Tanggal akhir akan dijumlahkan selama 1 minggu kedepan) =====*/
-  $(function(){
-    $('input#DATA_eDATE').attr("readonly","readonly");
-    $("input#DATA_sDATE").datepicker().on('changeDate', function(ev)
-    {  
-      var TANGGAL_AWAL=$("input#DATA_sDATE").val();   
-      // alert(TANGGAL_AWAL);          
-      //MENENTUKAN TANGGAL AKHIRNYA SEMINGGU DARI TANGGAL AWAL
-      var myDate = new Date(TANGGAL_AWAL);
-      myDate.setDate(myDate.getDate() + 6);
-      
-      var month = '' + (myDate.getMonth() + 1),day = '' + myDate.getDate(),year = myDate.getFullYear();
-      if (month.length < 2) 
-        month = '0' + month;
-      if (day.length < 2) 
-        day = '0' + day;
-      var TANGGAL_AKHIR=year+"/"+month+"/"+day;
-      //END MENETUKAN TANGGAL AKHIRNYA
-      // alert(TANGGAL_AKHIR);
-      var JENIS_LAPORAN=$('select#JENIS_LAPORAN').val();
-      if (JENIS_LAPORAN == "Harian") 
-      {
-        $('input#DATA_eDATE').val('');
-      } else {
-        $("input#DATA_eDATE").val(TANGGAL_AKHIR);
-      }
-      $('.datepicker').datepicker('hide');
-      });
-  });	
-  /*===== End filter perminggu =====*/
 
   /*===== Filter Harian,Mingguan,Bulanan dan Tahunan  =====*/
   function jenisAkumulasi(){
@@ -599,10 +607,16 @@ tr.trData:hover{
   });
   /*===== End checked =====*/
 
+  $("#tes").click(function(){
+    $("#JUMLAH").val()
+    $("#TANGGAL").val()
+    $("#modalTes").modal('show')
+  });
+
   /*===== Function Cek untuk menyimpan Catatan Keliling =====*/
   function cekSimpan()
   {
-    if ($('#KPE_AIR_FLOWMETER_CATATAN_ANGKA').val() - $('#KPE_AIR_FLOWMETER_CATATAN_ANGKA_HIDDEN').val() <= 0) {
+    if ($('#KPE_AIR_FLOWMETER_CATATAN_ANGKA').val() - $('#KPE_AIR_FLOWMETER_CATATAN_ANGKA_HIDDEN').val() < 0) {
       Swal.fire({
         title: 'Hasil beban minus (-)!',
         text: "Yakin ingin melanjutkan?",
@@ -631,12 +645,12 @@ tr.trData:hover{
     if ($("#PERSEN").val() == "") {
       var persen = "";
     } else {
-      persen = tambahNol(($("#PERSONIL_DEPARTEMEN").val()/$("#TOTAL_PERSONIL").val()*$("#PERSEN").val()).toFixed());
+      persen = duaNolDiDepan(($("#PERSONIL_DEPARTEMEN").val()/$("#TOTAL_PERSONIL").val()*$("#PERSEN").val()).toFixed());
     }
     var date = new Date($("#KPE_AIR_FLOWMETER_CATATAN_TANGGAL").val());
     var dates = $("#KPE_AIR_FLOWMETER_CATATAN_TANGGAL").val();
     dateSebelumnya = new Date((new Date(date)).valueOf() - 1000*60*60*24);
-    var KPE_AIR_FLOWMETER_CATATAN_TANGGAL_SEBELUMNYA = dateSebelumnya.getFullYear() + '/' + tambahKosong(dateSebelumnya.getMonth()+1) + '/' + tambahKosong(dateSebelumnya.getDate());   
+    var KPE_AIR_FLOWMETER_CATATAN_TANGGAL_SEBELUMNYA = dateSebelumnya.getFullYear() + '/' + satuNolDiDepan(dateSebelumnya.getMonth()+1) + '/' + satuNolDiDepan(dateSebelumnya.getDate());   
     var data = "&KPE_AIR_FLOWMETER_DEPARTEMEN_PERSONIL_HASIL="+persen+"&KPE_AIR_FLOWMETER_NAMA="+btoa($("#KPE_AIR_FLOWMETER_ID").children("option:selected"). text())+"&KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA="+btoa($("#KPE_AIR_FLOWMETER_DEPARTEMEN_ID").children("option:selected"). text())+"&KPE_AIR_FLOWMETER_CATATAN_TANGGAL_SEBELUMNYA="+KPE_AIR_FLOWMETER_CATATAN_TANGGAL_SEBELUMNYA+"&"+fData;
     // console.log(data);
     // return
@@ -655,7 +669,7 @@ tr.trData:hover{
           // alert(data.respon.text_msg);
           // console.log(data.respon.text_msg);
           $(".selectpicker").selectpicker("val","");
-          tampil('1');
+          tampil();
           
         }else if(data.respon.pesan=="gagal")
         {
@@ -665,7 +679,7 @@ tr.trData:hover{
             icon: 'error'
           })
           $("#btnSimpanCatatan").removeAttr("disabled");
-          tampil('1');
+          tampil();
         }
       },
       error:function(x,e){
@@ -674,20 +688,6 @@ tr.trData:hover{
     });
   }
   /*===== End function simpan Catatan =====*/
-
-  function tambahNol(x){
-    y=(x>9)?'0.'+x:'0.0'+x;
-    return y;
-  }
-
-  function tambahKosong(x){
-    y=(x>9)?x:'0'+x;
-    return y;
-  }
-
-  function formatNumber(num) {
-    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
-  }
 
   /*===== Function list data personil departemen yg menggunakan 1 flowmeter bersamaan =====*/
   function listCatatanFlowDept()
@@ -746,8 +746,8 @@ tr.trData:hover{
     // console.log(KPE_AIR_FLOWMETER_CATATAN_TANGGAL);
     var d = new Date(KPE_AIR_FLOWMETER_CATATAN_TANGGAL);
     var t = d.getFullYear();
-    var b = tambahKosong(d.getMonth()+1);
-    var h = tambahKosong(d.getDate());
+    var b = satuNolDiDepan(d.getMonth()+1);
+    var h = satuNolDiDepan(d.getDate());
     $('input#KPE_AIR_FLOWMETER_CATATAN_ANGKA').val(KPE_AIR_FLOWMETER_CATATAN_ANGKA);
     $('input#KPE_AIR_FLOWMETER_CATATAN_ID').val(KPE_AIR_FLOWMETER_CATATAN_ID);
     $('input#KPE_AIR_FLOWMETER_CATATAN_TANGGAL').val(t+"/"+b+"/"+h);
@@ -770,16 +770,19 @@ tr.trData:hover{
   /*===== End edit catatan keliling =====*/
 
   /*===== Function list data catatan =====*/
-  function tampil(curPage)
+  function tampil()
   {
+
+    $("#loader").fadeOut();
+    $('#divTable').attr('style','display:block;');
     // var data = 'tampil_catatan&keyword='+$("input#keyword").val()+'&DATA_sDATE='+$("input#DATA_sDATE").val()+'&DATA_eDATE='+$("input#DATA_eDATE").val()+'&BULAN_FILTER='+$("select#BULAN_FILTER").val()+'&TAHUN_FILTER='+$("select#TAHUN_FILTER").val()+'&batas='+$("input#REC_PER_HALAMAN").val()+'&halaman='+ curPage;
     // console.log(data);
     var url = window.location.href;
     var pageA = url.split("#");
-    if (pageA[1] == undefined) {} else {
+    if (pageA[1] == undefined) {var curPage = '1'} else {
       var pageB = pageA[1].split("page-");
       if (pageB[1] == '') {
-        var curPage = curPage;
+        var curPage = '1';
       } else {
         var curPage = pageB[1];
       }
@@ -923,6 +926,8 @@ tr.trData:hover{
               }
               $("tbody#zone_data").append(tableContent);//append list catatan
 
+              // $('a.sidebar-toggle').click()
+
         } else if (data.respon.pesan == "gagal") {
           // alert(data.respon.text_msg);
           $("tbody#zone_data").html(/*html*/`<tr><td colspan="7"><div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>${data.respon.text_msg}</div></td></tr>`);
@@ -937,10 +942,10 @@ tr.trData:hover{
   /*===== End function list catatan keliling =====*/
 
   $(window).on('hashchange', function(e) {
-  tampil('1');
+    preLoader()
   });
   $("input#REC_PER_HALAMAN").on('change', function() {
-  tampil('1');
+    preLoader();
   });
 
   /*===== Hapus catatan keliling =====*/
@@ -977,7 +982,7 @@ tr.trData:hover{
                 text: 'Data berhasil dihapus.',
                 icon: 'success',
               })
-              tampil('1');
+              tampil();
               
             }else if(data.respon.pesan=="gagal")
             {
@@ -988,7 +993,7 @@ tr.trData:hover{
                 text: 'Data gagal terhapus.',
                 icon: 'error'
               })
-              tampil('1');
+              tampil();
             }
           },
           error:function(x,e){
@@ -1001,11 +1006,6 @@ tr.trData:hover{
   })
   /*===== End hapus catatan =====*/
 
-  function tambahKosong(x){
-    y=(x>9)?x:'0'+x;
-    return y;
-  }
-
   /*===== Function list catatan hari sebelumnya dan Flowmeter yg dikalibrasi =====*/
   function listFlowDept() {
     
@@ -1014,7 +1014,7 @@ tr.trData:hover{
     let date = new Date($("#KPE_AIR_FLOWMETER_CATATAN_TANGGAL").val());
     let dates = $("#KPE_AIR_FLOWMETER_CATATAN_TANGGAL").val();
     date = new Date((new Date(date)).valueOf() - 1000*60*60*24);
-    let KPE_AIR_FLOWMETER_CATATAN_TANGGAL = date.getFullYear() + '/' + tambahKosong(date.getMonth()+1) + '/' + tambahKosong(date.getDate());   
+    let KPE_AIR_FLOWMETER_CATATAN_TANGGAL = date.getFullYear() + '/' + satuNolDiDepan(date.getMonth()+1) + '/' + satuNolDiDepan(date.getDate());   
 
     $("small.angkaSebelumnya").remove();
     // list_flowmeter_kalibrasi()
@@ -1062,8 +1062,8 @@ tr.trData:hover{
           let month = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
           let dateKosong = new Date(data.result[0].CATATAN_TERAKHIR.KPE_AIR_FLOWMETER_CATATAN_TANGGAL);
           dateKosong = new Date((new Date(dateKosong)).valueOf() + 1000*60*60*24);
-          let KPE_AIR_FLOWMETER_CATATAN_TANGGAL_KOSONG = tambahKosong(dateKosong.getDate()) + " " + month[dateKosong.getMonth()] + " " + dateKosong.getFullYear();
-          let KPE_AIR_FLOWMETER_CATATAN_TANGGAL_KOSONGS = dateKosong.getFullYear() + '/' + tambahKosong(dateKosong.getMonth()+1) + '/' + tambahKosong(dateKosong.getDate());   
+          let KPE_AIR_FLOWMETER_CATATAN_TANGGAL_KOSONG = satuNolDiDepan(dateKosong.getDate()) + " " + month[dateKosong.getMonth()] + " " + dateKosong.getFullYear();
+          let KPE_AIR_FLOWMETER_CATATAN_TANGGAL_KOSONGS = dateKosong.getFullYear() + '/' + satuNolDiDepan(dateKosong.getMonth()+1) + '/' + satuNolDiDepan(dateKosong.getDate());   
           Swal.fire({
             title: ""+KPE_AIR_FLOWMETER_CATATAN_TANGGAL_KOSONG+"",
             text: "Catatan angka tanggal "+KPE_AIR_FLOWMETER_CATATAN_TANGGAL_KOSONGS+" belum terisi!",
@@ -1175,6 +1175,7 @@ tr.trData:hover{
 
   /*===== Append colom tanggal (<th>) =====*/
   $('#btn-reload').click(function(){
+    preLoader();
     var JENIS_LAPORAN = $('select#JENIS_LAPORAN').val();
     $('tr#colTgl').empty();
     if (JENIS_LAPORAN == "Harian") 
@@ -1217,12 +1218,11 @@ tr.trData:hover{
     } else {
 
     }
-    tampil('1');
   })
   /*===== End append colom tanggal (<th>) =====*/
 
   function search() {
-    tampil('1');
+    tampil();
   }
 
   $('#cetakPdf').on('click', function(){

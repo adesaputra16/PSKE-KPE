@@ -146,6 +146,9 @@ CLASS KPE_MODULES extends USER_PRIVILEGES
 		case 'nonlogin_cetak_catatan':
 			require_once ("air/kpe_air/catatan/Cetak_catatan.php");
 		break;
+		case 'nonlogin_simpan_catatan_multiple':
+			require_once ("air/kpe_air/catatan/Simpan_catatan_multiple.php");
+		break;
 
 		//! Case Beban Harian
 		case 'nonlogin_list_beban_harian':

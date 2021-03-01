@@ -5,10 +5,11 @@ $adminLTE=new adminLTE();
 ?>
 <!DOCTYPE html>
 <html>
+	<link rel="stylesheet" href="aplikasi/<?= $_SESSION['aplikasi']; ?>/asset/plugins/sweet-alert/sweetalert2.min.css">
 <?php	
 $adminLTE->header_asset($params);
 ?>
-<body class="skin-blue sidebar-mini adminLTE pace-done" style="height: auto; min-height: 100%;">
+<body class="skin-blue sidebar-mini adminLTE pace-done sidebar-collapse" style="height: auto; min-height: 100%;">
 <div class="wrapper">
 <?php	
 $adminLTE->headerbar(

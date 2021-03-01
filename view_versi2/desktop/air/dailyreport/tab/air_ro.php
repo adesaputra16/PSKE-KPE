@@ -1,25 +1,4 @@
 <style>
-  .loader {
-    border: 7px solid #f3f3f3;
-    border-radius: 50%;
-    border-top: 7px solid #3498db;
-    border-bottom: 7px solid #3498db;
-    width: 60px;
-    height: 60px;
-    -webkit-animation: spin 2s linear infinite;
-    animation: spin 2s linear infinite;
-  }
-
-  @-webkit-keyframes spin {
-    0% { -webkit-transform: rotate(0deg); }
-    100% { -webkit-transform: rotate(360deg); }
-  }
-
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-
   .table2-header{
     border:1px solid #0F0808 !important;
     border-collapse: collapse;
@@ -259,230 +238,225 @@
 
 <div class="box-body">
   <div class="row">
-    <div class="col-md-3  form-group">
-      <label for="TAHUN_FILTER" >Tahun</label>
-      <select class="form-control col-sm-2" name="TAHUN_FILTER" id="TAHUN_FILTER" onchange="filterHariSetahun();">
-        <option value="">--Pilih tahun--</option>
-        <?php
-          $thnsekarang=Date('Y');
-          $thnsebelumnya=$thnsekarang-7;
-          for($thn=$thnsebelumnya;$thn<=$thnsekarang;$thn++){
-            echo"<option value='$thn'>$thn</option>";
-        } ?>
-      </select>
-    </div>
-    <div class="col-md-3  form-group">
-      <label for="TANGGAL_FILTER" >Tanggal</label>
-      <input id="TANGGAL_FILTER" name="TANGGAL_FILTER" type="text" class="form-control" value="" readonly>
-    </div>
-    <input type="hidden" id="first" value=""/>
-    <input type="hidden" id="second" value=""/>
-    <div class="col-md-4 form-group">
-      <label for="JUMLAH_HARI">Codding :</label>
-      <div class="input-group custom-search-form">
-        <select class="form-control" name="JUMLAH_HARI" id="JUMLAH_HARI">
-          
+    <div class="col-md-12">
+      <div class="col-md-3  form-group">
+        <label for="TAHUN_FILTER" >Tahun</label>
+        <select class="form-control col-sm-2" name="TAHUN_FILTER" id="TAHUN_FILTER" onchange="filterHariSetahun();">
+          <option value="">--Pilih tahun--</option>
+          <?php
+            $thnsekarang=Date('Y');
+            $thnsebelumnya=$thnsekarang-7;
+            for($thn=$thnsebelumnya;$thn<=$thnsekarang;$thn++){
+              echo"<option value='$thn'>$thn</option>";
+          } ?>
         </select>
-        <span class="input-group-btn">
-          <button type="button" class="btn btn-primary" id="btnFilter"><strong><i class="fa fa-eye"></i> Tampilkan</strong></button>
-        </span>
+      </div>
+      <div class="col-md-3  form-group">
+        <label for="TANGGAL_FILTER" >Tanggal</label>
+        <input id="TANGGAL_FILTER" name="TANGGAL_FILTER" type="text" class="form-control" value="" readonly>
+      </div>
+      <input type="hidden" id="first" value=""/>
+      <input type="hidden" id="second" value=""/>
+      <div class="col-md-4 form-group">
+        <label for="JUMLAH_HARI">Codding :</label>
+        <div class="input-group custom-search-form">
+          <select class="form-control" name="JUMLAH_HARI" id="JUMLAH_HARI">
+            
+          </select>
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-primary" id="btnFilter"><strong><i class="fa fa-eye"></i> Tampilkan</strong></button>
+          </span>
+        </div>
       </div>
     </div>
     <br><br><br>
   </div>
   <div class="row">
-    <div class="col-md-7">
-      <div class="box box-default box-solid">
-        <div class="box-header with-border">
-          <h3 class="box-title">RO Water Usage (m3)</h3>
-        </div>
-        <div class="box-body">
-          <div class="table-responsive">
-            <table class="table table-bordered table-hover">
-              <thead>
-                <tr>
-                  <th>DEPT. USAGE</th>
-                  <th>USAGE</th>
-                  <th>(%)</th>
-                  <th>ACCUMULATIF</th>
-                  <th>(%)</th>
-                </tr>
-              </thead>
-              <tbody id="RWU">
-                <tr> 
-                  <td colspan="5">
-                    <center>
-                      <div class="loader"></div>
-                    </center>
-                  </td>
-                </tr>
-              </tbody>
-              <tfoot id="totalRWU">
-              </tfoot>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <div class="box box-default box-solid">
-        <div class="box-header with-border">
-          <h3 class="box-title">Chemical Consumption</h3>
-        </div>
-        <div class="box-body">
-          <div class="table-responsive">
-            <table class="table table-bordered table-hover">
-              <thead>
-                <tr>
-                  <th>Described</th>
-                  <th>Usage</th>
-                  <th>Accumulatif</th>
-                  <th>Stock</th>
-                </tr>
-              </thead>
-              <tbody id="cc">
-              
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+    <div class="sk-wave text-center" id="loader">
+      <div class="sk-rect sk-rect1"></div>
+      <div class="sk-rect sk-rect2"></div>
+      <div class="sk-rect sk-rect3"></div>
+      <div class="sk-rect sk-rect4"></div>
+      <div class="sk-rect sk-rect5"></div>
     </div>
-    <div class="col-md-5">
-      <div class="box box-default box-solid">
-        <div class="box-header with-border">
-          <h3 class="box-title">Stock</h3>
-        </div>
-        <div class="box-body">
-          <div class="table-responsive">
-            <table class="table table-bordered table-hover">
-              <thead>
-                <tr>
-                  <th>Described</th>
-                  <th>(m3) Water</th>
-                </tr>
-              </thead>
-              <tbody id="stock">
-                
-              </tbody>
-              <tfoot id="stock">
-                
-              </tfoot>
-            </table>
+    <div class="col-md-12 animasi-table" id="divTable">
+      <div class="col-md-7">
+        <div class="box box-default box-solid">
+          <div class="box-header with-border">
+            <h3 class="box-title">RO Water Usage (m3)</h3>
           </div>
-        </div>
-      </div>
-      <div class="box box-default box-solid">
-        <div class="box-header with-border">
-          <h3 class="box-title"></h3>
-        </div>
-        <div class="box-body">
-          <div class="table-responsive">
-            <table class="table table-bordered table-hover">
-              <thead>
-                <tr>
-                  <th>Described</th>
-                  <th></th>
-                  <th>Accumulatif</th>
-                </tr>
-              </thead>
-              <tbody id="rwp">
-                
-              </tbody>
-              <tfoot id="rwp">
-                
-              </tfoot>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <div class="table-responsive">
-        <table class="table table-bordered table-hover">
-          <thead>
-            <tr>
-              <th>Described</th>
-              <th>Accumulatif</th>
-              <th>Usage</th>
-            </tr>
-          </thead>
-          <tbody id="susut">
-            
-          </tbody>
-          <tfoot id='susut'>
-          
-          </tfoot>
-        </table>
-      </div>
-      <!-- <table class="table3 table-unbordered" style="border:none;" width="100%">
-				<tbody>
-          <tr>
-            <td class="text-left" valign="bottom" style="border:none;" width="20%"></td>
-            <td>
-              <table class="table2 table-bordered table2-content" width="100%">
-                <tbody>
+          <div class="box-body">
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover">
+                <thead>
                   <tr>
-                    <td width="50%" align="center"><strong>Prepared and Checked by:</strong></td>
-                    <td width="50%" align="center"><strong>Confirmed by:</strong></td>
+                    <th>DEPT. USAGE</th>
+                    <th>USAGE</th>
+                    <th>(%)</th>
+                    <th>ACCUMULATIF</th>
+                    <th>(%)</th>
                   </tr>
-                  <tr><td class="text-center"><h1><a onclick="approval('approve')"><i class="fa fa-thumbs-o-up fa-flip-horizontal text-success" aria-hidden="true"></i></a> <a value="disapprove" onclick="approval('disapprove')"><i class="fa fa-thumbs-o-down text-danger" aria-hidden="true"></i></a></h1></td><td class="text-center"><h1><a onclick="approval('approve')"><i class="fa fa-thumbs-o-up fa-flip-horizontal text-success" aria-hidden="true"></i></a> <a onclick="approval('approve')"><i class="fa fa-thumbs-o-down text-danger" aria-hidden="true"></i></a></h1></td></tr>
-                  <tr>
-                    <td>
-                      <table class="table2 table2-unbordered">
-                        <tbody>
-                          <tr><td>Name</td><td>:ISAKNA</td></tr>
-                          <tr><td>Post/Dept</td><td>:Adm</td></tr>
-                          <tr><td>Date</td><td>:09/02/2021</td></tr>
-                        </tbody>
-                      </table>
+                </thead>
+                <tbody id="RWU">
+                  <tr> 
+                    <td colspan="5">
+                      <center>
+                        <div class="loader"></div>
+                      </center>
                     </td>
-                    <td>
-                      <table class="table2 table2-unbordered">
-                        <tbody><tr><td>Name</td><td>:HERI FIKRI</td></tr>
-                          <tr><td>Post/Dept</td><td>:Dept Head WT</td></tr>
-                          <tr><td>Date</td><td>:09/02/2021</td></tr>
-                        </tbody>
-                      </table>
-						        </td>
                   </tr>
                 </tbody>
+                <tfoot id="totalRWU">
+                </tfoot>
               </table>
-            </td>
-          </tr>
-        </tbody> 
-      </table> -->
+            </div>
+          </div>
+        </div>
+
+        <div class="box box-default box-solid">
+          <div class="box-header with-border">
+            <h3 class="box-title">Chemical Consumption</h3>
+          </div>
+          <div class="box-body">
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th>Described</th>
+                    <th>Usage</th>
+                    <th>Accumulatif</th>
+                    <th>Stock</th>
+                  </tr>
+                </thead>
+                <tbody id="cc">
+                
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-5">
+        <div class="box box-default box-solid">
+          <div class="box-header with-border">
+            <h3 class="box-title">Stock</h3>
+          </div>
+          <div class="box-body">
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th>Described</th>
+                    <th>(m3) Water</th>
+                  </tr>
+                </thead>
+                <tbody id="stock">
+                  
+                </tbody>
+                <tfoot id="stock">
+                  
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="box box-default box-solid">
+          <div class="box-header with-border">
+            <h3 class="box-title"></h3>
+          </div>
+          <div class="box-body">
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th>Described</th>
+                    <th></th>
+                    <th>Accumulatif</th>
+                  </tr>
+                </thead>
+                <tbody id="rwp">
+                  
+                </tbody>
+                <tfoot id="rwp">
+                  
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <th>Described</th>
+                <th>Accumulatif</th>
+                <th>Usage</th>
+              </tr>
+            </thead>
+            <tbody id="susut">
+              
+            </tbody>
+            <tfoot id='susut'>
+            
+            </tfoot>
+          </table>
+        </div>
+        <!-- <table class="table3 table-unbordered" style="border:none;" width="100%">
+          <tbody>
+            <tr>
+              <td class="text-left" valign="bottom" style="border:none;" width="20%"></td>
+              <td>
+                <table class="table2 table-bordered table2-content" width="100%">
+                  <tbody>
+                    <tr>
+                      <td width="50%" align="center"><strong>Prepared and Checked by:</strong></td>
+                      <td width="50%" align="center"><strong>Confirmed by:</strong></td>
+                    </tr>
+                    <tr><td class="text-center"><h1><a onclick="approval('approve')"><i class="fa fa-thumbs-o-up fa-flip-horizontal text-success" aria-hidden="true"></i></a> <a value="disapprove" onclick="approval('disapprove')"><i class="fa fa-thumbs-o-down text-danger" aria-hidden="true"></i></a></h1></td><td class="text-center"><h1><a onclick="approval('approve')"><i class="fa fa-thumbs-o-up fa-flip-horizontal text-success" aria-hidden="true"></i></a> <a onclick="approval('approve')"><i class="fa fa-thumbs-o-down text-danger" aria-hidden="true"></i></a></h1></td></tr>
+                    <tr>
+                      <td>
+                        <table class="table2 table2-unbordered">
+                          <tbody>
+                            <tr><td>Name</td><td>:ISAKNA</td></tr>
+                            <tr><td>Post/Dept</td><td>:Adm</td></tr>
+                            <tr><td>Date</td><td>:09/02/2021</td></tr>
+                          </tbody>
+                        </table>
+                      </td>
+                      <td>
+                        <table class="table2 table2-unbordered">
+                          <tbody><tr><td>Name</td><td>:HERI FIKRI</td></tr>
+                            <tr><td>Post/Dept</td><td>:Dept Head WT</td></tr>
+                            <tr><td>Date</td><td>:09/02/2021</td></tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody> 
+        </table> -->
+      </div>
     </div>
   </div>
 </div>
 
 <script>
 
+  function loader() {
+    let myLoader = setTimeout(listDlyRo,2000);
+  }
+
   $(function(){
-    $('a.sidebar-toggle').click();
     $('#TAHUN_FILTER').val(<?= Date('Y') ?>);
     filterHariSetahun();
-    listDlyRo();
+    loader();
+    // listDlyRo();
     // listStockRo();
   });	
-
-  function tambahKosong(x){
-    y=(x>9)?x:'0'+x;
-    return y;
-  }
-
-  function depanKosong(x){
-    if (x<10) {
-      y = '00'+x;
-    } else if(x<100){
-      y = '0'+x;
-    } else {
-      y = x;
-    }
-    return y;
-  }
-
-  function formatNumber(num) {
-    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
-  }
 
   //?============ Filter Jumlah Hari Dalam Setahun ==============?//
   function parseDate(str) {
@@ -501,7 +475,7 @@
     $('#second').val("1/1/"+(date.getFullYear()+1)+"");
     let jumlahHari = '';
     for (let i = 1; i <= datediff(parseDate(first.value), parseDate(second.value)); i++) {
-      jumlahHari  += /*html*/`<option value="${i}">${depanKosong(i)}</option>`;
+      jumlahHari  += /*html*/`<option value="${i}">${codding(i)}</option>`;
     }
     $('#JUMLAH_HARI').append(/*html*/`<option value="">--Pilih--</option>${jumlahHari}`);
   }
@@ -512,17 +486,19 @@
   }
 
   function listDlyRo() {
+    $("#loader").fadeOut();
+    $('#divTable').attr('style','display:block;');
     $('#RWU').empty();
     $('#totalRWU').empty();
     //!Set jumlah hari
     if ($('#JUMLAH_HARI').val() == "") {
       let dateNow = new Date();
-      var date= dateNow.getFullYear()+"/"+(tambahKosong(dateNow.getMonth()+1)) +"/"+tambahKosong(dateNow.getDate());
+      var date= dateNow.getFullYear()+"/"+(satuNolDiDepan(dateNow.getMonth()+1)) +"/"+satuNolDiDepan(dateNow.getDate());
     } else {
       //!Set tanggal berdasarkan jumlah hari yg di input 
       let targetDate = new Date($('#TAHUN_FILTER').val());
       targetDate.setDate($('#JUMLAH_HARI').val());
-      date= targetDate.getFullYear()+"/"+(tambahKosong(targetDate.getMonth()+1)) +"/"+tambahKosong(targetDate.getDate());
+      date= targetDate.getFullYear()+"/"+(satuNolDiDepan(targetDate.getMonth()+1)) +"/"+satuNolDiDepan(targetDate.getDate());
     }
     $('#TANGGAL_FILTER').val(date)
     let now = new Date(date);
@@ -871,7 +847,8 @@
   //?=========== END FUNCTION LIST DATA KIMIA ===========?//
 
   $('button#btnFilter').on('click',function () {
-    listDlyRo();
+    preLoader();
+    // listDlyRo();
     //listStockRo();
   })
   
