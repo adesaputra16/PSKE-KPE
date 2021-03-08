@@ -145,7 +145,7 @@ tr.trData:hover{
 <div class="box-body">
   <button type="button" class="btn btn-success modalCatatan"><i class="fa fa-plus-square" aria-hidden="true"></i> Tambah Catatan</button>
   <div class="pull-right">
-    <a type="button" id="tes" class="btn btn-danger"><strong><i class="fa fa-paper-plane-o" aria-hidden="true"></i> Multiple Add</strong></a> 
+    <a type="button" id="multipleAdd" class="btn btn-danger"><strong><i class="fa fa-paper-plane-o" aria-hidden="true"></i> Multiple Add</strong></a> 
     <a type="button" id="rekapCatatan" class="btn btn-default"><strong><i class="fa fa-save" aria-hidden="true"></i> Rekap Catatan</strong></a> 
     <a type="button" id="cetakPdf" class="btn btn-warning"><i class="fa fa-print" aria-hidden="true"></i> Cetak</a>
   </div>
@@ -306,7 +306,7 @@ tr.trData:hover{
 </div>
 
 <!-- //?======= Modal tes -->
-<div class="modal fade" id="modalTes" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index:10000;">
+<div class="modal fade" id="modalMultipleAdd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index:10000;">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
@@ -316,7 +316,7 @@ tr.trData:hover{
       <div class="modal-body">
         <div class="row">
           <div class="col-md-12">
-            <form action="https://isea.sambu.co.id/?show=kpe/air/pemakaian" method='post'>
+            <form action="https://isea.sambu.co.id/?show=kpe/air/multiple_add" method='post'>
               <div class="form-group">
                 <label for="JUMLAH">Jumlah</label>
                 <input type="number" class="form-control" id="JUMLAH" name="JUMLAH" autocomplete="off" placeholder="10" step="any" required min='1' max='100'>
@@ -368,6 +368,10 @@ tr.trData:hover{
               <input type="hidden" class="form-control" id="KPE_AIR_FLOWMETER_CATATAN_ANGKA_HIDDEN" name="KPE_AIR_FLOWMETER_CATATAN_ANGKA_HIDDEN">
               
               <input type="hidden" class="form-control" id="KPE_AIR_FLOWMETER_CATATAN_ID" name="KPE_AIR_FLOWMETER_CATATAN_ID" value="">
+            </div>
+            <div class="form-group KPE_AIR_FLOWMETER_CATATAN_BEBAN">
+              <label for="KPE_AIR_FLOWMETER_CATATAN_BEBAN">Beban</label>
+              <input type="text" name="KPE_AIR_FLOWMETER_CATATAN_BEBAN" id="KPE_AIR_FLOWMETER_CATATAN_BEBAN" class="form-control" required readonly>
             </div>
             <div class="form-group KPE_AIR_FLOWMETER_CATATAN_TANGGAL">
               <label for="KPE_AIR_FLOWMETER_CATATAN_TANGGAL">Tanggal</label>
@@ -582,6 +586,8 @@ tr.trData:hover{
     $('#KPE_AIR_FLOWMETER_CATATAN_TANGGAL').val('');
     $("#flowmeterBaru").prop("checked", false);
     $("small.angkaSebelumnya").remove();
+    $('#KPE_AIR_FLOWMETER_CATATAN_BEBAN').val('');
+    $('#KPE_AIR_FLOWMETER_CATATAN_BEBAN').removeAttr('style');
     $("#modalCatatan").modal('show');
     $('#KPE_AIR_FLOWMETER_ID').val('');
     $('#KPE_AIR_FLOWMETER_CATATAN_ANGKA').val('');
@@ -594,9 +600,12 @@ tr.trData:hover{
     $(".KPE_AIR_FLOWMETER_CATATAN_ANGKA").removeClass("has-error");
     $(".KPE_AIR_FLOWMETER_CATATAN_ANGKA").removeClass("has-success");
     $("label#KPE_AIR_FLOWMETER_CATATAN_ANGKA").removeClass("control-label");
+    $(".KPE_AIR_FLOWMETER_CATATAN_BEBAN").removeClass("has-error");
+    $(".KPE_AIR_FLOWMETER_CATATAN_BEBAN").removeClass("has-success");
+    $("label#KPE_AIR_FLOWMETER_CATATAN_BEBAN").removeClass("control-label");
     $("#btnSimpanCatatan").removeAttr("disabled");
     $("small.help-block").remove();
-    $('#KPE_AIR_FLOWMETER_CATATAN_TANGGAL').val("<?= Date('Y/m/d');?>");
+    $('#KPE_AIR_FLOWMETER_CATATAN_TANGGAL').val("<?php $tanggalAwals = Date('Y/m/d'); echo Date('Y/m/d',strtotime($tanggalAwals.'-1 day'));?>");
     $('#KPE_AIR_FLOWMETER_CATATAN_NOTE').val("");
   })
   /*===== End modal =====*/
@@ -607,10 +616,10 @@ tr.trData:hover{
   });
   /*===== End checked =====*/
 
-  $("#tes").click(function(){
+  $("#multipleAdd").click(function(){
     $("#JUMLAH").val()
-    $("#TANGGAL").val()
-    $("#modalTes").modal('show')
+    $("#TANGGAL").val("<?php $tanggalAwals = Date('Y/m/d'); echo Date('Y/m/d',strtotime($tanggalAwals.'-1 day'));?>")
+    $("#modalMultipleAdd").modal('show')
   });
 
   /*===== Function Cek untuk menyimpan Catatan Keliling =====*/
@@ -667,7 +676,7 @@ tr.trData:hover{
         {
           $("#modalCatatan").modal('hide');
           // alert(data.respon.text_msg);
-          // console.log(data.respon.text_msg);
+          console.log(data.result);
           $(".selectpicker").selectpicker("val","");
           tampil();
           
@@ -752,7 +761,11 @@ tr.trData:hover{
     $('input#KPE_AIR_FLOWMETER_CATATAN_ID').val(KPE_AIR_FLOWMETER_CATATAN_ID);
     $('input#KPE_AIR_FLOWMETER_CATATAN_TANGGAL').val(t+"/"+b+"/"+h);
     $('input#KPE_AIR_FLOWMETER_NAMA').val(KPE_AIR_FLOWMETER_NAMA);
-    $('#KPE_AIR_FLOWMETER_CATATAN_NOTE').val(KPE_AIR_FLOWMETER_CATATAN_NOTE);
+    if (KPE_AIR_FLOWMETER_CATATAN_NOTE == 'kosong') {
+      $('#KPE_AIR_FLOWMETER_CATATAN_NOTE').val('');
+    } else {
+      $('#KPE_AIR_FLOWMETER_CATATAN_NOTE').val(KPE_AIR_FLOWMETER_CATATAN_NOTE);
+    }
     // $('select#KPE_AIR_FLOWMETER_ID').val(KPE_AIR_FLOWMETER_ID);
     $(".selectpicker").selectpicker("val",KPE_AIR_FLOWMETER_ID);
 
@@ -1056,7 +1069,7 @@ tr.trData:hover{
               $("#KPE_AIR_FLOWMETER_KALIBRASI_PERSEN").val('');
             }
           }
-          
+          cekAngkaCatatan();
         }else
         {
           let month = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
@@ -1077,36 +1090,77 @@ tr.trData:hover{
 
   /*===== Cek catatan yg diinput lebih besar atau lebih kecil dari angka sebelumnya =====*/
   function cekAngkaCatatan() {
-    var catatanKSebelum = ($("#KPE_AIR_FLOWMETER_CATATAN_ANGKA_HIDDEN").val())*0.80;
-    var catatanKSebelumnya = catatanKSebelum.toFixed(2);
-    var catatanLSebelum = ($("#KPE_AIR_FLOWMETER_CATATAN_ANGKA_HIDDEN").val())/0.50;
-    var catatanLSebelumnya = catatanLSebelum.toFixed(2);
-    var catatanSekarang = parseFloat($("#KPE_AIR_FLOWMETER_CATATAN_ANGKA").val());
-    $("small.help-block").remove();
-    if(catatanSekarang == $("#KPE_AIR_FLOWMETER_CATATAN_ANGKA_HIDDEN").val()){
-      $(".KPE_AIR_FLOWMETER_CATATAN_ANGKA").removeClass("has-error");
-      $(".KPE_AIR_FLOWMETER_CATATAN_ANGKA").addClass("has-success");
-      $("label#KPE_AIR_FLOWMETER_CATATAN_ANGKA").addClass("control-label");
-      $(".KPE_AIR_FLOWMETER_CATATAN_ANGKA").append('<small class="help-block">Angka yang dimasukkan sama dengan angka sebelumnya.</small>');
-      $("#btnSimpanCatatan").removeAttr("disabled");
-    } else if (catatanLSebelumnya == 0.000 && catatanSekarang > $("#KPE_AIR_FLOWMETER_CATATAN_ANGKA_HIDDEN").val()){
-      $(".KPE_AIR_FLOWMETER_CATATAN_ANGKA").removeClass("has-error");
-      $(".KPE_AIR_FLOWMETER_CATATAN_ANGKA").addClass("has-success");
-      $("label#KPE_AIR_FLOWMETER_CATATAN_ANGKA").addClass("control-label");
-      $("#btnSimpanCatatan").removeAttr("disabled");
-    } else if (catatanSekarang < catatanKSebelumnya) {
-      $(".KPE_AIR_FLOWMETER_CATATAN_ANGKA").addClass("has-error");
-      $("label#KPE_AIR_FLOWMETER_CATATAN_ANGKA").addClass("control-label");
-      $(".KPE_AIR_FLOWMETER_CATATAN_ANGKA").append('<small class="help-block">Angka yang dimasukkan terlalu kecil dari angka sebelumnya.</small>');
-      $("#btnSimpanCatatan").attr("disabled","disabled");
+    if ($("#KPE_AIR_FLOWMETER_CATATAN_ANGKA").val() == "") {
+      
     } else {
-      $(".KPE_AIR_FLOWMETER_CATATAN_ANGKA").removeClass("has-error");
-      $(".KPE_AIR_FLOWMETER_CATATAN_ANGKA").addClass("has-success");
-      $("label#KPE_AIR_FLOWMETER_CATATAN_ANGKA").addClass("control-label");
-      $("#btnSimpanCatatan").removeAttr("disabled");
+      const catatanKSebelum = ($("#KPE_AIR_FLOWMETER_CATATAN_ANGKA_HIDDEN").val())*0.80;
+      const catatanKSebelumnya = catatanKSebelum.toFixed(2);
+      const catatanLSebelum = ($("#KPE_AIR_FLOWMETER_CATATAN_ANGKA_HIDDEN").val())/0.50;
+      const catatanLSebelumnya = catatanLSebelum.toFixed(2);
+      const catatanSekarang = parseFloat($("#KPE_AIR_FLOWMETER_CATATAN_ANGKA").val());
+      $("small.help-block").remove();
+      
+      if(catatanSekarang == $("#KPE_AIR_FLOWMETER_CATATAN_ANGKA_HIDDEN").val()){
+        $(".KPE_AIR_FLOWMETER_CATATAN_ANGKA").removeClass("has-error");
+        $(".KPE_AIR_FLOWMETER_CATATAN_ANGKA").addClass("has-success");
+        $("label#KPE_AIR_FLOWMETER_CATATAN_ANGKA").addClass("control-label");
+        $(".KPE_AIR_FLOWMETER_CATATAN_ANGKA").append('<small class="help-block">Angka yang dimasukkan sama dengan angka sebelumnya.</small>');
+        $("#btnSimpanCatatan").removeAttr("disabled");
+      } else if (catatanLSebelumnya == 0.000 && catatanSekarang > $("#KPE_AIR_FLOWMETER_CATATAN_ANGKA_HIDDEN").val()){
+        $(".KPE_AIR_FLOWMETER_CATATAN_ANGKA").removeClass("has-error");
+        $(".KPE_AIR_FLOWMETER_CATATAN_ANGKA").addClass("has-success");
+        $("label#KPE_AIR_FLOWMETER_CATATAN_ANGKA").addClass("control-label");
+        $("#btnSimpanCatatan").removeAttr("disabled");
+      } else if (catatanSekarang < catatanKSebelumnya) {
+        $(".KPE_AIR_FLOWMETER_CATATAN_ANGKA").addClass("has-error");
+        $("label#KPE_AIR_FLOWMETER_CATATAN_ANGKA").addClass("control-label");
+        $(".KPE_AIR_FLOWMETER_CATATAN_ANGKA").append('<small class="help-block">Angka yang dimasukkan terlalu kecil dari angka sebelumnya.</small>');
+        $("#btnSimpanCatatan").attr("disabled","disabled");
+      } else {
+        $(".KPE_AIR_FLOWMETER_CATATAN_ANGKA").removeClass("has-error");
+        $(".KPE_AIR_FLOWMETER_CATATAN_ANGKA").addClass("has-success");
+        $("label#KPE_AIR_FLOWMETER_CATATAN_ANGKA").addClass("control-label");
+        $("#btnSimpanCatatan").removeAttr("disabled");
+      }
+
+
+      // console.log(typeof bebanSekarang);
+      const bebanSekarang = (parseFloat($('#KPE_AIR_FLOWMETER_CATATAN_ANGKA').val()) - parseFloat($('#KPE_AIR_FLOWMETER_CATATAN_ANGKA_HIDDEN').val())).toFixed(2);
+      let bebanNow = '';
+      if ($('#KPE_AIR_FLOWMETER_KALIBRASI_PERSEN').val() == "") {
+        bebanNow = bebanSekarang;
+      } else {
+        bebanNow = (bebanSekarang-(bebanSekarang*parseFloat($('#KPE_AIR_FLOWMETER_KALIBRASI_PERSEN').val())/100)).toFixed(2);
+      }
+      if (parseFloat(bebanNow) >= 0 ) {
+        $('#KPE_AIR_FLOWMETER_CATATAN_BEBAN').val(bebanNow);
+        $('.KPE_AIR_FLOWMETER_CATATAN_BEBAN').removeClass("has-error");
+        $('.KPE_AIR_FLOWMETER_CATATAN_BEBAN').addClass("has-success");
+        $('label#KPE_AIR_FLOWMETER_CATATAN_BEBAN').addClass("control-label");
+        // $('#KPE_AIR_FLOWMETER_CATATAN_ANGKA').attr("style","border-color:#3c763d; color:#3c763d;");
+      } else {
+        $('#KPE_AIR_FLOWMETER_CATATAN_BEBAN').val(bebanNow);
+        $('.KPE_AIR_FLOWMETER_CATATAN_BEBAN').addClass("has-success");
+        $('.KPE_AIR_FLOWMETER_CATATAN_BEBAN').addClass("has-error");
+        $('label#KPE_AIR_FLOWMETER_CATATAN_BEBAN').addClass("control-label");
+        // $('#KPE_AIR_FLOWMETER_CATATAN_ANGKA').attr("style","border-color:#a94442; color:#a94442;");
+      }
     }
   }
   /*===== End cek catatan =====*/
+
+  $("input#KPE_AIR_FLOWMETER_KALIBRASI").on('change', function() {
+    if ($('input#KPE_AIR_FLOWMETER_KALIBRASI').is(':checked')) {
+      listFlowDept();
+      // console.log("cek");
+    } else {
+      // console.log("nocek");
+      $("#KPE_AIR_FLOWMETER_KALIBRASI_REAL").val("");
+      $("#KPE_AIR_FLOWMETER_KALIBRASI_SELISIH").val("");
+      $("#KPE_AIR_FLOWMETER_KALIBRASI_PERSEN").val("");
+      cekAngkaCatatan();
+    }
+  })
 
   // --------------------Format Tanggal-------------------- //
   function format_tanggal(fulld){

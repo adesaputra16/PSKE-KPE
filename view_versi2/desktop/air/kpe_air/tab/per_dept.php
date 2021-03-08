@@ -301,7 +301,7 @@ tr.drum2{
                   <tr id="nFlowmeter">
                     
                   </tr>
-                  <tr id="colAngka">
+                  <tr id="colAngka" class="header" style="cursor:pointer;">
 
                   </tr>
                   <tr id='kalibrasitext' class='kalibrasi bordered text-center'>
@@ -598,7 +598,7 @@ tr.drum2{
             for (var j = 0; j < arr.sort().length; j++) {
               kalkosong += /*html*/`<td class="bordered">&nbsp;</td>`;
               th += /*html*/`<th class="bordered" style='top: 52px;'>${arr[j]}</th>`;
-              td += /*html*/`<td class="bordered text-right">${data.result[i].DEPT_FLOW[j].KPE_AIR_FLOWMETER_DEPARTEMEN_PERSONIL_HASIL}</td>`;
+              td += /*html*/`<td class="bordered text-right">${parseFloat(data.result[i].DEPT_FLOW[j].KPE_AIR_FLOWMETER_DEPARTEMEN_PERSONIL_HASIL).toFixed(2)}</td>`;
             }             
           } else {
             // for (var k = 0; k < arr.length; k++) {
@@ -691,7 +691,7 @@ tr.drum2{
             cssStyle: 'light-theme',
             currentPage: curPage,
           });
-              // console.log(data.tes);
+              // console.log(data.result);
               var listData ="";
               for (var i = 0; i < data.result.length; i++) 
               {
@@ -814,7 +814,7 @@ tr.drum2{
       }, //end success
       error: function(x, e) {
         // error_handler_json(x, e, '=> list_per_dept()');
-        alert('error');
+        console.log('error');
       } //end error
     });
   }
@@ -878,7 +878,7 @@ tr.drum2{
       }, //end success
       error: function(x, e) {
         // error_handler_json(x, e, '=> list_per_dept()');
-        alert('error');
+        console.log('error');
       } //end error
     });
   }
@@ -901,12 +901,12 @@ tr.drum2{
       {
         $("#modalPerDept").modal('hide');
         // console.log(data.respon.text_msg1);
-        listPerDept();
+        preLoader();
         
       }else if(data.respon.pesan=="gagal")
       {
         alert(data.respon.text_msg);
-        listPerDept();
+        preLoader();
       }
     },
     error:function(x,e){
@@ -951,6 +951,10 @@ tr.drum2{
   $('#btn-reload').click(function(){
     preLoader();
   })
+
+  $('.header').click(function(){
+    $(this).nextUntil('tr.header').slideToggle();
+  });
 
   $(window).on('hashchange', function(e) {
     preLoader();

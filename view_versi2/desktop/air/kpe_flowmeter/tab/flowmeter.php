@@ -51,6 +51,11 @@ $flow = $KPE->kpe_modules($params_flow)->load->module;
 /* .backloader{
   background:rgba(250, 240, 202,0.4) !important;
 } */
+.Content {
+  height:600px;
+  overflow:auto;
+  background:#fff;
+}
 
 table.table-bodered, .bordered{
   border:1px solid #ccc !important;
@@ -128,7 +133,7 @@ a.disabled {
   <div class="box">
     <div class="row">
       <div class="col-md-12">
-        <div class="table-responsive">
+        <div class="table-responsive Content">
           <table class="table table-hover">
             <thead class="bordered">
                 <tr class="bordered">
@@ -489,11 +494,6 @@ function tampil(curPage)
             } else {
               KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA += JSON.parse(data.result[i].KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA);
             }
-            if (data.result[i].KPE_AIR_FLOWMETER_STATUS == "PERMANEN" ) {
-              var disable = 'disabled';
-            }  else {
-              disable = '';
-            }
             $("tbody#zone_data").append("<tr class='bordered trData'>" + "<td  class='bordered'>" + data.result[i].NO + ".</td>" +
             "<td class='bordered text-center'>"+
               "<div class='btn-group'>"+
@@ -505,7 +505,7 @@ function tampil(curPage)
                 "</button>"+
                 "<ul class='dropdown-menu'>"+
                   "<li><a class='edit' style='color:rgb(0, 48, 73);' KPE_AIR_FLOWMETER_ID='" + data.result[i].KPE_AIR_FLOWMETER_ID + "' KPE_AIR_FLOWMETER_DLY='" + data.result[i].KPE_AIR_FLOWMETER_DLY + "' KPE_AIR_FLOWMETER_NAMA='" + data.result[i].KPE_AIR_FLOWMETER_NAMA + "' KPE_AIR_FLOWMETER_DISTRIBUSI='" + data.result[i].KPE_AIR_FLOWMETER_DISTRIBUSI + "' KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE='" + data.result[i].KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE + "' KPE_AIR_FLOWMETER_SUB_ID='" + data.result[i].KPE_AIR_FLOWMETER_SUB_ID + "' KPE_AIR_FLOWMETER_LOKASI='" + data.result[i].KPE_AIR_FLOWMETER_LOKASI + "' KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA='" + KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA +"'><i class='fa fa-edit'></i>Edit</a></li>"+
-                  "<li><a class='hapus "+disable+"' style='color:brown;' KPE_AIR_FLOWMETER_ID='" + data.result[i].KPE_AIR_FLOWMETER_ID + "'><i class='fa fa-trash'></i>Hapus</a></li>"+
+                  "<li><a class='hapus' style='color:brown;' KPE_AIR_FLOWMETER_ID='" + data.result[i].KPE_AIR_FLOWMETER_ID + "' KPE_AIR_FLOWMETER_STATUS='" + data.result[i].KPE_AIR_FLOWMETER_STATUS + "'><i class='fa fa-trash'></i>Hapus</a></li>"+
                 "</ul>"+
               "</div>"+
             "</td>"+
@@ -527,9 +527,17 @@ function tampil(curPage)
 }
 
 $('tbody').on('click', 'a.hapus', function(){
-  var KPE_AIR_FLOWMETER_ID = $(this).attr('KPE_AIR_FLOWMETER_ID');
+  let KPE_AIR_FLOWMETER_ID = $(this).attr('KPE_AIR_FLOWMETER_ID');
+  let KPE_AIR_FLOWMETER_STATUS = $(this).attr('KPE_AIR_FLOWMETER_STATUS');
 
-  Swal.fire({
+  if (KPE_AIR_FLOWMETER_STATUS == "PERMANEN") {
+    Swal.fire({
+      title: 'Gagal!',
+      text: 'Flowmeter ini tidak bisa dihapus, Hubungi IT',
+      icon: 'error',
+    })
+  }else {
+    Swal.fire({
       title: 'Apakah anda yakin?',
       text: "Setelah dihapus data tidak bisa dikembalikan!",
       icon: 'warning',
@@ -538,45 +546,46 @@ $('tbody').on('click', 'a.hapus', function(){
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Ya, yakin!'
-  }).then((result) => {
-    if (result.isConfirmed) {
-      $.ajax({
-        type:'POST',
-        url:refseeAPI,
-        dataType:'json',
-        data:'aplikasi=<?php echo $d0;?>&ref=hapus_flowmeter&KPE_AIR_FLOWMETER_ID='+KPE_AIR_FLOWMETER_ID,
-        success:function(data)
-        { 
-          if(data.respon.pesan=="sukses")
-          {
-            Swal.fire({
-              timer: 1000,
-              timerProgressBar: true,
-              title: 'Terhapus!',
-              text: 'Data berhasil dihapus.',
-              icon: 'success',
-            })
-            tampil('1');
-            
-          }else if(data.respon.pesan=="gagal")
-          {
-            Swal.fire({
-              timer: 1000,
-              timerProgressBar: true,
-              title: 'Gagal!',
-              text: 'Data gagal terhapus.',
-              icon: 'error'
-            })
-            tampil('1');
-          }
-        },
-        error:function(x,e){
-          // error_handler_json(x,e,'=> hapus_catatan()');
-          alert('error')
-        }//end error
-      });
-    }
-  })
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          type:'POST',
+          url:refseeAPI,
+          dataType:'json',
+          data:'aplikasi=<?php echo $d0;?>&ref=hapus_flowmeter&KPE_AIR_FLOWMETER_ID='+KPE_AIR_FLOWMETER_ID,
+          success:function(data)
+          { 
+            if(data.respon.pesan=="sukses")
+            {
+              Swal.fire({
+                timer: 1000,
+                timerProgressBar: true,
+                title: 'Terhapus!',
+                text: 'Data berhasil dihapus.',
+                icon: 'success',
+              })
+              tampil('1');
+              
+            }else if(data.respon.pesan=="gagal")
+            {
+              Swal.fire({
+                timer: 1000,
+                timerProgressBar: true,
+                title: 'Gagal!',
+                text: 'Data gagal terhapus.',
+                icon: 'error'
+              })
+              tampil('1');
+            }
+          },
+          error:function(x,e){
+            // error_handler_json(x,e,'=> hapus_catatan()');
+            alert('error')
+          }//end error
+        });
+      }
+    })
+  }
 })
 
 $('#cetakPdf').on('click', function(){

@@ -7,6 +7,12 @@ switch($d2){
 	case 'cetak_flowmeter':
 		require("pdf/cetak_flowmeter.php");
 		break;
+	case 'dly_pre':
+		require("pdf/dly_pre.php");
+		break;
+	case 'dly_ro':
+		require("pdf/dly_ro.php");
+		break;
 	//--------------Handle Error Page-----------------------------------
 	default:
 		$callback['pesan']="gagal";

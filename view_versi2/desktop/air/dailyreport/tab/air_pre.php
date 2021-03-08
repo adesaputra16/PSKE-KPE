@@ -253,7 +253,7 @@
       </div>
       <div class="col-md-3  form-group">
         <label for="TANGGAL_FILTER" >Tanggal</label>
-        <input id="TANGGAL_FILTER" name="TANGGAL_FILTER" type="text" class="form-control" value="" readonly>
+        <input id="TANGGAL_FILTER" name="TANGGAL_FILTER" type="text" class="form-control datepicker" value="">
       </div>
       <input type="hidden" id="first" value=""/>
       <input type="hidden" id="second" value=""/>
@@ -264,7 +264,8 @@
             
           </select>
           <span class="input-group-btn">
-            <button type="button" class="btn btn-primary" id="btnFilter"><strong><i class="fa fa-eye"></i> Tampilkan</strong></button>
+            <button type="button" class="btn btn-primary" id="btnFilter"><strong><i class="fa fa-eye"></i> Tampilkan</strong></button> 
+            <button type="button" class="btn btn-default" id="btn-cetak"><strong><i class="fa fa-print"></i> Cetak</strong></button>
           </span>
         </div>
       </div>
@@ -466,6 +467,11 @@
     loader();
     $('#TAHUN_FILTER').val(<?= Date('Y') ?>);
     filterHariSetahun();
+    $("input#TANGGAL_FILTER").datepicker().on('changeDate', function(ev)
+    { 
+      tanggalFilter();
+      $('.datepicker').datepicker('hide');
+    });
   });
 
   //?============ Filter Jumlah Hari Dalam Setahun ==============?//
@@ -493,6 +499,16 @@
 
   function approval(app) {
     console.log(app);
+  }
+  
+  function tanggalFilter() {
+    let date = $('#TANGGAL_FILTER').val();
+    let now = new Date(date);
+    let start = new Date(now.getFullYear(), 0, 0);
+    let diff = (now - start) + ((start.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000);
+    let oneDay = 1000 * 60 * 60 * 24;
+    let day = Math.floor(diff / oneDay);
+    $('#JUMLAH_HARI').val(day)
   }
 
   function listDlyPre() {
@@ -529,7 +545,7 @@
       { 
         if(data.respon.pesan=="sukses")
         {
-          // console.log(data.result);
+          console.log(data.result);
           // console.log(data.TOTAL_USAGE);
           // let listPWU = '';
           let arrPersen = [];
@@ -860,4 +876,9 @@
     //listStockPre();
   })
   
+  $('#btn-cetak').on('click', function(){
+    let tgl = $('#TANGGAL_FILTER').val().split('/').join('-');
+    let jml = $('#JUMLAH_HARI').val();
+    window.open('?show=kpe/pdf/dly_pre/'+tgl+'/'+jml+'', '_blank');
+  })
 </script>

@@ -274,8 +274,8 @@ require_once('menu_sidebar.php');
           case 'TAMBAH_FLOWMETER':
             require_once("air/kpe_flowmeter/tambah_flowmeter.php");
             break;
-          case 'PEMAKAIAN':
-            require_once("air/kpe_air/pemakaian_air_dept.php");
+          case 'MULTIPLE_ADD':
+            require_once("air/kpe_air/multiple_add.php");
             break;
           case 'KONFIGURASI':
             require_once("air/konfigurasi/konfigurasi.php");

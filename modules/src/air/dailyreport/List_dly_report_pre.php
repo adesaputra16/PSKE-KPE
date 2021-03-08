@@ -68,7 +68,8 @@ foreach($result_a as $r)
     $this->MYSQL = new MYSQL();
     $this->MYSQL->database = $this->CONFIG->mysql_koneksi()->db_nama;
     $this->MYSQL->queri = $sql_e;
-    $result_e = $this->MYSQL->data() ? : array();
+    $result_x = $this->MYSQL->data() ? : array();
+    $result_e = $result_x ? : array();
   } else {
 
     $sql_g = "SELECT SUM(KPE_AIR_FLOWMETER_CATATAN_BEBAN) AS ACCUMULATIF
@@ -87,11 +88,16 @@ foreach($result_a as $r)
     $this->MYSQL = new MYSQL();
     $this->MYSQL->database = $this->CONFIG->mysql_koneksi()->db_nama;
     $this->MYSQL->queri = $sql_e;
-    $result_e = $this->MYSQL->data()[0] ? : array();
+    $result_x = $this->MYSQL->data() ? : array();
+    $result_e = $result_x[0] ? : array();
+
+    
+    // $result_x = $this->MYSQL->data() ? : array();
   }
 
   $r['NO'] = $no;
   $r['BEBAN_HARIAN'] = $result_e;
+  $r['BEBAN_HARIAN_PDF'] = $result_x;
   $r['ACCUMULATIF'] = $ACCUMULATIF;
   $result[] = $r;
 

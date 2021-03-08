@@ -371,7 +371,7 @@
 <script>
 
   $(function() {
-    $('a.sidebar-toggle').click();
+    // $('a.sidebar-toggle').click();
     listFlowDept();
     listFlowDeptPersonil();
     listFlowmeterKalibrasi();
@@ -387,7 +387,9 @@
   }
 
   function tambahKosong(x){
-    y=(x>9)?'0.'+x:'0.0'+x;
+    // x.substr(2);
+    var a = x.replace('.','');
+    y=(x>9)?'0.'+a.substr(0,3): x < 9 ? '0.0'+a.substr(0,2) : '0.00'+x.substr(2);
     return y;
   }
   //?======================== SCRIPT FLOWMETER DEPARTEMEN =============================//
@@ -676,7 +678,14 @@
   /*===== Function simpan flowmeter departemen personil =====*/
   function simpanPersonil() {
     let fData = $('#fDataPersonil').serialize();
-    let persen = tambahKosong(($("#PERSONIL_DEPARTEMEN").val()/$("#TOTAL_PERSONIL").val()*$("#PERSEN").val()).toFixed());
+    let persen = '';
+    // if ($("#PERSONIL_DEPARTEMEN").val()/$("#TOTAL_PERSONIL").val()*$("#PERSEN").val() < 1) {
+    //   persen = ($("#PERSONIL_DEPARTEMEN").val()/$("#TOTAL_PERSONIL").val()*$("#PERSEN").val()).toFixed(2);
+    // } else {
+      persen = tambahKosong(($("#PERSONIL_DEPARTEMEN").val()/$("#TOTAL_PERSONIL").val()*$("#PERSEN").val()).toFixed(2));
+    // }
+    // console.log(persen);
+    // return
     $.ajax({
       type: 'POST',
       url: refseeAPI,
@@ -698,7 +707,7 @@
           $("#TOTAL_PERSONIL").val('');
           $("#KPE_AIR_FLOWMETER_DEPARTEMEN_FLOW_ID").val('');
           listFlowDeptPersonil();
-          console.log(data.result);
+          // console.log(data.result);
           
         }else if(data.respon.pesan=="gagal")
         {
