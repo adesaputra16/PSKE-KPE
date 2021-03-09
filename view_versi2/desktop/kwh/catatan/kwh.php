@@ -1,1 +1,1 @@
-KPE KWH
+KPE KWH (kWH)
