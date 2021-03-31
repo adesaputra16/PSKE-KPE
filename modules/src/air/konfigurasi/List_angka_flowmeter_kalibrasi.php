@@ -38,7 +38,9 @@ $no = $posisi + 1;
 
 foreach ($result_ab as $r) {
   $r['NO'] = $no;
-  $r['TANGGAL'] = tanggal_format(Date("Y-m-d", strtotime($r['KPE_AIR_FLOWMETER_KALIBRASI_TANGGAL'])));
+  // $r['TANGGAL'] = tanggal_format(Date("Y-m-d", strtotime($r['KPE_AIR_FLOWMETER_KALIBRASI_TANGGAL'])));
+  $date = date_create($r['KPE_AIR_FLOWMETER_KALIBRASI_TANGGAL']);
+  $r['TANGGAL'] = date_format($date,"d M Y");
 	$result[] = $r;
 	$no++;
 }

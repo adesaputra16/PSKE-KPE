@@ -373,8 +373,55 @@ foreach($respon['result'] as $r){
 	}
 	
 }
+// $detail_records = '';
+// for ($i=1; $i < 2; $i++) { 
+// 	if ($respon['result'][$i]['FLOWMETER'] == "") {
+// 		$JFLOWMETER = 1;
+// 	} else {
+// 		$JFLOWMETER = count($respon['result'][$i]['FLOWMETER']);
+// 	}
+// 	$rowspan = 1;
+// 	$rowspan += $JFLOWMETER;
 
-// echo "<pre>".print_r($respon)."</pre>";
+// 	$detail_records .= /*html*/'<tr class="trData">
+// 																<td rowspan="'.$rowspan.'">'.$respon['result'][$i]['NO'].'</td>
+// 																<td rowspan="'.$rowspan.'">'.$respon['result'][$i]['KPE_AIR_FLOWMETER_SUB_NAMA'].'</td>
+// 															</tr>';
+// 		$listData = '';
+// 		for ($j=0; $j < 2; $j++) {
+			
+// 			if ($d3 != "") {
+// 				$listData .=  /*html*/'<td>'. $respon['result'][$i]['FLOWMETER'][$j]['KPE_AIR_FLOWMETER_NAMA'].' </td>
+// 															<td class="">'.formatNumber($respon['result'][$i]['FLOWMETER'][$j]['KPE_AIR_FLOWMETER_CATATAN_ANGKA']).' </td>
+// 															<td class="">'. $respon['result'][$i]['FLOWMETER'][$j]['KPE_AIR_FLOWMETER_LOKASI'].' </td>
+// 															<td class="">'. $respon['result'][$i]['FLOWMETER'][$j]['KPE_AIR_FLOWMETER_DISTRIBUSI'].' </td>' ;
+// 			} else {
+
+// 			}
+// 		}
+// 		$detail_records .= htmlspecialchars('<tr class="trData">'.$listData.'</tr>');
+// }
+
+// $detail_records = '<tr class="trData">
+// 										<td rowspan="3">2</td>
+// 										<td rowspan="3">MESS KARYAWAN</td>
+// 										</tr>';
+
+// $detail_records .= /*html*/'<tr class="trData">
+// 															<td>MESS BTN</td>
+// 															<td class=" text-right">137,013.440</td>
+// 															<td class="">Lantai II tower WTD</td>
+// 															<td class="">Air Pre-Treatment</td>
+// 														</tr>
+// 														<tr class="trData">
+// 															<td>MESS DEPAN</td>
+// 															<td class=" text-right">164,368.890 </td>
+// 															<td class="">Lantai II tower WTD</td>
+// 															<td class="">Air Pre-Treatment</td>
+// 														</tr>';
+
+// echo "<table>".$detail_records."</table>";
+// echo "<pre>".print_r($respon['result'][1]['FLOWMETER'],true)."</pre>";
 // exit();
 
 // $header=array(
