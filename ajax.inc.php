@@ -176,7 +176,7 @@ switch($ref){
 				require_once("ajax/air/rekap_used_ro/hapus_rekap_used_ro.php");
 			break;
 
-			//! KWH SOLAR BATUBARA
+			//! DAILY REPORT
 			case 'ksb_list':
 				require_once("ajax/air/dailyreport/ksb_list.php");
 			break;
@@ -185,6 +185,31 @@ switch($ref){
 			break;
 			case 'list_dly_report_ro':
 				require_once("ajax/air/dailyreport/list_dly_report_ro.php");
+			break;
+
+			//! FLOWMETER KWH
+			case 'simpan_flowmeter_kwh':
+				require_once("ajax/kwh/flowmeter/simpan_flowmeter.php");
+			break;
+			case 'list_kwh_flowmeter':
+				require_once("ajax/kwh/flowmeter/list_kwh_flowmeter.php");
+			break;
+			case 'hapus_kwh_flowmeter':
+				require_once("ajax/kwh/flowmeter/hapus_kwh_flowmeter.php");
+			break;
+
+			//! CATATAN KWH
+			case 'simpan_catatan_kwh':
+				require_once("ajax/kwh/catatan/simpan_catatan.php");
+			break;
+			case 'list_catatan_kwh_sebelumnya':
+				require_once("ajax/kwh/catatan/list_catatan_sebelumnya.php");
+			break;
+			case 'list_catatan_kwh':
+				require_once("ajax/kwh/catatan/list_catatan.php");
+			break;
+			case 'hapus_catatan_kwh':
+				require_once("ajax/kwh/catatan/hapus_catatan.php");
 			break;
 			
 

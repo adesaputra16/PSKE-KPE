@@ -4,11 +4,51 @@ require_once('menu_sidebar.php');
 
 <div class="content-wrapper">
   <?php
-  $adminLTE->breadcrumb(array(
-    'title' => "KPE",
-    'title_sub' => "1.0",
-    'breadcrumb' => array(),
-  ));
+  if(!isset($d2) or $d2=="")
+  {
+   $adminLTE->breadcrumb(array(
+     'title'=>"KPE",
+     'title_sub'=>"1.0",
+     'breadcrumb'=>array(
+       array('title'=>"KPE",'link'=>"#"),
+       //array('title'=>"Wiget",'link'=>"#"),
+       //array('title'=>"more title",'link'=>"#"),
+     ),
+   ));
+  }else if($d2=="flowmeter")
+  {
+    $adminLTE->breadcrumb(array(
+      'title'=>"<i class='glyphicon glyphicon-scale'></i> Daftar Flowmeter",
+      'breadcrumb'=>array(
+        array('title'=>"<a href='?show=kpe'>KPE</a>",'link'=>"?show=kpe"),
+        array('title'=>"<a href='?show=kpe/kwh/flowmeter'>Flowmeter</a>",'link'=>"?show=kpe/kwh/flowmeter"),
+        //array('title'=>"Pribadi",'link'=>"?show=laporan/kerja/personel/"),
+        //array('title'=>"more title",'link'=>"#"),
+      ),
+    ));
+  }else if($d2=="catatan")
+  {
+    $adminLTE->breadcrumb(array(
+      'title'=>"<i class='fa fa-file-text-o'></i> Catatan KWh",
+      'breadcrumb'=>array(
+        array('title'=>"<a href='?show=kpe'>KPE</a>",'link'=>"?show=kpe"),
+        array('title'=>"<a href='?show=kpe/kwh/catatan'>Catatan KWh</a>",'link'=>"?show=kpe/kwh/catatan"),
+        //array('title'=>"Pribadi",'link'=>"?show=laporan/kerja/personel/"),
+        //array('title'=>"more title",'link'=>"#"),
+      ),
+    ));
+  }else if($d2=="harian_solar")
+  {
+    $adminLTE->breadcrumb(array(
+      'title'=>"<i class='fa fa-file-text'></i> Harian Solar & KWh",
+      'breadcrumb'=>array(
+        array('title'=>"<a href='?show=kpe'>KPE</a>",'link'=>"?show=kpe"),
+        array('title'=>"<a href='?show=kpe/kwh/harian_solar'>Harian Solar & KWh</a>",'link'=>"?show=kpe/kwh/harian_solar"),
+        //array('title'=>"Pribadi",'link'=>"?show=laporan/kerja/personel/"),
+        //array('title'=>"more title",'link'=>"#"),
+      ),
+    ));
+  }
   ?>
   <section class="content">
     <div class="row box1" id="PlatformWiget">
@@ -24,16 +64,20 @@ require_once('menu_sidebar.php');
       <div class="col-md-12">
         <?php
         switch (strtoupper($d2)) {
-          case 'KWH':
-            require_once("kwh/catatan/kwh.php");
+          case 'CATATAN':
+            require_once("kwh/catatan/catatan.php");
             break;
 
-          case 'LAPORAN':
-            require_once("kwh/laporan.php");
+          case 'FLOWMETER':
+            require_once("kwh/flowmeter/flowmeter.php");
+            break;
+
+          case 'HARIAN_SOLAR':
+            require_once("kwh/harian/solar_kwh.php");
             break;
             //----------------- END CASE
           default:
-            require_once("kwh/catatan/kwh.php");
+            require_once("kwh/catatan/catatan.php");
             break;
         }
         ?>

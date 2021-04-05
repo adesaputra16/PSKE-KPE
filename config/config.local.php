@@ -1,12 +1,12 @@
 <?php
 
-CLASS RMP_CONFIG extends CONFIG
+CLASS KPE_CONFIG extends CONFIG
 {
 	public function __construct()
 	{
 		$this->CONFIG = new CONFIG();
-		$this->MYSQL=new MYSQL();
-		$this->SISTEM=new SISTEM();
+		// $this->MYSQL=new MYSQL();
+		// $this->SISTEM=new SISTEM();
 	}
 	public function user(){
 		$this->jenis_kontak=array(
