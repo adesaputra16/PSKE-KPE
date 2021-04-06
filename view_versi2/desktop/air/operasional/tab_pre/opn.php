@@ -364,7 +364,7 @@
       data:'aplikasi=<?php echo $d0;?>&ref=simpan_operasional_pre&KPE_AIR_FLOWMETER_OPERASIONAL_PRE_TANGGAL_SEBELUMNYA='+KPE_AIR_OPERASIONAL_PRE_TANGGAL_SEBELUMNYA+'&'+fData,
       success:function(data)
       { 
-        
+        console.log(data.result);
         if(data.respon.pesan=="sukses")
         {
           Swal.fire({

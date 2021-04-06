@@ -258,9 +258,20 @@
                   <label for="KPE_AIR_FLOWMETER_OPERASIONAL_RO_REGENERASI_FLOW_LINE_2">Regenerasi line 2</label>
                   <input type="text" class="form-control" id="KPE_AIR_FLOWMETER_OPERASIONAL_RO_REGENERASI_FLOW_LINE_2" name="KPE_AIR_FLOWMETER_OPERASIONAL_RO_REGENERASI_FLOW_LINE_2" placeholder="Regenerasi line 2" autocomplete="off" required>
                 </div>
-                <div class="form-group">
-                  <label for="KPE_AIR_FLOWMETER_OPERASIONAL_RO_PROSES_FLOW_1">Proses RO 1 (m3)</label>
-                  <input type="text" class="form-control" id="KPE_AIR_FLOWMETER_OPERASIONAL_RO_PROSES_FLOW_1" name="KPE_AIR_FLOWMETER_OPERASIONAL_RO_PROSES_FLOW_1" placeholder="Proses RO 1 (m3)" autocomplete="off" required>
+                <div class="row KPE_AIR_FLOWMETER_OPERASIONAL_RO_PROSES_FLOW_1">
+                  <div class="col-sm-9">
+                    <div class="form-group">
+                      <label for="KPE_AIR_FLOWMETER_OPERASIONAL_RO_PROSES_FLOW_1">Proses RO 1 (m3)</label>
+                      <input type="text" class="form-control" id="KPE_AIR_FLOWMETER_OPERASIONAL_RO_PROSES_FLOW_1" name="KPE_AIR_FLOWMETER_OPERASIONAL_RO_PROSES_FLOW_1" placeholder="Proses RO 1 (m3)" autocomplete="off" required>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <label class="form-check-label" for="KPE_AIR_FLOWMETER_OPERASIONAL_RO_PROSES_FLOW_1_BARU">&nbsp;</label>
+                    <div class="form-check">
+                      <input type="checkbox" class="form-check-input" id="KPE_AIR_FLOWMETER_OPERASIONAL_RO_PROSES_FLOW_1_BARU">
+                      <label class="form-check-label" for="KPE_AIR_FLOWMETER_OPERASIONAL_RO_PROSES_FLOW_1_BARU">Baru</label>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="col-sm-6">
@@ -268,21 +279,54 @@
                   <label for="KPE_AIR_FLOWMETER_OPERASIONAL_RO_CODDING">Codding</label>
                   <input type="text" class="form-control" id="KPE_AIR_FLOWMETER_OPERASIONAL_RO_CODDING" name="KPE_AIR_FLOWMETER_OPERASIONAL_RO_CODDING" autocomplete="off" readonly>
                 </div>
-                <div class="form-group">
-                  <label for="KPE_AIR_FLOWMETER_OPERASIONAL_RO_PRODUK_FLOW_1">Produk RO 1 (m3)</label>
-                  <input type="text" class="form-control" id="KPE_AIR_FLOWMETER_OPERASIONAL_RO_PRODUK_FLOW_1" name="KPE_AIR_FLOWMETER_OPERASIONAL_RO_PRODUK_FLOW_1" placeholder="Produk RO 1 (m3)" autocomplete="off" required>
+                <div class="row KPE_AIR_FLOWMETER_OPERASIONAL_RO_PRODUK_FLOW_1">
+                  <div class="col-sm-9">
+                    <div class="form-group">
+                      <label for="KPE_AIR_FLOWMETER_OPERASIONAL_RO_PRODUK_FLOW_1">Produk RO 1 (m3)</label>
+                      <input type="text" class="form-control" id="KPE_AIR_FLOWMETER_OPERASIONAL_RO_PRODUK_FLOW_1" name="KPE_AIR_FLOWMETER_OPERASIONAL_RO_PRODUK_FLOW_1" placeholder="Produk RO 1 (m3)" autocomplete="off" required>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <label class="form-check-label" for="KPE_AIR_FLOWMETER_OPERASIONAL_RO_PRODUK_FLOW_1_BARU">&nbsp;</label>
+                    <div class="form-check">
+                      <input type="checkbox" class="form-check-input" id="KPE_AIR_FLOWMETER_OPERASIONAL_RO_PRODUK_FLOW_1_BARU">
+                      <label class="form-check-label" for="KPE_AIR_FLOWMETER_OPERASIONAL_RO_PRODUK_FLOW_1_BARU">Baru</label>
+                    </div>
+                  </div>
                 </div>
                 <div class="form-group">
                   <label for="KPE_AIR_FLOWMETER_OPERASIONAL_RO_DEBIT_PRODUK_1">Debit Produk RO 1 (m3/jam)</label>
                   <input type="text" class="form-control" id="KPE_AIR_FLOWMETER_OPERASIONAL_RO_DEBIT_PRODUK_1" name="KPE_AIR_FLOWMETER_OPERASIONAL_RO_DEBIT_PRODUK_1" placeholder="Debit Produk RO 1 (m3/jam)" autocomplete="off" required>
                 </div>
-                <div class="form-group">
-                  <label for="KPE_AIR_FLOWMETER_OPERASIONAL_RO_PROSES_FLOW_2">Proses RO 2 (m3)</label>
-                  <input type="text" class="form-control" id="KPE_AIR_FLOWMETER_OPERASIONAL_RO_PROSES_FLOW_2" name="KPE_AIR_FLOWMETER_OPERASIONAL_RO_PROSES_FLOW_2" placeholder="Proses RO 2 (m3)" autocomplete="off" required>
+                <div class="row KPE_AIR_FLOWMETER_OPERASIONAL_RO_PROSES_FLOW_2">
+                  <div class="col-sm-9">
+                    <div class="form-group">
+                      <label for="KPE_AIR_FLOWMETER_OPERASIONAL_RO_PROSES_FLOW_2">Proses RO 2 (m3)</label>
+                      <input type="text" class="form-control" id="KPE_AIR_FLOWMETER_OPERASIONAL_RO_PROSES_FLOW_2" name="KPE_AIR_FLOWMETER_OPERASIONAL_RO_PROSES_FLOW_2" placeholder="Produk RO 2 (m3)" autocomplete="off" required>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <label class="form-check-label" for="KPE_AIR_FLOWMETER_OPERASIONAL_RO_PROSES_FLOW_2_BARU">&nbsp;</label>
+                    <div class="form-check">
+                      <input type="checkbox" class="form-check-input" id="KPE_AIR_FLOWMETER_OPERASIONAL_RO_PROSES_FLOW_2_BARU">
+                      <label class="form-check-label" for="KPE_AIR_FLOWMETER_OPERASIONAL_RO_PROSES_FLOW_2_BARU">Baru</label>
+                    </div>
+                  </div>
                 </div>
-                <div class="form-group">
-                  <label for="KPE_AIR_FLOWMETER_OPERASIONAL_RO_PRODUK_FLOW_2">Produk RO 2 (m3)</label>
-                  <input type="text" class="form-control" id="KPE_AIR_FLOWMETER_OPERASIONAL_RO_PRODUK_FLOW_2" name="KPE_AIR_FLOWMETER_OPERASIONAL_RO_PRODUK_FLOW_2" placeholder="Produk RO 2 (m3)" autocomplete="off" required>
+                <div class="row KPE_AIR_FLOWMETER_OPERASIONAL_RO_PRODUK_FLOW_2">
+                  <div class="col-sm-9">
+                    <div class="form-group">
+                      <label for="KPE_AIR_FLOWMETER_OPERASIONAL_RO_PRODUK_FLOW_2">Produk RO 2 (m3)</label>
+                      <input type="text" class="form-control" id="KPE_AIR_FLOWMETER_OPERASIONAL_RO_PRODUK_FLOW_2" name="KPE_AIR_FLOWMETER_OPERASIONAL_RO_PRODUK_FLOW_2" placeholder="Proses RO 2 (m3)" autocomplete="off" required>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <label class="form-check-label" for="KPE_AIR_FLOWMETER_OPERASIONAL_RO_PRODUK_FLOW_2_BARU">&nbsp;</label>
+                    <div class="form-check">
+                      <input type="checkbox" class="form-check-input" id="KPE_AIR_FLOWMETER_OPERASIONAL_RO_PRODUK_FLOW_2_BARU">
+                      <label class="form-check-label" for="KPE_AIR_FLOWMETER_OPERASIONAL_RO_PRODUK_FLOW_2_BARU">Baru</label>
+                    </div>
+                  </div>
                 </div>
                 <div class="form-group">
                   <label for="KPE_AIR_FLOWMETER_OPERASIONAL_RO_DEBIT_PRODUK_2">Debit Produk RO 2 (m3/jam)</label>
@@ -403,7 +447,7 @@
     let date = new Date($("#KPE_AIR_FLOWMETER_OPERASIONAL_RO_TANGGAL").val());
     let dateSebelumnya = new Date((new Date(date)).valueOf() - 1000*60*60*24);
     let KPE_AIR_FLOWMETER_OPERASIONAL_RO_TANGGAL_SEBELUMNYA = dateSebelumnya.getFullYear() + '/' + satuNolDiDepan(dateSebelumnya.getMonth()+1) + '/' + satuNolDiDepan(dateSebelumnya.getDate());
-    // console.log(KPE_AIR_FLOWMETER_OPERASIONAL_RO_TANGGAL_SEBELUMNYA);
+    // let baru = "&KPE_AIR_FLOWMETER_OPERASIONAL_RO_PRODUK_FLOW_1_BARU="+$("#KPE_AIR_FLOWMETER_OPERASIONAL_RO_PRODUK_FLOW_1_BARU").val()+"&KPE_AIR_FLOWMETER_OPERASIONAL_RO_PROSES_FLOW_1_BARU="+$("#KPE_AIR_FLOWMETER_OPERASIONAL_RO_PROSES_FLOW_1_BARU").val()+"&KPE_AIR_FLOWMETER_OPERASIONAL_RO_PRODUK_FLOW_2_BARU="+$("#KPE_AIR_FLOWMETER_OPERASIONAL_RO_PRODUK_FLOW_2_BARU").val()+"&KPE_AIR_FLOWMETER_OPERASIONAL_RO_PROSES_FLOW_2_BARU="+$("#KPE_AIR_FLOWMETER_OPERASIONAL_RO_PROSES_FLOW_2_BARU").val()+""
     // console.log(fData);
     // return
     $.ajax({
@@ -424,7 +468,7 @@
             icon: 'success',
           });
           $('#modalTambahData').modal('hide');
-          // console.log(data.result);
+          console.log(data.result);
           listOperasionalRo();
         }else if(data.respon.pesan=="gagal")
         {
@@ -672,5 +716,51 @@
     })
   })
   //?===== END HAPUS OPERASIONAL RO =====?//
+
+  //?===== FLOWMETER BARU =====?//
+  $("input#KPE_AIR_FLOWMETER_OPERASIONAL_RO_PROSES_FLOW_1_BARU").on('change', function() {
+    if ($('input#KPE_AIR_FLOWMETER_OPERASIONAL_RO_PROSES_FLOW_1_BARU').is(':checked')) {
+      $("div.KPE_AIR_FLOWMETER_OPERASIONAL_RO_PROSES_FLOW_1").after(/*html*/`<div class="form-group PROSES_RO_1_HASIL_BARU">
+                            <label for="KPE_AIR_FLOWMETER_OPERASIONAL_RO_PROSES_FLOW_1_BARU_HASIL">Proses RO 1 Hasil</label>
+                            <input type="text" class="form-control" id="KPE_AIR_FLOWMETER_OPERASIONAL_RO_PROSES_FLOW_1_BARU_HASIL" name="KPE_AIR_FLOWMETER_OPERASIONAL_RO_PROSES_FLOW_1_BARU_HASIL" placeholder="Proses RO 1 Hasil" autocomplete="off" required>
+                          </div>`)
+    } else {
+      $("div.PROSES_RO_1_HASIL_BARU").remove()
+    }
+  })
+
+  $("input#KPE_AIR_FLOWMETER_OPERASIONAL_RO_PRODUK_FLOW_1_BARU").on('change', function() {
+    if ($('input#KPE_AIR_FLOWMETER_OPERASIONAL_RO_PRODUK_FLOW_1_BARU').is(':checked')) {
+      $("DIV.KPE_AIR_FLOWMETER_OPERASIONAL_RO_PRODUK_FLOW_1").after(/*html*/`<div class="form-group PRODUK_RO_1_HASIL_BARU">
+                            <label for="KPE_AIR_FLOWMETER_OPERASIONAL_RO_PRODUK_FLOW_1_BARU_HASIL">Produk RO 1 Hasil</label>
+                            <input type="text" class="form-control" id="KPE_AIR_FLOWMETER_OPERASIONAL_RO_PRODUK_FLOW_1_BARU_HASIL" name="KPE_AIR_FLOWMETER_OPERASIONAL_RO_PRODUK_FLOW_1_BARU_HASIL" placeholder="Produk RO 1 Hasil" autocomplete="off" required>
+                          </div>`)
+    } else {
+      $("div.PRODUK_RO_1_HASIL_BARU").remove()
+    }
+  })
+
+  $("input#KPE_AIR_FLOWMETER_OPERASIONAL_RO_PROSES_FLOW_2_BARU").on('change', function() {
+    if ($('input#KPE_AIR_FLOWMETER_OPERASIONAL_RO_PROSES_FLOW_2_BARU').is(':checked')) {
+      $("div.KPE_AIR_FLOWMETER_OPERASIONAL_RO_PROSES_FLOW_2").after(/*html*/`<div class="form-group PROSES_RO_2_HASIL_BARU">
+                            <label for="KPE_AIR_FLOWMETER_OPERASIONAL_RO_PROSES_FLOW_2_BARU_HASIL">Proses RO 2 Hasil</label>
+                            <input type="text" class="form-control" id="KPE_AIR_FLOWMETER_OPERASIONAL_RO_PROSES_FLOW_2_BARU_HASIL" name="KPE_AIR_FLOWMETER_OPERASIONAL_RO_PROSES_FLOW_2_BARU_HASIL" placeholder="Proses RO 2 Hasil" autocomplete="off" required>
+                          </div>`)
+    } else {
+      $("div.PROSES_RO_2_HASIL_BARU").remove()
+    }
+  })
+
+  $("input#KPE_AIR_FLOWMETER_OPERASIONAL_RO_PRODUK_FLOW_2_BARU").on('change', function() {
+    if ($('input#KPE_AIR_FLOWMETER_OPERASIONAL_RO_PRODUK_FLOW_2_BARU').is(':checked')) {
+      $("div.KPE_AIR_FLOWMETER_OPERASIONAL_RO_PRODUK_FLOW_2").after(/*html*/`<div class="form-group PRODUK_RO_2_HASIL_BARU">
+                            <label for="KPE_AIR_FLOWMETER_OPERASIONAL_RO_PRODUK_FLOW_2_BARU_HASIL">Produk RO 2 (m3)</label>
+                            <input type="text" class="form-control" id="KPE_AIR_FLOWMETER_OPERASIONAL_RO_PRODUK_FLOW_2_BARU_HASIL" name="KPE_AIR_FLOWMETER_OPERASIONAL_RO_PRODUK_FLOW_2_BARU_HASIL" placeholder="Produk RO 2 Hasil" autocomplete="off" required>
+                          </div>`)
+    } else {
+      $("div.PRODUK_RO_2_HASIL_BARU").remove()
+    }
+  })
+  //?===== END FLOWMETER BARU =====?//
 
 </script>

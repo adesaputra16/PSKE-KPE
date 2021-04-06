@@ -353,6 +353,7 @@
       let oneDay = 1000 * 60 * 60 * 24;
       let day = Math.floor(diff / oneDay);
       $('input#KPE_AIR_FLOWMETER_KIMIA_PRE_CODDING').val(codding(day));
+
       $('.datepicker').datepicker('hide');
     });
     $('#dateRange').val('');
@@ -521,6 +522,7 @@
             text: ''+data.respon.text_msg+'',
             icon: 'error'
           })
+          console.log(data.result);
         }
       },
       error:function(x,e){
@@ -549,7 +551,7 @@
         
         if(data.respon.pesan=="sukses")
         {
-          console.log(data.result);
+          // console.log(data.result);
           for (let i = 0; i < data.result.length; i++) {
             let listData = '';
             if (data.result[i].KIMIA == "") {

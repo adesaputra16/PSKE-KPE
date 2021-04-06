@@ -60,7 +60,7 @@ if ($input['TAHUN_FILTER'] != "")
 $sql_a = "SELECT FS.KPE_KWH_FLOWMETER_ID,FS.KPE_KWH_FLOWMETER_NAMA
           FROM KPE_KWH_FLOWMETER AS FS  WHERE
           FS.RECORD_STATUS='A'
-          ORDER BY FS.KPE_KWH_FLOWMETER_ID ASC";
+          ORDER BY FS.KPE_KWH_FLOWMETER_NAMA ASC";
 
 $this->MYSQL = new MYSQL();
 $this->MYSQL->database = $this->CONFIG->mysql_koneksi()->db_nama;
