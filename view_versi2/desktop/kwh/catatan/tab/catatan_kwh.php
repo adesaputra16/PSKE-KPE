@@ -304,40 +304,6 @@ tr.trData:hover{
   </div>
 </div>
 
-<!-- //?======= Modal tes -->
-<div class="modal fade" id="modalMultipleAdd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index:10000;">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
-        <h4 class="modal-title"><i class="fa fa-plus" aria-hidden="true"></i> Generate</h4>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-md-12">
-            <form action="https://isea.sambu.co.id/?show=kpe/air/multiple_add" method='post'>
-              <div class="form-group">
-                <label for="JUMLAH">Jumlah</label>
-                <input type="number" class="form-control" id="JUMLAH" name="JUMLAH" autocomplete="off" placeholder="10" step="any" required min='1' max='100'>
-                <small class="help-block">Masukkan jumlah catatan flowmeter yang ingin di input</small>
-              </div>
-              <div class="form-group">
-                <label for="TANGGAL">Tanggal</label>
-                <input type="text" class="form-control datepicker TANGGAL" id="TANGGAL" name="TANGGAL" placeholder="<?= Date("Y/m/d"); ?>" autocomplete="off" required>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-                <button type="submit" class="btn btn-success" id="">Simpan</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- //?======= end -->
-
 <!-- Modal -->
 <div class="modal fade" id="modalCatatan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index:10000;">
   <div class="modal-dialog modal-lg">
@@ -364,7 +330,7 @@ tr.trData:hover{
             <div class="form-group KPE_KWH_CATATAN_ANGKA">
               <label for="KPE_KWH_CATATAN_ANGKA">Counter</label>
               <input type="number" class="form-control" id="KPE_KWH_CATATAN_ANGKA" name="KPE_KWH_CATATAN_ANGKA" autocomplete="off" placeholder="123.456" step="any" required>
-              <input type="hidden" class="form-control" id="KPE_KWH_CATATAN_ANGKA_HIDDEN" name="KPE_KWH_CATATAN_ANGKA_HIDDEN">
+              <input type="text" class="form-control" id="KPE_KWH_CATATAN_ANGKA_HIDDEN" name="KPE_KWH_CATATAN_ANGKA_HIDDEN" style='display:none;'>
               
               <input type="hidden" class="form-control" id="KPE_KWH_CATATAN_ID" name="KPE_KWH_CATATAN_ID" value="">
             </div>
@@ -570,12 +536,6 @@ tr.trData:hover{
   })
   /*===== End modal =====*/
 
-  $("#multipleAdd").click(function(){
-    $("#JUMLAH").val()
-    $("#TANGGAL").val("<?php $tanggalAwals = Date('Y/m/d'); echo Date('Y/m/d',strtotime($tanggalAwals.'-1 day'));?>")
-    $("#modalMultipleAdd").modal('show')
-  });
-
   /*===== Function Cek untuk menyimpan Catatan Keliling =====*/
   function cekSimpan()
   {
@@ -621,6 +581,7 @@ tr.trData:hover{
         {
           $("#modalCatatan").modal('hide');
           $(".selectpicker").selectpicker("val","");
+          $('input#KPE_KWH_CATATAN_ANGKA_HIDDEN').removeAttr("value");
           listKWh();
           
         }else if(data.respon.pesan=="gagal")
@@ -652,7 +613,6 @@ tr.trData:hover{
     const KPE_KWH_CATATAN_NOTE = $(this).attr('KPE_KWH_CATATAN_NOTE');
     const KPE_KWH_CATATAN_PENGKONDISIAN_BEBAN = $(this).attr('KPE_KWH_CATATAN_PENGKONDISIAN_BEBAN');
     const KPE_KWH_CATATAN_PENGKONDISIAN = $(this).attr('KPE_KWH_CATATAN_PENGKONDISIAN');
-    // console.log(KPE_KWH_CATATAN_TANGGAL);
     const d = new Date(KPE_KWH_CATATAN_TANGGAL);
     const t = d.getFullYear();
     const b = satuNolDiDepan(d.getMonth()+1);
@@ -719,7 +679,7 @@ tr.trData:hover{
             currentPage: curPage,
           });
 
-          console.log(data.respon.text_msg);
+          // console.log(data.respon.text_msg);
               var tableContent = "";
               for (var j = 0; j < data.result.length; j++) 
               {
@@ -775,7 +735,6 @@ tr.trData:hover{
                   if (JENIS_LAPORAN == "Harian") 
                   {
 
-                    $("th.catatanBeban").after('<th class="bordered bebanXreading" rowspan="2" width="50"><center><b>BEBAN*READING</b></center></th>')
                     var listData =  /*html*/`<td class="bordered text-right"> ${formatNumber(data.result[j].FLOWMETER[i].KPE_KWH_CATATAN_ANGKA)} </td>
                                     <td class="bordered text-right"> ${data.result[j].FLOWMETER[i].KPE_KWH_CATATAN_BEBAN} </td>
                                     <td class="bordered text-right"> ${data.result[j].FLOWMETER[i].KPE_KWH_CATATAN_BEBAN_X_READING} </td>
@@ -1024,6 +983,8 @@ tr.trData:hover{
         $('.KPE_KWH_CATATAN_PAKAI').addClass("has-success");
         $('label#KPE_KWH_CATATAN_PAKAI').addClass("control-label");
         // $('#KPE_KWH_CATATAN_PAKAI').attr("style","border-color:#3c763d; color:#3c763d;");
+      } else if (bebanSekarang.toString() == 'NaN') {
+        $('#KPE_KWH_CATATAN_PAKAI').val("");
       } else {
         $('#KPE_KWH_CATATAN_PAKAI').val(bebanSekarang);
         $('.KPE_KWH_CATATAN_PAKAI').addClass("has-success");
@@ -1129,10 +1090,12 @@ tr.trData:hover{
     $('tr#colTgl').empty();
     if (JENIS_LAPORAN == "Harian") 
     {
+      $("th.bebanXreading").remove()
       $('th#action-btn').removeAttr("style");
       $('th.catatanBeban').removeAttr("style");
       $('th#tglCatatan').attr("colspan",1);
       $('tr#colTgl').append(/*html*/`<th class="bordered" style="top:35px;">${format_tanggal($('input#DATA_sDATE').val())}</th>`)
+      $("th.catatanBeban").after('<th class="bordered bebanXreading" rowspan="2" width="50"><center><b>BEBAN*READING</b></center></th>')
     } else if (JENIS_LAPORAN == "Mingguan")
     {	
       $('th#action-btn').attr("style","display:none");

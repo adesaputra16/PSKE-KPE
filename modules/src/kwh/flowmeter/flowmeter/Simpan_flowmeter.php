@@ -28,6 +28,8 @@ if (empty($params['case']))
 						'KPE_KWH_SUB_FLOWMETER_NAMA' => base64_decode($input['KPE_KWH_SUB_FLOWMETER_NAMA']),
 						'KPE_KWH_FLOWMETER_LOKASI' => $input['KPE_KWH_FLOWMETER_LOKASI'],
 						'KPE_KWH_FLOWMETER_READING' => $input['KPE_KWH_FLOWMETER_READING'],
+						'KPE_KWH_FLOWMETER_DISTRIBUSI' => $input['KPE_KWH_FLOWMETER_DISTRIBUSI'],
+						'KPE_KWH_FLOWMETER_TYPE' => $input['KPE_KWH_FLOWMETER_TYPE'],
 						'ENTRI_WAKTU' => date("Y-m-d H:i:s"),
 						'ENTRI_OPERATOR' => $user_login['PERSONAL_NIK'],
 						'RECORD_STATUS' => "A"
@@ -70,12 +72,14 @@ if (empty($params['case']))
 				{
 					$data_master = array(
 						'KPE_KWH_FLOWMETER_INDEX' => waktu_decimal(Date("Y-m-d H:i:s")),
-						'KPE_KWH_FLOWMETER_ID' => waktu_decimal(Date("Y-m-d H:i:s")),
+						'KPE_KWH_FLOWMETER_ID' => $input['KPE_KWH_FLOWMETER_ID'],
 						'KPE_KWH_FLOWMETER_NAMA' => $input['KPE_KWH_FLOWMETER_NAMA'],
 						'KPE_KWH_SUB_FLOWMETER_ID' => $input['KPE_KWH_SUB_FLOWMETER_ID'],
 						'KPE_KWH_SUB_FLOWMETER_NAMA' => base64_decode($input['KPE_KWH_SUB_FLOWMETER_NAMA']),
 						'KPE_KWH_FLOWMETER_LOKASI' => $input['KPE_KWH_FLOWMETER_LOKASI'],
 						'KPE_KWH_FLOWMETER_READING' => $input['KPE_KWH_FLOWMETER_READING'],
+						'KPE_KWH_FLOWMETER_DISTRIBUSI' => $input['KPE_KWH_FLOWMETER_DISTRIBUSI'],
+						'KPE_KWH_FLOWMETER_TYPE' => $input['KPE_KWH_FLOWMETER_TYPE'],
 						'ENTRI_WAKTU' => date("Y-m-d H:i:s"),
 						'ENTRI_OPERATOR' => $user_login['PERSONAL_NIK'],
 						'RECORD_STATUS' => "A"

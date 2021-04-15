@@ -166,7 +166,7 @@ a.disabled {
           <form action="javascript:simpan();" class="fDataFlowmeter" id="fData" name="fDataFlowmeter">
             <div class="form-group">
               <label for="KPE_KWH_FLOWMETER_NAMA">Flowmeter</label>
-              <input type="text" class="form-control" id="KPE_KWH_FLOWMETER_NAMA" name="KPE_KWH_FLOWMETER_NAMA" placeholder="KPE_KWH_FLOWMETER_NAMA">
+              <input type="text" class="form-control" id="KPE_KWH_FLOWMETER_NAMA" name="KPE_KWH_FLOWMETER_NAMA" placeholder="KPE_KWH_FLOWMETER_NAMA" required>
               
               <input type="hidden" class="form-control" id="KPE_KWH_FLOWMETER_ID" name="KPE_KWH_FLOWMETER_ID">
 
@@ -189,11 +189,28 @@ a.disabled {
             </div> -->
             <div class="form-group">
               <label for="KPE_KWH_FLOWMETER_LOKASI">Lokasi</label>
-              <input type="text" class="form-control" id="KPE_KWH_FLOWMETER_LOKASI" name="KPE_KWH_FLOWMETER_LOKASI" placeholder="KPE_KWH_FLOWMETER_LOKASI" >
+              <input type="text" class="form-control" id="KPE_KWH_FLOWMETER_LOKASI" name="KPE_KWH_FLOWMETER_LOKASI" placeholder="KPE_KWH_FLOWMETER_LOKASI" autocomplete="off" >
             </div>
             <div class="form-group">
               <label for="KPE_KWH_FLOWMETER_READING">Reading</label>
-              <input type="number" class="form-control" id="KPE_KWH_FLOWMETER_READING" name="KPE_KWH_FLOWMETER_READING" placeholder="KPE_KWH_FLOWMETER_READING" autocomplete="off">
+              <input type="number" class="form-control" id="KPE_KWH_FLOWMETER_READING" name="KPE_KWH_FLOWMETER_READING" placeholder="KPE_KWH_FLOWMETER_READING" autocomplete="off" required>
+            </div>
+            <div class="form-group">
+              <label for="KPE_KWH_FLOWMETER_TYPE">Type</label>
+              <select name="KPE_KWH_FLOWMETER_TYPE" id="KPE_KWH_FLOWMETER_TYPE" class="form-control" required>
+                <option value="">--Pilih--</option>
+                <option value="TURBIN">Turbin</option>
+                <option value="DEPT">Departement</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="KPE_KWH_FLOWMETER_DISTRIBUSI">Distribusi</label>
+              <select name="KPE_KWH_FLOWMETER_DISTRIBUSI" id="KPE_KWH_FLOWMETER_DISTRIBUSI" class="form-control" required>
+                <option value="">--Pilih--</option>
+                <option value="YA">Ya</option>
+                <option value="TIDAK">Tidak</option>
+              </select>
+              <small class="help-block">*Pilih <b>Ya</b> jika ingin dihitung total/sum distribusi</small>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
@@ -224,15 +241,15 @@ $('.btnFlowmeter').on('click', function(){
 function simpan()
 {
   const fData=$("#fData").serialize();
-  const data = "&"+fData;
+  // const data = "&"+fData;
   // const data = "&KPE_KWH_SUB_FLOWMETER_NAMA="+btoa($("#KPE_KWH_SUB_FLOWMETER_ID").children("option:selected").text())+"&"+fData;
-  // console.log(data);
+  // console.log(fData);
   // return
   $.ajax({
     type:'POST',
     url:refseeAPI,
     dataType:'json',
-    data:'aplikasi=<?php echo $d0;?>&ref=simpan_flowmeter_kwh'+data,
+    data:'aplikasi=<?php echo $d0;?>&ref=simpan_flowmeter_kwh&'+fData,
     success:function(data)
     { 
       $('tfoot#zone_total').empty();
@@ -273,11 +290,15 @@ $('tbody').on('click', 'a.edit', function(){
   var KPE_KWH_FLOWMETER_NAMA = $(this).attr('KPE_KWH_FLOWMETER_NAMA');
   var KPE_KWH_FLOWMETER_LOKASI = $(this).attr('KPE_KWH_FLOWMETER_LOKASI');
   var KPE_KWH_FLOWMETER_READING = $(this).attr('KPE_KWH_FLOWMETER_READING');
+  var KPE_KWH_FLOWMETER_DISTRIBUSI = $(this).attr('KPE_KWH_FLOWMETER_DISTRIBUSI');
+  var KPE_KWH_FLOWMETER_TYPE = $(this).attr('KPE_KWH_FLOWMETER_TYPE');
   $("#modalFlowmeter").modal('show');
   $('input#KPE_KWH_FLOWMETER_NAMA').val(KPE_KWH_FLOWMETER_NAMA);
   $('input#KPE_KWH_FLOWMETER_LOKASI').val(KPE_KWH_FLOWMETER_LOKASI);
   $('input#KPE_KWH_FLOWMETER_ID').val(KPE_KWH_FLOWMETER_ID);
   $('input#KPE_KWH_FLOWMETER_READING').val(KPE_KWH_FLOWMETER_READING);
+  $('select#KPE_KWH_FLOWMETER_DISTRIBUSI').val(KPE_KWH_FLOWMETER_DISTRIBUSI);
+  $('select#KPE_KWH_FLOWMETER_TYPE').val(KPE_KWH_FLOWMETER_TYPE);
 });
 
 $(window).on('hashchange', function(e) {
@@ -328,7 +349,7 @@ function tampil(curPage)
                     <i class='caret'></i>
                   </button>
                   <ul class='dropdown-menu'>
-                    <li><a class='edit' style='color:rgb(0, 48, 73);' KPE_KWH_FLOWMETER_ID='${data.result[i].KPE_KWH_FLOWMETER_ID}' KPE_KWH_FLOWMETER_NAMA='${data.result[i].KPE_KWH_FLOWMETER_NAMA}' KPE_KWH_FLOWMETER_LOKASI='${data.result[i].KPE_KWH_FLOWMETER_LOKASI}' KPE_KWH_FLOWMETER_READING='${data.result[i].KPE_KWH_FLOWMETER_READING}'><i class='fa fa-edit'></i>Edit</a></li>
+                    <li><a class='edit' style='color:rgb(0, 48, 73);' KPE_KWH_FLOWMETER_ID='${data.result[i].KPE_KWH_FLOWMETER_ID}' KPE_KWH_FLOWMETER_NAMA='${data.result[i].KPE_KWH_FLOWMETER_NAMA}' KPE_KWH_FLOWMETER_LOKASI='${data.result[i].KPE_KWH_FLOWMETER_LOKASI}' KPE_KWH_FLOWMETER_READING='${data.result[i].KPE_KWH_FLOWMETER_READING}' KPE_KWH_FLOWMETER_DISTRIBUSI='${data.result[i].KPE_KWH_FLOWMETER_DISTRIBUSI}' KPE_KWH_FLOWMETER_TYPE='${data.result[i].KPE_KWH_FLOWMETER_TYPE}'><i class='fa fa-edit'></i>Edit</a></li>
                     <li><a class='hapus' style='color:brown;' KPE_KWH_FLOWMETER_ID='${data.result[i].KPE_KWH_FLOWMETER_ID}'><i class='fa fa-trash'></i>Hapus</a></li>
                   </ul>
                 </div>

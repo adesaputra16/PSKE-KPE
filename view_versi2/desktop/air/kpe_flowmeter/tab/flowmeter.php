@@ -329,6 +329,15 @@ a.disabled {
               </select>
               <small class="help-block">*Pilih <b>Ya</b> jika ingin menampilkan di <b>Daily Report</b></small>
             </div>
+            <div class="form-group">
+              <label for="KPE_AIR_FLOWMETER_REKAP_USED">Rekap Used</label>
+              <select class="form-control" id="KPE_AIR_FLOWMETER_REKAP_USED" name="KPE_AIR_FLOWMETER_REKAP_USED" required>
+                <option value="">--Pilih--</option>
+                <option value="Y">Ya</option>
+                <option value="N">Tidak</option>
+              </select>
+              <small class="help-block">*Pilih <b>Ya</b> jika ingin di <b>Rekap</b></small>
+            </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
               <!-- <button type="button" class="addFlowDept btn btn-primary" name="addFlowDept" id="addFlowDept" data-placement="top" title="Add">
@@ -367,6 +376,7 @@ $('.btnFlowmeter').on('click', function(){
   $('#KPE_AIR_FLOWMETER_ID').val('');
   $('#KPE_AIR_FLOWMETER_DISTRIBUSI').val('');
   $('#KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE').val('');
+  $('#KPE_AIR_FLOWMETER_REKAP_USED').val('');
 })
 
 function simpan()
@@ -425,6 +435,7 @@ $('tbody').on('click', 'a.edit', function(){
   var KPE_AIR_FLOWMETER_DISTRIBUSI = $(this).attr('KPE_AIR_FLOWMETER_DISTRIBUSI');
   var KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE = $(this).attr('KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE');
   var KPE_AIR_FLOWMETER_SUB_ID = $(this).attr('KPE_AIR_FLOWMETER_SUB_ID');
+  var KPE_AIR_FLOWMETER_REKAP_USED = $(this).attr('KPE_AIR_FLOWMETER_REKAP_USED');
   // var KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA = $(this).attr('KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA');
   // console.log(KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA);
   // var arr = KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA.split(",");
@@ -452,6 +463,7 @@ $('tbody').on('click', 'a.edit', function(){
   $('select#KPE_AIR_FLOWMETER_SUB_ID').selectpicker("val",KPE_AIR_FLOWMETER_SUB_ID);
   $('input#KPE_AIR_FLOWMETER_DISTRIBUSI').val(KPE_AIR_FLOWMETER_DISTRIBUSI);
   $('select#KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE').val(KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE);
+  $('select#KPE_AIR_FLOWMETER_REKAP_USED').val(KPE_AIR_FLOWMETER_REKAP_USED);
 });
 
 $(window).on('hashchange', function(e) {
@@ -504,7 +516,7 @@ function tampil(curPage)
                   "<i class='caret'></i>"+
                 "</button>"+
                 "<ul class='dropdown-menu'>"+
-                  "<li><a class='edit' style='color:rgb(0, 48, 73);' KPE_AIR_FLOWMETER_ID='" + data.result[i].KPE_AIR_FLOWMETER_ID + "' KPE_AIR_FLOWMETER_DLY='" + data.result[i].KPE_AIR_FLOWMETER_DLY + "' KPE_AIR_FLOWMETER_NAMA='" + data.result[i].KPE_AIR_FLOWMETER_NAMA + "' KPE_AIR_FLOWMETER_DISTRIBUSI='" + data.result[i].KPE_AIR_FLOWMETER_DISTRIBUSI + "' KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE='" + data.result[i].KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE + "' KPE_AIR_FLOWMETER_SUB_ID='" + data.result[i].KPE_AIR_FLOWMETER_SUB_ID + "' KPE_AIR_FLOWMETER_LOKASI='" + data.result[i].KPE_AIR_FLOWMETER_LOKASI + "' KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA='" + KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA +"'><i class='fa fa-edit'></i>Edit</a></li>"+
+                  "<li><a class='edit' style='color:rgb(0, 48, 73);' KPE_AIR_FLOWMETER_ID='" + data.result[i].KPE_AIR_FLOWMETER_ID + "' KPE_AIR_FLOWMETER_DLY='" + data.result[i].KPE_AIR_FLOWMETER_DLY + "' KPE_AIR_FLOWMETER_NAMA='" + data.result[i].KPE_AIR_FLOWMETER_NAMA + "' KPE_AIR_FLOWMETER_DISTRIBUSI='" + data.result[i].KPE_AIR_FLOWMETER_DISTRIBUSI + "' KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE='" + data.result[i].KPE_AIR_FLOWMETER_DISTRIBUSI_TYPE + "' KPE_AIR_FLOWMETER_SUB_ID='" + data.result[i].KPE_AIR_FLOWMETER_SUB_ID + "' KPE_AIR_FLOWMETER_LOKASI='" + data.result[i].KPE_AIR_FLOWMETER_LOKASI + "' KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA='" + KPE_AIR_FLOWMETER_DEPARTEMEN_NAMA +"' KPE_AIR_FLOWMETER_REKAP_USED='" + data.result[i].KPE_AIR_FLOWMETER_REKAP_USED +"'><i class='fa fa-edit'></i>Edit</a></li>"+
                   "<li><a class='hapus' style='color:brown;' KPE_AIR_FLOWMETER_ID='" + data.result[i].KPE_AIR_FLOWMETER_ID + "' KPE_AIR_FLOWMETER_STATUS='" + data.result[i].KPE_AIR_FLOWMETER_STATUS + "'><i class='fa fa-trash'></i>Hapus</a></li>"+
                 "</ul>"+
               "</div>"+

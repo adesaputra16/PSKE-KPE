@@ -211,6 +211,20 @@ switch($ref){
 			case 'hapus_catatan_kwh':
 				require_once("ajax/kwh/catatan/hapus_catatan.php");
 			break;
+
+			//! HARIAN SOLAR & KWH
+			case 'list_harian_solar_kwh':
+				require_once("ajax/kwh/harian/list_harian.php");
+			break;
+			case 'simpan_harian_solar_kwh':
+				require_once("ajax/kwh/harian/simpan_harian.php");
+			break;
+			case 'list_harian_distribusi':
+				require_once("ajax/kwh/harian/list_distribusi.php");
+			break;
+			case 'hapus_harian_distribusi':
+				require_once("ajax/kwh/harian/hapus_distribusi.php");
+			break;
 			
 
 }

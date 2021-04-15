@@ -96,13 +96,13 @@ foreach($result_a as $r)
         for($i = $begin; $i <= $end; $i->modify('+1 day')){
             $tanggal[] = $i->format("Y-m-d");
         }
-        $filter_minggu = "MAX(CASE WHEN Date_format(s.KPE_KWH_CATATAN_TANGGAL, '%Y-%m-%d')= '".$tanggal[0]."' THEN s.KPE_KWH_CATATAN_BEBAN ELSE ('-') END )AS `day1`,
-                          MAX(CASE WHEN Date_format(s.KPE_KWH_CATATAN_TANGGAL, '%Y-%m-%d')= '".$tanggal[1]."' THEN s.KPE_KWH_CATATAN_BEBAN ELSE ('-') END )AS `day2`,
-                          MAX(CASE WHEN Date_format(s.KPE_KWH_CATATAN_TANGGAL, '%Y-%m-%d')= '".$tanggal[2]."' THEN s.KPE_KWH_CATATAN_BEBAN ELSE ('-') END )AS `day3`,
-                          MAX(CASE WHEN Date_format(s.KPE_KWH_CATATAN_TANGGAL, '%Y-%m-%d')= '".$tanggal[3]."' THEN s.KPE_KWH_CATATAN_BEBAN ELSE ('-') END )AS `day4`,
-                          MAX(CASE WHEN Date_format(s.KPE_KWH_CATATAN_TANGGAL, '%Y-%m-%d')= '".$tanggal[4]."' THEN s.KPE_KWH_CATATAN_BEBAN ELSE ('-') END )AS `day5`,
-                          MAX(CASE WHEN Date_format(s.KPE_KWH_CATATAN_TANGGAL, '%Y-%m-%d')= '".$tanggal[5]."' THEN s.KPE_KWH_CATATAN_BEBAN ELSE ('-') END )AS `day6`,
-                          MAX(CASE WHEN Date_format(s.KPE_KWH_CATATAN_TANGGAL, '%Y-%m-%d')= '".$tanggal[6]."' THEN s.KPE_KWH_CATATAN_BEBAN ELSE ('-') END )AS `day7`
+        $filter_minggu = "MAX(CASE WHEN Date_format(s.KPE_KWH_CATATAN_TANGGAL, '%Y-%m-%d')= '".$tanggal[0]."' THEN s.KPE_KWH_CATATAN_BEBAN_X_READING ELSE ('-') END )AS `day1`,
+                          MAX(CASE WHEN Date_format(s.KPE_KWH_CATATAN_TANGGAL, '%Y-%m-%d')= '".$tanggal[1]."' THEN s.KPE_KWH_CATATAN_BEBAN_X_READING ELSE ('-') END )AS `day2`,
+                          MAX(CASE WHEN Date_format(s.KPE_KWH_CATATAN_TANGGAL, '%Y-%m-%d')= '".$tanggal[2]."' THEN s.KPE_KWH_CATATAN_BEBAN_X_READING ELSE ('-') END )AS `day3`,
+                          MAX(CASE WHEN Date_format(s.KPE_KWH_CATATAN_TANGGAL, '%Y-%m-%d')= '".$tanggal[3]."' THEN s.KPE_KWH_CATATAN_BEBAN_X_READING ELSE ('-') END )AS `day4`,
+                          MAX(CASE WHEN Date_format(s.KPE_KWH_CATATAN_TANGGAL, '%Y-%m-%d')= '".$tanggal[4]."' THEN s.KPE_KWH_CATATAN_BEBAN_X_READING ELSE ('-') END )AS `day5`,
+                          MAX(CASE WHEN Date_format(s.KPE_KWH_CATATAN_TANGGAL, '%Y-%m-%d')= '".$tanggal[5]."' THEN s.KPE_KWH_CATATAN_BEBAN_X_READING ELSE ('-') END )AS `day6`,
+                          MAX(CASE WHEN Date_format(s.KPE_KWH_CATATAN_TANGGAL, '%Y-%m-%d')= '".$tanggal[6]."' THEN s.KPE_KWH_CATATAN_BEBAN_X_READING ELSE ('-') END )AS `day7`
                           ";
         $sql_flow = "SELECT 
         ".$filter_minggu.",

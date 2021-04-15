@@ -453,7 +453,7 @@ tr.trData:hover{
     { 
       $('.datepicker').datepicker('hide');
     });
-    tampil();
+    // tampil();
     $('tr#colTgl').append(/*html*/`<th class="bordered" style="top:35px;">${format_tanggal($('input#DATA_sDATE').val())}</th>`)
   });	
 

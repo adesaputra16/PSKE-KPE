@@ -1,15 +1,75 @@
-const formatNumber = (num) =>
-  num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+const jadwal = () => {
+  const d = new Date();
+  const url = `https://api.banghasan.com/sholat/format/json/jadwal/kota/588/tanggal/${d.getFullYear()}-${satuNolDiDepan(d.getMonth() + 1)}-${satuNolDiDepan(d.getDate())}`;
+
+  fetch(url)
+    .then((resp) => resp.json())
+    .then(function (data) {
+      let authors = data;
+      // console.log(authors);
+      if (authors.status === "ok") {
+        const object = authors.jadwal.data;
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 10000,
+        });
+
+        setInterval(() => {
+          const date = new Date();
+          let time = `${satuNolDiDepan(date.getHours())}:${satuNolDiDepan(date.getMinutes())}`;
+          for (let property in object) {
+            if (object[property] == time) {
+              return Toast.fire({
+                icon: "info",
+                title: `<h5> Sudah jam ${time} waktunya sholat.</h5>`,
+              });
+            }
+          }
+        }, 50000);
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+};
+
+const toastNotifikasi = (icon, title) => {
+  const Toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 3000,
+  });
+
+  return Toast.fire({
+    icon: icon,
+    title: title,
+  });
+};
+
+const alertBox = (icon, title, text) => {
+  return Swal.fire({
+    timer: 1500,
+    timerProgressBar: true,
+    title: title,
+    text: text,
+    icon: icon,
+  });
+};
+
+const formatNumber = (num) => num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 
 const satuNolDiDepan = (x) => (y = x > 9 ? x : "0" + x);
 
 const duaNolDiDepan = (x) => (y = x > 9 ? "0." + x : "0.0" + x);
 
-function preLoader() {
+const preLoader = () => {
   $("#loader").fadeIn();
   $("div#divTable").removeAttr("style");
   loader();
-}
+};
 
 $(function () {
   $("input#DATA_eDATE").attr("readonly", "readonly");
