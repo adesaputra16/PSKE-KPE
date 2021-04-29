@@ -225,6 +225,9 @@ switch($ref){
 			case 'hapus_harian_distribusi':
 				require_once("ajax/kwh/harian/hapus_distribusi.php");
 			break;
+			case 'kwh_contoh':
+				require_once("ajax/kwh/harian/contoh.php");
+			break;
 			
 
 }

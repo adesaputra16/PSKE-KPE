@@ -38,7 +38,7 @@ if($JENIS_LAPORAN=="Harian")
 					round(kwh) as nkwh,
 					round(acckwh) as nacckwh,
 					round(solar) as nsolar,
-					round(accsolar) as naccsolar FROM kwhpakai where substring(tgl,1,10)='".$tanggalAwals."'";
+					round(accsolar) as naccsolar FROM kwhpakai where substring(tgl,1,10)='".$tanggalAwals."' order by dept asc";
 		}else
 		{
 			$queri="SELECT  *,

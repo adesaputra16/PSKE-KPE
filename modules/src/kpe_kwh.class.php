@@ -165,6 +165,9 @@ CLASS KPE_KWH extends USER_PRIVILEGES
 		case 'nonlogin_hapus_distribusi':
 			require_once ("kwh/harian/Hapus_distribusi.php");
 		break;
+		case 'nonlogin_contoh':
+			require_once ("kwh/harian/contoh.php");
+		break;
 				
 			// ---------------------end case-----------------------------//
 

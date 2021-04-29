@@ -11,7 +11,7 @@ if (empty($params['case']))
 
 $input = $params['input_option'];
 
-if($input['KPE_KWH_DISTRIBUSI_SOLAR_KWH_ID']=="")
+if($input['KPE_KWH_DISTRIBUSI_ENERGI_ID']=="")
 {
   $this->callback['respon']['pesan'] = "gagal";
   $this->callback['respon']['text_msg'] = "Data tidak di temukan";
@@ -25,9 +25,9 @@ if($input['KPE_KWH_DISTRIBUSI_SOLAR_KWH_ID']=="")
 
   $this->MYSQL =new MYSQL;
   $this->MYSQL->database = $this->CONFIG->mysql_koneksi()->db_nama;
-  $this->MYSQL->tabel ="KPE_KWH_DISTRIBUSI_SOLAR_KWH";
+  $this->MYSQL->tabel ="KPE_KWH_DISTRIBUSI_ENERGI";
   $this->MYSQL->record = $data_master_edit;
-  $this->MYSQL->dimana = "WHERE KPE_KWH_DISTRIBUSI_SOLAR_KWH_ID='".$input['KPE_KWH_DISTRIBUSI_SOLAR_KWH_ID']."' AND RECORD_STATUS='A'";
+  $this->MYSQL->dimana = "WHERE KPE_KWH_DISTRIBUSI_ENERGI_ID='".$input['KPE_KWH_DISTRIBUSI_ENERGI_ID']."' AND RECORD_STATUS='A'";
   $this->MYSQL->ubah();
   
   $data_master_harian = array(  
@@ -38,9 +38,9 @@ if($input['KPE_KWH_DISTRIBUSI_SOLAR_KWH_ID']=="")
 
   $this->MYSQL =new MYSQL;
   $this->MYSQL->database = $this->CONFIG->mysql_koneksi()->db_nama;
-  $this->MYSQL->tabel ="KPE_KWH_HARIAN_SOLAR_KWH";
+  $this->MYSQL->tabel ="KPE_KWH_HARIAN_ENERGI";
   $this->MYSQL->record = $data_master_harian;
-  $this->MYSQL->dimana = "WHERE KPE_KWH_HARIAN_SOLAR_KWH_TANGGAL='".$input['KPE_KWH_DISTRIBUSI_SOLAR_KWH_TANGGAL']."' AND RECORD_STATUS='A'";
+  $this->MYSQL->dimana = "WHERE KPE_KWH_HARIAN_ENERGI_TANGGAL='".$input['KPE_KWH_DISTRIBUSI_ENERGI_TANGGAL']."' AND RECORD_STATUS='A'";
 
   if ($this->MYSQL->ubah() == true)
   {

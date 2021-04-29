@@ -48,6 +48,17 @@ require_once('menu_sidebar.php');
         //array('title'=>"more title",'link'=>"#"),
       ),
     ));
+  }else if($d2=="konfigurasi")
+  {
+    $adminLTE->breadcrumb(array(
+      'title'=>"<i class='fa fa-cogs'></i> Konfigurasi",
+      'breadcrumb'=>array(
+        array('title'=>"<a href='?show=kpe'>KPE</a>",'link'=>"?show=kpe"),
+        array('title'=>"<a href='?show=kpe/kwh/konfigurasi'>Konfigurasi</a>",'link'=>"?show=kpe/kwh/konfigurasi"),
+        //array('title'=>"Pribadi",'link'=>"?show=laporan/kerja/personel/"),
+        //array('title'=>"more title",'link'=>"#"),
+      ),
+    ));
   }
   ?>
   <section class="content">
@@ -75,6 +86,13 @@ require_once('menu_sidebar.php');
           case 'HARIAN_SOLAR':
             require_once("kwh/harian/solar_kwh.php");
             break;
+          case 'KONFIGURASI':
+            require_once("kwh/konfigurasi/konfigurasi.php");
+            break;
+          
+            case 'CONTOH':
+              require_once("kwh/konfigurasi/contoh.php");
+              break;
             //----------------- END CASE
           default:
             require_once("kwh/catatan/catatan.php");
