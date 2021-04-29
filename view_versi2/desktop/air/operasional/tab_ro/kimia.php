@@ -197,7 +197,7 @@
                 <tr>
                   <th class="bordered text-center" rowspan="3" colspan="2">#</th>
                   <th class="bordered text-center" rowspan="3">Codding</th>
-                  <th class="bordered text-center" rowspan="3">Tanggal</th>
+                  <th class="bordered text-center" rowspan="3" style="min-width:110px;">Tanggal</th>
                   <th class="bordered text-center" colspan="25">Bahan Kimia - PROSES RO</th>
                 </tr>
                 <tr>
@@ -600,35 +600,36 @@
                                   <td class="bordered">-</td>
                                   <td class="bordered">-</td>`;
             } else {
+              let TANGGAL = data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_TANGGAL.split('-')
               listData = /*html*/`<td class="bordered"><button class="btn btn-sm btn-danger" id="hapus" KPE_AIR_FLOWMETER_KIMIA_RO_ID="${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_ID}"><i class="fa fa-trash"></i></button></td>
                                   <td class="bordered"><button class="btn btn-sm btn-primary" id="edit" KPE_AIR_FLOWMETER_KIMIA_RO_ID="${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_ID}" KPE_AIR_FLOWMETER_KIMIA_RO_CODDING="${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_CODDING}" KPE_AIR_FLOWMETER_KIMIA_RO_TANGGAL="${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_TANGGAL}" KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_590_TERIMA="${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_590_TERIMA}" KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_277_TERIMA="${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_277_TERIMA}" KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_566_TERIMA="${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_566_TERIMA}" KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_259_TERIMA="${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_259_TERIMA}" KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_575_TERIMA="${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_575_TERIMA}" KPE_AIR_FLOWMETER_KIMIA_RO_GARAM_TERIMA="${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_GARAM_TERIMA}" KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_590_PAKAI="${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_590_PAKAI}" KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_277_PAKAI="${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_277_PAKAI}" KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_566_PAKAI="${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_566_PAKAI}" KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_259_PAKAI="${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_259_PAKAI}" KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_259_PAKAI="${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_259_PAKAI}" KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_575_PAKAI="${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_575_PAKAI}" KPE_AIR_FLOWMETER_KIMIA_RO_GARAM_PAKAI="${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_GARAM_PAKAI}" KPE_AIR_FLOWMETER_KIMIA_RO_CAUSTIC_PAKAI="${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_CAUSTIC_PAKAI}"><i class="fa fa-edit"></i></button></td>
                                   <td class="bordered">${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_CODDING}</td>
-                                  <td class="bordered">${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_TANGGAL}</td>
-                                  <td class="bordered">${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_590_TERIMA}</td>
-                                  <td class="bordered">${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_277_TERIMA}</td>
-                                  <td class="bordered">${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_566_TERIMA}</td>
-                                  <td class="bordered">${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_259_TERIMA}</td>
-                                  <td class="bordered">${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_575_TERIMA}</td>
-                                  <td class="bordered">${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_GARAM_TERIMA}</td>
-                                  <td class="bordered">${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_590_PAKAI}</td>
-                                  <td class="bordered">${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_277_PAKAI}</td>
-                                  <td class="bordered">${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_566_PAKAI}</td>
-                                  <td class="bordered">${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_259_PAKAI}</td>
-                                  <td class="bordered">${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_575_PAKAI}</td>
-                                  <td class="bordered">${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_GARAM_PAKAI}</td>
-                                  <td class="bordered">${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_CAUSTIC_PAKAI}</td>
-                                  <td class="bordered">${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_590_AKUMULASI}</td>
-                                  <td class="bordered">${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_277_AKUMULASI}</td>
-                                  <td class="bordered">${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_566_AKUMULASI}</td>
-                                  <td class="bordered">${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_259_AKUMULASI}</td>
-                                  <td class="bordered">${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_575_AKUMULASI}</td>
-                                  <td class="bordered">${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_GARAM_AKUMULASI}</td>
-                                  <td class="bordered">${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_590_STOK}</td>
-                                  <td class="bordered">${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_277_STOK}</td>
-                                  <td class="bordered">${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_566_STOK}</td>
-                                  <td class="bordered">${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_259_STOK}</td>
-                                  <td class="bordered">${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_575_STOK}</td>
-                                  <td class="bordered">${formatNumber(data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_GARAM_STOK)}</td>`;
+                                  <td class="bordered text-center">${TANGGAL[2]}-${TANGGAL[1]}-${TANGGAL[0]}</td>
+                                  <td class="bordered text-right">${formatNumber(data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_590_TERIMA)}</td>
+                                  <td class="bordered text-right">${formatNumber(data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_277_TERIMA)}</td>
+                                  <td class="bordered text-right">${formatNumber(data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_566_TERIMA)}</td>
+                                  <td class="bordered text-right">${formatNumber(data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_259_TERIMA)}</td>
+                                  <td class="bordered text-right">${formatNumber(data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_575_TERIMA)}</td>
+                                  <td class="bordered text-right">${formatNumber(data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_GARAM_TERIMA)}</td>
+                                  <td class="bordered text-right">${formatNumber(data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_590_PAKAI)}</td>
+                                  <td class="bordered text-right">${formatNumber(data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_277_PAKAI)}</td>
+                                  <td class="bordered text-right">${formatNumber(data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_566_PAKAI)}</td>
+                                  <td class="bordered text-right">${formatNumber(data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_259_PAKAI)}</td>
+                                  <td class="bordered text-right">${formatNumber(data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_575_PAKAI)}</td>
+                                  <td class="bordered text-right">${formatNumber(data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_GARAM_PAKAI)}</td>
+                                  <td class="bordered text-right">${formatNumber(data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_CAUSTIC_PAKAI)}</td>
+                                  <td class="bordered text-right">${formatNumber(data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_590_AKUMULASI)}</td>
+                                  <td class="bordered text-right">${formatNumber(data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_277_AKUMULASI)}</td>
+                                  <td class="bordered text-right">${formatNumber(data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_566_AKUMULASI)}</td>
+                                  <td class="bordered text-right">${formatNumber(data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_259_AKUMULASI)}</td>
+                                  <td class="bordered text-right">${formatNumber(data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_575_AKUMULASI)}</td>
+                                  <td class="bordered text-right">${formatNumber(data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_GARAM_AKUMULASI)}</td>
+                                  <td class="bordered text-right">${formatNumber(data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_590_STOK)}</td>
+                                  <td class="bordered text-right">${formatNumber(data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_277_STOK)}</td>
+                                  <td class="bordered text-right">${formatNumber(data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_566_STOK)}</td>
+                                  <td class="bordered text-right">${formatNumber(data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_259_STOK)}</td>
+                                  <td class="bordered text-right">${formatNumber(data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_HYDRO_575_STOK)}</td>
+                                  <td class="bordered text-right">${formatNumber(data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_RO_GARAM_STOK)}</td>`;
             }
             $('tbody#zone_data').append(/*html*/`<tr>
                                                   ${listData}

@@ -559,8 +559,8 @@
               var persen = '';
               var deptUsage = 0;
             } else if (data.result[i].BEBAN_HARIAN != ""){
-              beban = (data.result[i].BEBAN_HARIAN.KPE_AIR_FLOWMETER_CATATAN_BEBAN);
-              persenUsage = parseFloat(data.result[i].BEBAN_HARIAN.KPE_AIR_FLOWMETER_CATATAN_BEBAN / data.TOTAL_USAGE * 100).toFixed(2);
+              beban = formatNumber(data.result[i].BEBAN_HARIAN.KPE_AIR_FLOWMETER_CATATAN_BEBAN);
+              persenUsage = parseFloat((data.result[i].BEBAN_HARIAN.KPE_AIR_FLOWMETER_CATATAN_BEBAN / data.TOTAL_USAGE * 100).toFixed(2));
               persen = parseFloat(data.result[i].BEBAN_HARIAN.KPE_AIR_FLOWMETER_CATATAN_BEBAN / data.TOTAL_USAGE * 100);
               arrPersen.push(persen);
               deptUsage = data.TOTAL_USAGE;
@@ -606,21 +606,13 @@
               dept = /*html*/`<tr>
                                 <td>${data.result[i].KPE_AIR_FLOWMETER_NAMA}</td>
                                 <td>${beban}</td>
-                                <td>${persenUsage}</td>
-                                <td>${acc}</td>
-                                <td>${accTotal}</td>
+                                <td>${formatNumber(persenUsage)}</td>
+                                <td>${formatNumber(acc)}</td>
+                                <td>${formatNumber(accTotal)}</td>
                               </tr>`;
             }
 
             $('tbody#PWU').append(/*html*/`${dept}`);
-            
-            // $('tbody#PWU').append(/*html*/`<tr>
-            //                                 <td>${data.result[i].KPE_AIR_FLOWMETER_NAMA}</td>
-            //                                 <td>${beban}</td>
-            //                                 <td>${persenUsage}</td>
-            //                                 <td>${acc}</td>
-            //                                 <td>${accTotal}</td>
-            //                               </tr>`);
           }
           const totalPersen = arrAccPersen.reduce((a, b) => a + b, 0) + arrTotal;
           const totalPersenDept = arrAccPersen.reduce((a, b) => a + b, 0) + arrPersenTotal;
@@ -666,105 +658,105 @@
         {
           $("tbody#stock").append(/*html*/`<tr>
                                               <td>Equalisasi</td>
-                                              <td class="bordered">${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_STOCK_BAK_EQUALISASI}</td>
+                                              <td class="bordered">${formatNumber(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_STOCK_BAK_EQUALISASI)}</td>
                                             </tr>
                                             <tr>
                                               <td>Employe Mess Basin</td>
-                                              <td class="bordered">${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_EMPLOYE_MESS_BASIN}</td>
+                                              <td class="bordered">${formatNumber(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_EMPLOYE_MESS_BASIN)}</td>
                                             </tr>
                                             <tr>
                                               <td>Tower</td>
-                                              <td class="bordered">${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_TOWER}</td>
+                                              <td class="bordered">${formatNumber(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_TOWER)}</td>
                                             </tr>
                                             <tr>
                                               <td>Aerasi Basin</td>
-                                              <td class="bordered">${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_AERASI_BASIN}</td>
+                                              <td class="bordered">${formatNumber(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_AERASI_BASIN)}</td>
                                             </tr>
                                             <tr>
                                               <td>Filtered Water Basin</td>
-                                              <td class="bordered">${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_FILTERED_WATER_BASIN}</td>
+                                              <td class="bordered">${formatNumber(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_FILTERED_WATER_BASIN)}</td>
                                             </tr>
                                             <tr>
                                               <td>Bak BSF 1 & 2</td>
-                                              <td class="bordered">${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_BAK_BSF_1_2}</td>
+                                              <td class="bordered">${formatNumber(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_BAK_BSF_1_2)}</td>
                                             </tr>
                                             <tr>
                                               <td>Bak BSF 3 & 4</td>
-                                              <td class="bordered">${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_BAK_BSF_3_4}</td>
+                                              <td class="bordered">${formatNumber(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_BAK_BSF_3_4)}</td>
                                             </tr>`);
                                             
           $('tfoot#stock').append(/*html*/`<tr>
                                               <th>Total</th>
-                                              <th class="bordered">${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_AKUMULASI_STOCK}</th>
+                                              <th class="bordered">${formatNumber(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_AKUMULASI_STOCK)}</th>
                                             </tr>`);
 
           $('tbody#pwp').append(/*html*/`<tr>
                                            <td>Raw Water</td> 
-                                           <td>${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_PROSES_RW}</td>
-                                           <td>${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_AKUMULASI_PROSES_RW}</td>
+                                           <td>${formatNumber(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_PROSES_RW)}</td>
+                                           <td>${formatNumber(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_AKUMULASI_PROSES_RW)}</td>
                                         </tr>
                                         <tr>
                                            <td>Clarifier 1</td> 
-                                           <td>${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_PROSES_CC_1_2_REAL/4}</td>
-                                           <td>${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_AKUM_PROSES_CC_1_2_LAPORAN/2}</td>
+                                           <td>${formatNumber(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_PROSES_CC_1_2_REAL/4)}</td>
+                                           <td>${formatNumber(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_AKUM_PROSES_CC_1_2_LAPORAN/2)}</td>
                                         </tr>
                                         <tr>
                                            <td>Clarifier 2</td> 
-                                           <td>${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_PROSES_CC_1_2_REAL/2}</td>
-                                           <td>${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_AKUM_PROSES_CC_1_2_LAPORAN/2}</td>
+                                           <td>${formatNumber(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_PROSES_CC_1_2_REAL/2)}</td>
+                                           <td>${formatNumber(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_AKUM_PROSES_CC_1_2_LAPORAN/2)}</td>
                                         </tr>
                                         <tr>
                                            <td>Clarifier 3</td> 
-                                           <td>${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_PROSES_CC_3_4_REAL/2}</td>
-                                           <td>${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_AKUM_PROSES_CC_3_4_LAPORAN/2}</td>
+                                           <td>${formatNumber(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_PROSES_CC_3_4_REAL/2)}</td>
+                                           <td>${formatNumber(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_AKUM_PROSES_CC_3_4_LAPORAN/2)}</td>
                                         </tr>
                                         <tr>
                                            <td>Clarifier 4</td> 
-                                           <td>${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_PROSES_CC_3_4_REAL/2}</td>
-                                           <td>${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_AKUM_PROSES_CC_3_4_LAPORAN/2}</td>
+                                           <td>${formatNumber(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_PROSES_CC_3_4_REAL/2)}</td>
+                                           <td>${formatNumber(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_AKUM_PROSES_CC_3_4_LAPORAN/2)}</td>
                                         </tr>`);
           $('tfoot#pwp').append(/*html*/`<tr>
                                             <th>Total</th>
-                                            <th class="bordered">${(parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_PROSES_RW)+parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_PROSES_CC_1_2_REAL/4)+parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_PROSES_CC_1_2_REAL/2)+parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_PROSES_CC_3_4_REAL/2)+parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_PROSES_CC_3_4_REAL/2)).toFixed(2)}</th>
-                                            <th class="bordered">${(parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_AKUMULASI_PROSES_RW) + parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_AKUM_PROSES_CC_1_2_LAPORAN/2) + parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_AKUM_PROSES_CC_1_2_LAPORAN/2) + parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_AKUM_PROSES_CC_3_4_LAPORAN/2) + parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_AKUM_PROSES_CC_3_4_LAPORAN/2)).toFixed(2)}</th>
+                                            <th class="bordered">${formatNumber((parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_PROSES_RW)+parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_PROSES_CC_1_2_REAL/4)+parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_PROSES_CC_1_2_REAL/2)+parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_PROSES_CC_3_4_REAL/2)+parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_PROSES_CC_3_4_REAL/2)).toFixed(2))}</th>
+                                            <th class="bordered">${formatNumber((parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_AKUMULASI_PROSES_RW) + parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_AKUM_PROSES_CC_1_2_LAPORAN/2) + parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_AKUM_PROSES_CC_1_2_LAPORAN/2) + parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_AKUM_PROSES_CC_3_4_LAPORAN/2) + parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_AKUM_PROSES_CC_3_4_LAPORAN/2)).toFixed(2))}</th>
                                           </tr>`);
 
           $('tbody#operation').append(/*html*/`<tr>
                                                   <td>Clarifier 1</td> 
-                                                  <td>${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CC_1_2}</td>
+                                                  <td>${formatNumber(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CC_1_2)}</td>
                                                   <td>${30}</td>
-                                                  <td>${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CC_1_3/2}</td>
+                                                  <td>${formatNumber(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CC_1_3/2)}</td>
                                                 </tr>
                                                 <tr>
                                                   <td>Clarifier 2</td> 
-                                                  <td>${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CC_1_2_RUMUS}</td>
+                                                  <td>${formatNumber(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CC_1_2_RUMUS)}</td>
                                                   <td>${30}</td>
-                                                  <td>${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CC_1_3/2}</td>
+                                                  <td>${formatNumber(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CC_1_3/2)}</td>
                                                 </tr>
                                                 <tr>
                                                   <td>Clarifier 3</td> 
-                                                  <td>${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CC_3_4}</td>
+                                                  <td>${formatNumber(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CC_3_4)}</td>
                                                   <td>${30}</td>
-                                                  <td>${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CC_3_6/2}</td>
+                                                  <td>${formatNumber(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CC_3_6/2)}</td>
                                                 </tr>
                                                 <tr>
                                                   <td>Clarifier 4</td> 
-                                                  <td>${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CC_3_4_RUMUS}</td>
+                                                  <td>${formatNumber(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CC_3_4_RUMUS)}</td>
                                                   <td>${30}</td>
-                                                  <td>${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CC_3_6/2}</td>
+                                                  <td>${formatNumber(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CC_3_6/2)}</td>
                                                 </tr>`);
           $('tfoot#operation').append(/*html*/`<tr>
                                                 <th>Total</th>
-                                                <th class="bordered">${(parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CC_1_2)+parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CC_1_2_RUMUS)+parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CC_3_4)+parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CC_3_4_RUMUS)).toFixed(2)}</th>
+                                                <th class="bordered">${formatNumber((parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CC_1_2)+parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CC_1_2_RUMUS)+parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CC_3_4)+parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CC_3_4_RUMUS)).toFixed(2))}</th>
                                                 <th class="bordered">${120}</th>
-                                                <th class="bordered">${(parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CC_1_3/2) + parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CC_1_3/2) + parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CC_3_6/2) + parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CC_3_6/2)).toFixed(2)}</th>
+                                                <th class="bordered">${formatNumber((parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CC_1_3/2) + parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CC_1_3/2) + parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CC_3_6/2) + parseFloat(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_CC_3_6/2)).toFixed(2))}</th>
                                               </tr>`);
           let TOTAL_USAGE = $('th#TOTAL_USAGE').attr('TOTAL_USAGE');
           let TOTAL_ACC = $('th#TOTAL_ACC').attr('TOTAL_ACC');
           $('tbody#accumulatif').append(/*html*/`<tr>
                                                     <td colspan="2">Accept</td> 
-                                                    <td>${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_PROSES_RW}</td>
-                                                    <td>${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_AKUMULASI_PROSES_RW}</td>
+                                                    <td>${formatNumber(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_PROSES_RW)}</td>
+                                                    <td>${formatNumber(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_AKUMULASI_PROSES_RW)}</td>
                                                   </tr>
                                                   <tr>
                                                     <td colspan="2">Usage</td> 
@@ -773,16 +765,16 @@
                                                   </tr>
                                                   <tr>
                                                     <td colspan="2">Stock</td> 
-                                                    <td colspan="2" class="text-left">${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_AKUMULASI_STOCK}</td>
+                                                    <td colspan="2" class="text-left">${formatNumber(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_AKUMULASI_STOCK)}</td>
                                                   </tr>
                                                   <tr>
                                                     <td colspan="2">Decrease</td> 
-                                                    <td>${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_SUSUT_PRE_DISTRIBUSI}</td>
-                                                    <td>${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_SUSUT}</td>
+                                                    <td>${formatNumber(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_SUSUT_PRE_DISTRIBUSI)}</td>
+                                                    <td>${formatNumber(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_SUSUT)}</td>
                                                   </tr>
                                                   <tr>
                                                     <td colspan="2">Efficiency</td> 
-                                                    <td colspan="2" class="text-left">${data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_EFFESIENSI}</td>
+                                                    <td colspan="2" class="text-left">${formatNumber(data.result[0].KPE_AIR_FLOWMETER_OPERASIONAL_PRE_EFFESIENSI)}</td>
                                                   </tr>`);
           
         }else if(data.respon.pesan=="gagal")

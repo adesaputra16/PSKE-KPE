@@ -59,7 +59,19 @@ const alertBox = (icon, title, text) => {
   });
 };
 
-const formatNumber = (num) => num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+// const formatNumber = (num) => num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+
+const formatNumber = (num) => {
+  num += "";
+  x = num.split(".");
+  x1 = x[0];
+  x2 = x.length > 1 ? "," + x[1] : "";
+  var rgx = /(\d+)(\d{3})/;
+  while (rgx.test(x1)) {
+    x1 = x1.replace(rgx, "$1" + "." + "$2");
+  }
+  return x1 + x2;
+};
 
 const satuNolDiDepan = (x) => (y = x > 9 ? x : "0" + x);
 

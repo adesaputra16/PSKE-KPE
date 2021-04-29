@@ -21,7 +21,7 @@ else
           <a href="?show=kpe/air/operasional_ro/kimia">Kimia</a>
         </li>
         <li class="active" id="rekap" role="tab">
-          <a href="?show=kpe/air/operasional_ro/rekap">Rekap Used</a>
+          <a href="?show=kpe/air/operasional_ro/rekap">Rekap Pemakaian</a>
         </li>
       </ul>
       <script>

@@ -584,28 +584,28 @@
               listData = /*html*/`<td class="bordered"><button class="btn btn-sm btn-danger" id="hapus" KPE_AIR_FLOWMETER_KIMIA_PRE_ID="${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_ID}"><i class="fa fa-trash"></i></button></td>
                                   <td class="bordered"><button class="btn btn-sm btn-primary" id="edit" KPE_AIR_FLOWMETER_KIMIA_PRE_ID="${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_ID}" KPE_AIR_FLOWMETER_KIMIA_PRE_CODDING="${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_CODDING}" KPE_AIR_FLOWMETER_KIMIA_PRE_TANGGAL="${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_TANGGAL}" KPE_AIR_FLOWMETER_KIMIA_PRE_HYDRO_TERIMA="${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_HYDRO_TERIMA}" KPE_AIR_FLOWMETER_KIMIA_PRE_TAWAS_TERIMA="${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_TAWAS_TERIMA}" KPE_AIR_FLOWMETER_KIMIA_PRE_CAUSTIC_TERIMA="${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_CAUSTIC_TERIMA}" KPE_AIR_FLOWMETER_KIMIA_PRE_TCCA_TERIMA="${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_TCCA_TERIMA}" KPE_AIR_FLOWMETER_KIMIA_PRE_POLIMER_TERIMA="${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_POLIMER_TERIMA}" KPE_AIR_FLOWMETER_KIMIA_PRE_HYDRO_PAKAI="${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_HYDRO_PAKAI}" KPE_AIR_FLOWMETER_KIMIA_PRE_TAWAS_PAKAI="${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_TAWAS_PAKAI}" KPE_AIR_FLOWMETER_KIMIA_PRE_CAUSTIC_PAKAI="${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_CAUSTIC_PAKAI}" KPE_AIR_FLOWMETER_KIMIA_PRE_TCCA_PAKAI="${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_TCCA_PAKAI}" KPE_AIR_FLOWMETER_KIMIA_PRE_TCCA_PAKAI="${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_TCCA_PAKAI}" KPE_AIR_FLOWMETER_KIMIA_PRE_POLIMER_PAKAI="${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_POLIMER_PAKAI}"><i class="fa fa-edit"></i></button></td>
                                   <td class="bordered">${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_CODDING}</td>
-                                  <td class="bordered">${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_TANGGAL}</td>
-                                  <td class="bordered">${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_HYDRO_TERIMA}</td>
-                                  <td class="bordered">${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_TAWAS_TERIMA}</td>
-                                  <td class="bordered">${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_CAUSTIC_TERIMA}</td>
-                                  <td class="bordered">${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_TCCA_TERIMA}</td>
-                                  <td class="bordered">${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_POLIMER_TERIMA}</td>
-                                  <td class="bordered">${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_HYDRO_PAKAI}</td>
-                                  <td class="bordered">${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_TAWAS_PAKAI}</td>
-                                  <td class="bordered">${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_CAUSTIC_PAKAI}</td>
-                                  <td class="bordered">${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_TCCA_PAKAI}</td>
-                                  <td class="bordered">${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_POLIMER_PAKAI}</td>
-                                  <td class="bordered">${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_HYDRO_AKUMULASI}</td>
-                                  <td class="bordered">${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_TAWAS_AKUMULASI}</td>
-                                  <td class="bordered">${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_CAUSTIC_AKUMULASI}</td>
-                                  <td class="bordered">${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_TCCA_AKUMULASI}</td>
-                                  <td class="bordered">${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_POLIMER_AKUMULASI}</td>
-                                  <td class="bordered">${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_HYDRO_STOCK}</td>
-                                  <td class="bordered">${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_TAWAS_STOCK}</td>
-                                  <td class="bordered">${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_CAUSTIC_STOCK}</td>
-                                  <td class="bordered">${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_TCCA_STOCK}</td>
-                                  <td class="bordered">${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_POLIMER_STOCK}</td>
-                                  <td class="bordered">${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_EFFIENSI_CAUSTIC}</td>`;
+                                  <td class="bordered text-center" style="min-width:110px;">${data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_TANGGAL}</td>
+                                  <td class="bordered text-right">${formatNumber(data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_HYDRO_TERIMA)}</td>
+                                  <td class="bordered text-right">${formatNumber(data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_TAWAS_TERIMA)}</td>
+                                  <td class="bordered text-right">${formatNumber(data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_CAUSTIC_TERIMA)}</td>
+                                  <td class="bordered text-right">${formatNumber(data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_TCCA_TERIMA)}</td>
+                                  <td class="bordered text-right">${formatNumber(data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_POLIMER_TERIMA)}</td>
+                                  <td class="bordered text-right">${formatNumber(data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_HYDRO_PAKAI)}</td>
+                                  <td class="bordered text-right">${formatNumber(data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_TAWAS_PAKAI)}</td>
+                                  <td class="bordered text-right">${formatNumber(data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_CAUSTIC_PAKAI)}</td>
+                                  <td class="bordered text-right">${formatNumber(data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_TCCA_PAKAI)}</td>
+                                  <td class="bordered text-right">${formatNumber(data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_POLIMER_PAKAI)}</td>
+                                  <td class="bordered text-right">${formatNumber(data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_HYDRO_AKUMULASI)}</td>
+                                  <td class="bordered text-right">${formatNumber(data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_TAWAS_AKUMULASI)}</td>
+                                  <td class="bordered text-right">${formatNumber(data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_CAUSTIC_AKUMULASI)}</td>
+                                  <td class="bordered text-right">${formatNumber(data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_TCCA_AKUMULASI)}</td>
+                                  <td class="bordered text-right">${formatNumber(data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_POLIMER_AKUMULASI)}</td>
+                                  <td class="bordered text-right">${formatNumber(data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_HYDRO_STOCK)}</td>
+                                  <td class="bordered text-right">${formatNumber(data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_TAWAS_STOCK)}</td>
+                                  <td class="bordered text-right">${formatNumber(data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_CAUSTIC_STOCK)}</td>
+                                  <td class="bordered text-right">${formatNumber(data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_TCCA_STOCK)}</td>
+                                  <td class="bordered text-right">${formatNumber(data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_POLIMER_STOCK)}</td>
+                                  <td class="bordered text-right">${formatNumber(data.result[i].KIMIA.KPE_AIR_FLOWMETER_KIMIA_PRE_EFFIENSI_CAUSTIC)}</td>`;
             }
             $('tbody#zone_data').append(/*html*/`<tr>
                                                   ${listData}

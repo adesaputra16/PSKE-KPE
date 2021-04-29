@@ -118,7 +118,7 @@
                 <tr>
                   <th class="bordered text-center" rowspan="2">#</th>
                   <th class="bordered text-center" rowspan="2">Codding</th>
-                  <th class="bordered text-center" rowspan="2">Tanggal</th>
+                  <th class="bordered text-center" rowspan="2" style="min-width:110px;">Tanggal</th>
                   <th class="bordered text-center" colspan="2" >Produk Softener (m3) line 1</th>
                   <th class="bordered text-center" colspan="2" >Produk Softener (m3) line 2</th>
                   <th class="bordered text-center" colspan="2" >Produk Softener</th>
@@ -502,6 +502,7 @@
         if(data.respon.pesan=="sukses")
         {
           for (let i = 0; i < data.result.length; i++) {
+            let TANGGAL = data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_TANGGAL.split('-')
             $('#zone_data').append(/*html*/`<tr>
                                               <td class="bordered">
                                                 <div class="dropright">
@@ -515,71 +516,71 @@
                                                 </div>
                                               </td>
                                               <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_CODDING}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_TANGGAL}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_SOFTENER_FLOW_LINE_1}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_SOFTENER_HASIL_LINE_1}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_SOFTENER_FLOW_LINE_2}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_SOFTENER_HASIL_LINE_2}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_SOFTENER_TOTAL}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_SOFTENER_AKUMULASI}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_REGENERASI_FLOW_LINE_1}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_REGENERASI_HASIL_LINE_1}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_REGENERASI_FLOW_LINE_2}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_REGENERASI_HASIL_LINE_2}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_REGENERASI_TOTAL}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_REGENERASI_AKUMULASI}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_PROSES_FLOW_1}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_PROSES_HASIL_1}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_PROSES_AKUMULASI_1}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_PRODUK_FLOW_1}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_PRODUK_HASIL_1}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_PRODUK_AKUMULASI_1}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_REJECT_1}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_REJECT_AKUMULASI_1}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_DEBIT_PRODUK_1}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_WAKTU_OPERASI_1}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_WAKTU_OPERASI_AKUMULASI_1}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_PROSES_FLOW_2}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_PROSES_HASIL_2}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_PROSES_AKUMULASI_2}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_PRODUK_FLOW_2}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_PRODUK_HASIL_2}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_PRODUK_AKUMULASI_2}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_REJECT_2}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_REJECT_AKUMULASI_2}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_DEBIT_PRODUK_2}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_WAKTU_OPERASI_2}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_WAKTU_OPERASI_AKUMULASI_2}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_PROSES_CARBON_FILTER}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_BACKWASH_FLOW}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_BACKWASH_PRODUK}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_BACKWASH_AKUMULASI}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_SUSUT}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_KONTROL_SUSUT}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_AKUMULASI_SUSUT}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_AKUMULASI_PRODUK}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_AKUMULASI_REJECT}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_AKUMULASI_REJECT_HASIL}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_EFFESIENSI_PROSES_1}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_EFFESIENSI_PROSES_2}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_HASIL_PROSES_PRODUK}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_SOUNDING_SOFT_WATER_1}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_SOUNDING_SOFT_WATER_2}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_SOUNDING_BAK_IV}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_SOUNDING_BOILER_I}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_SOUNDING_BOILER_II}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_SOUNDING_BOILER_III}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_SOUNDING_BOILER_IV}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_SOUNDING_BOILER_V_SEKAT}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_STOK_TOTAL}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_STOK_SOFT_WATER_1}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_STOK_SOFT_WATER_2}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_STOK_TANKI}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_STOK_BOILER_I}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_STOK_BOILER_II}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_STOK_BOILER_III}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_STOK_BOILER_IV}</td>
-                                              <td class="bordered">${data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_STOK_BOILER_V_SEKAT}</td>
+                                              <td class="bordered text-center">${TANGGAL[2]}-${TANGGAL[1]}-${TANGGAL[0]}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_SOFTENER_FLOW_LINE_1)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_SOFTENER_HASIL_LINE_1)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_SOFTENER_FLOW_LINE_2)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_SOFTENER_HASIL_LINE_2)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_SOFTENER_TOTAL)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_SOFTENER_AKUMULASI)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_REGENERASI_FLOW_LINE_1)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_REGENERASI_HASIL_LINE_1)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_REGENERASI_FLOW_LINE_2)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_REGENERASI_HASIL_LINE_2)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_REGENERASI_TOTAL)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_REGENERASI_AKUMULASI)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_PROSES_FLOW_1)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_PROSES_HASIL_1)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_PROSES_AKUMULASI_1)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_PRODUK_FLOW_1)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_PRODUK_HASIL_1)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_PRODUK_AKUMULASI_1)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_REJECT_1)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_REJECT_AKUMULASI_1)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_DEBIT_PRODUK_1)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_WAKTU_OPERASI_1)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_WAKTU_OPERASI_AKUMULASI_1)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_PROSES_FLOW_2)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_PROSES_HASIL_2)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_PROSES_AKUMULASI_2)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_PRODUK_FLOW_2)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_PRODUK_HASIL_2)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_PRODUK_AKUMULASI_2)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_REJECT_2)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_REJECT_AKUMULASI_2)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_DEBIT_PRODUK_2)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_WAKTU_OPERASI_2)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_WAKTU_OPERASI_AKUMULASI_2)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_PROSES_CARBON_FILTER)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_BACKWASH_FLOW)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_BACKWASH_PRODUK)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_BACKWASH_AKUMULASI)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_SUSUT)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_KONTROL_SUSUT)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_AKUMULASI_SUSUT)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_AKUMULASI_PRODUK)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_AKUMULASI_REJECT)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_AKUMULASI_REJECT_HASIL)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_EFFESIENSI_PROSES_1)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_EFFESIENSI_PROSES_2)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_HASIL_PROSES_PRODUK)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_SOUNDING_SOFT_WATER_1)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_SOUNDING_SOFT_WATER_2)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_SOUNDING_BAK_IV)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_SOUNDING_BOILER_I)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_SOUNDING_BOILER_II)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_SOUNDING_BOILER_III)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_SOUNDING_BOILER_IV)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_SOUNDING_BOILER_V_SEKAT)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_STOK_TOTAL)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_STOK_SOFT_WATER_1)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_STOK_SOFT_WATER_2)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_STOK_TANKI)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_STOK_BOILER_I)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_STOK_BOILER_II)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_STOK_BOILER_III)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_STOK_BOILER_IV)}</td>
+                                              <td class="bordered text-right">${formatNumber(data.result[i].KPE_AIR_FLOWMETER_OPERASIONAL_RO_STOK_BOILER_V_SEKAT)}</td>
                                             </tr>`);
           }
         }else if(data.respon.pesan=="gagal")
